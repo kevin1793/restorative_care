@@ -40,6 +40,9 @@ export default function Footer() {
       <div className="border-t border-gray-200 text-center py-4 text-sm text-gray-500">
         © {new Date().getFullYear()} Restorative Care HHS. All rights reserved.
       </div>
+      <div className="border-t bg-teal-50 border-gray-200 text-center py-4 text-sm text-gray-500">
+        Built with Care by <a href="https://kevin1793.github.io" className="hover:text-teal-600">KC Designs</a>.
+      </div>
     </footer>
   );
 }

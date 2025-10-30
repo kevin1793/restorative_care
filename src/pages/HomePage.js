@@ -1,10 +1,11 @@
 import React from "react";
 import { HeartPulse, Home, Users, Phone } from "lucide-react";
 import nurseImage1 from "../assets/images/nurse_care1.jpg";
+import ContactForm from "../components/ContactForm";
 
 export default function HomePage() {
   return (
-    <div className="pt-24">
+    <div className="pt-16">
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-teal-50 to-white py-20">
         <div className="max-w-7xl mx-auto px-6 text-center">
@@ -26,6 +27,8 @@ export default function HomePage() {
           </a>
         </div>
       </section>
+
+      
 
       {/* About Section */}
       <section id="about" className="py-20 bg-white">
@@ -51,6 +54,10 @@ export default function HomePage() {
             </p>
           </div>
         </div>
+      </section>
+
+      <section id="contact">
+        <ContactForm />
       </section>
 
       {/* Services Section */}
@@ -148,7 +155,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact CTA */}
-      <section id="contact" className="py-20 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <Phone className="w-10 h-10 text-teal-600 mx-auto mb-4" />
           <h2 className="text-3xl font-semibold text-teal-700 mb-4">
@@ -162,7 +169,7 @@ export default function HomePage() {
             href="tel:8172858515"
             className="bg-teal-600 text-white px-6 py-3 rounded-full font-medium hover:bg-teal-700 transition"
           >
-            Contact Us Today
+            Call Us Today
           </a>
         </div>
       </section>

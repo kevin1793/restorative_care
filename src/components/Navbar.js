@@ -9,6 +9,7 @@ export default function Navbar() {
     // { label: "About Us", href: "#about" },
     // { label: "Services", href: "#services" },
     // { label: "Careers", href: "#careers" },
+    { label: "Contact Us", href: "#contact" },
     { label: "Call Us: (817)-285-8515", href: "tel:8172858515" },
   ];
 
