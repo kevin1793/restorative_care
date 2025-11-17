@@ -13,9 +13,9 @@ export default function ContactForm() {
   }, [state.succeeded]);
 
   return (
-    <section className="bg-gradient-to-b from-white to-teal-50 py-20 border-t border-gray-200" id="contact">
+    <section className="bg-gradient-to-b from-white to-primaryLight py-20 border-t border-gray-200" id="contact">
       <div className="max-w-2xl mx-auto px-6">
-        <h2 className="text-3xl font-semibold text-center text-teal-600 mb-8">
+        <h2 className="text-3xl font-semibold text-center text-primary mb-8">
           Get in Touch
         </h2>
         <p className="text-center text-gray-600 mb-10">
@@ -37,7 +37,7 @@ export default function ContactForm() {
               type="text"
               name="name"
               required
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <ValidationError prefix="Name" field="name" errors={state.errors} />
           </div>
@@ -49,7 +49,7 @@ export default function ContactForm() {
               type="email"
               name="email"
               required
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <ValidationError prefix="Email" field="email" errors={state.errors} />
           </div>
@@ -61,7 +61,7 @@ export default function ContactForm() {
               type="tel"
               name="phone"
               required
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <ValidationError prefix="Phone" field="phone" errors={state.errors} />
           </div>
@@ -72,7 +72,7 @@ export default function ContactForm() {
             <select
               name="service"
               required
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">Select a service</option>
               <option value="Home Health Care">Home Health Care</option>
@@ -93,7 +93,7 @@ export default function ContactForm() {
               type="text"
               name="referral"
               placeholder="(e.g., Google, friend, doctor, etc.)"
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <ValidationError prefix="Referral" field="referral" errors={state.errors} />
           </div>
@@ -106,7 +106,7 @@ export default function ContactForm() {
               rows="4"
               required
               placeholder="Tell us how we can help..."
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             ></textarea>
             <ValidationError prefix="Message" field="message" errors={state.errors} />
           </div>
@@ -116,7 +116,7 @@ export default function ContactForm() {
             <button
               type="submit"
               disabled={state.submitting}
-              className="bg-teal-600 text-white px-6 py-3 rounded-full font-medium hover:bg-teal-700 transition"
+              className="bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-primary transition"
             >
               {state.submitting ? "Sending..." : "Send Message"}
             </button>
