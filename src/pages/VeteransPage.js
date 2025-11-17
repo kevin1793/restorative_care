@@ -1,5 +1,6 @@
 import React from "react";
 import veteransHero from "../assets/images/veterans.jpg";
+import { useEffect } from "react";
 
 export default function VeteransPage() {
 
