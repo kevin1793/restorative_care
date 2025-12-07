@@ -221,7 +221,7 @@ export default function HomePage() {
             ].map((insurance) => (
               <div
                 key={insurance}
-                className="bg-primaryLight border border-teal-100 p-5 rounded-xl shadow-sm hover:shadow-md transition text-center"
+                className="bg-primaryLight border p-5 rounded-xl shadow-sm hover:shadow-md transition text-center"
               >
                 <p className="text-primary font-medium">{insurance}</p>
               </div>

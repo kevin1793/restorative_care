@@ -19,6 +19,24 @@ export default function Footer() {
           <h3 className="text-md font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
             <li><a href="tel:8172858515" className="hover:text-primary">Call Us: (817)-285-8515</a></li>
+            <li>
+              <a
+                href="mailto:inforestorativecare@gmail.com"
+                className="hover:text-primary"
+              >
+                Email Us: inforestorativecare@gmail.com
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+208+Bedford,+TX+76022"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary"
+              >
+                221 Bedford Road Suite 208 Bedford, TX 76022
+              </a>
+            </li>
             {/* <li><a href="#about" className="hover:text-primary">About Us</a></li>
             <li><a href="#services" className="hover:text-primary">Services</a></li>
             <li><a href="#careers" className="hover:text-primary">Careers</a></li>

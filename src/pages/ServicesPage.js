@@ -9,7 +9,7 @@ export default function ServicesPage() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="">
+    <div className="pt-10">
 
 
       {/* Hero / Header */}
@@ -30,7 +30,7 @@ export default function ServicesPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
             Our Services
           </h1>
-          <p className="text-white/90 max-w-2xl mx-auto text-lg drop-shadow">
+          <p className="text-white/90 max-w-2xl mx-auto text-lg md:text-xl drop-shadow">
             Restorative Care HHS is dedicated to providing compassionate,
             professional, and personalized care to support comfort, dignity,
             and independence at home.

@@ -9,7 +9,8 @@ export default function Navbar() {
   const navLinks = [
     { label: "Services", href: "/services" },
     { label: "Veterans", href: "/veterans" },
-    { label: "Message Us", href: "#contact" },
+    { label: "Careers", href: "/careers" },
+    { label: "Contact Us", href: "/contact" },
     { label: "Call Us: (817)-285-8515", href: "tel:8172858515" },
   ];
 
@@ -84,14 +85,14 @@ export default function Navbar() {
                 {link.label}
               </button>
             ) : (
-              <a
+              <RouterLink
                 key={link.label}
-                href={link.href}
+                to={link.href}
                 className="block px-6 py-3 text-gray-700 hover:bg-primaryLight hover:text-primary"
                 onClick={() => setOpen(false)}
               >
                 {link.label}
-              </a>
+              </RouterLink>
             )
           )}
         </div>
