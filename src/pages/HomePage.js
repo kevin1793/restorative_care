@@ -211,7 +211,6 @@ export default function HomePage() {
             {[
               "Molina",
               "Superior",
-              "United Healthcare",
               "Blue Cross Blue Shield Texas",
               "VA",
               "Medicare",

@@ -29,12 +29,12 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+208+Bedford,+TX+76022"
+                href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+320+Bedford,+TX+76022"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary"
               >
-                221 Bedford Road Suite 208 Bedford, TX 76022
+                221 Bedford Road Suite 320 Bedford, TX 76022
               </a>
             </li>
             {/* <li><a href="#about" className="hover:text-primary">About Us</a></li>

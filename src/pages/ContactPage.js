@@ -86,12 +86,12 @@ export default function ContactPage() {
               Address
             </h3>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+208+Bedford+TX+76022"
+              href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+320+Bedford+TX+76022"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 hover:text-primary"
             >
-              221 Bedford Road Suite 208
+              221 Bedford Road Suite 320
               <br /> Bedford, TX 76022
             </a>
           </div>
@@ -119,7 +119,7 @@ export default function ContactPage() {
           <div className="rounded-2xl overflow-hidden shadow-lg">
             <iframe
               title="Restorative Care HHS Office"
-              src="https://www.google.com/maps?q=221+Bedford+Road+Suite+208+Bedford,+TX+76022&output=embed"
+              src="https://www.google.com/maps?q=221+Bedford+Road+Suite+320+Bedford,+TX+76022&output=embed"
               width="100%"
               height="350"
               allowFullScreen=""
