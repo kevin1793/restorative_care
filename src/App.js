@@ -6,10 +6,11 @@ import HomePage from "./pages/HomePage";
 // import About from "./pages/About";
 import ServicesPage from "./pages/ServicesPage";
 import VeteransPage from "./pages/VeteransPage";
-import CareersPage from "./pages/CareersPage";
+// import CareersPage from "./pages/CareersPage";
 import ContactPage from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Navigate } from 'react-router-dom';
 
 function App() {
   return (
@@ -18,9 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/veterans" element={<VeteransPage />} />
-        {/* <Route path="/about" element={<About />} /> */}
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="/careers" element={<CareersPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />

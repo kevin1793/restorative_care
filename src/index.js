@@ -5,6 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+if (window.location.pathname === "/careers/") {
+  window.location.replace("/careers");
+}
 root.render(
   <React.StrictMode>
     <App />
