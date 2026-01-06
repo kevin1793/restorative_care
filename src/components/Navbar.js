@@ -91,15 +91,20 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden bg-white border-t border-gray-200">
           {navLinks.map((link) =>
-            link.label === "Message Us" ? (
-              <button
+            link.href.startsWith("http") ? (
+              // external link
+              <a
                 key={link.label}
-                onClick={(e) => handleScrollLink(e, "contact")}
-                className="block w-full text-left px-6 py-3 text-gray-700 hover:bg-primaryLight hover:text-primary"
+                href={link.href}
+                className="block px-6 py-3 text-gray-700 hover:bg-primaryLight hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
               >
                 {link.label}
-              </button>
+              </a>
             ) : (
+              // internal link
               <RouterLink
                 key={link.label}
                 to={link.href}
