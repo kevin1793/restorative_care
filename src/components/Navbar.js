@@ -51,16 +51,31 @@ export default function Navbar() {
               >
                 {link.label}
               </button>
+            ) : link.href.startsWith("http") ? (
+              // external link
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-gray-700 hover:text-primary transition-colors"
+                target="_blank" // optional, open in new tab
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </a>
             ) : (
+              // internal link
               <RouterLink
                 key={link.label}
                 to={link.href}
                 className="text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setOpen(false)}
               >
                 {link.label}
               </RouterLink>
             )
           )}
+
         </div>
 
         {/* Mobile Menu Button */}
