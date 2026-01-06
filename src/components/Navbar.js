@@ -9,7 +9,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Services", href: "/services" },
     { label: "Veterans", href: "/veterans" },
-    { label: "Careers", href: "https://restorativecarehhs.com/careers" }, // External link to your careers app
+    { label: "Careers", href: "https://www.restorativecarehhs.com/careers" }, // External link to your careers app
     { label: "Contact Us", href: "/contact" },
     { label: "Call Us: (817)-285-8515", href: "tel:8172858515" },
   ];
