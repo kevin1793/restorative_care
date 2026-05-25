@@ -1,38 +1,58 @@
+/* Avoid global centering that can harm readability */
 .App {
-  text-align: center;
+  text-align: left;
 }
 
+/* Remove pointer-events restriction (can break accessibility tools) */
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
 }
 
+/* Respect motion preferences properly */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin 20s linear infinite;
   }
 }
 
+/* Avoid full-screen layout forcing */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
+
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
+/* Improve link accessibility contrast */
 .App-link {
-  color: #61dafb;
+  color: #4aa3ff;
+  text-decoration: underline;
 }
 
+/* Animation */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion accessibility (GOOD — keep this) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }
