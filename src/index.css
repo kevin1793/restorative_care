@@ -18,3 +18,17 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+  Base type size bumped from the Tailwind default (16px) to 18px per the
+  site's elderly-audience accessibility guidance (report §3.15). Since
+  Tailwind's text-* utilities are rem-based, this scales every heading and
+  paragraph proportionally instead of requiring per-class overrides.
+*/
+html {
+  font-size: 18px;
+}
+
+body {
+  line-height: 1.6;
+}

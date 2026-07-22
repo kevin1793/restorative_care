@@ -1,10 +1,24 @@
 import React from "react";
-import { HeartPulse, Home, Users, Phone } from "lucide-react";
+import {
+  HeartPulse,
+  Users,
+  Phone,
+  Stethoscope,
+  HeartHandshake,
+  Activity,
+  ShieldCheck,
+  MapPinned,
+  BadgeCheck,
+  MessageCircle,
+  ClipboardCheck,
+} from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 
 import nurseImage1 from "../assets/images/nurse_care1.jpg";
 import nurseCall from "../assets/images/calling.jpg";
+import veteransImage from "../assets/images/veterans.jpg";
 import ContactForm from "../components/ContactForm";
+import InsuranceSection from "../components/InsuranceSection";
 
 export default function HomePage() {
   const focusClasses =
@@ -19,6 +33,94 @@ export default function HomePage() {
     transition-colors duration-200
     ${focusClasses}
   `;
+
+  const buttonOutlineClasses = `
+    inline-flex items-center justify-center
+    bg-white text-primary
+    border-2 border-primary
+    px-6 py-3 rounded-full
+    font-medium
+    hover:bg-primaryLight
+    transition-colors duration-200
+    ${focusClasses}
+  `;
+
+  const pillClasses = `
+    inline-flex items-center
+    bg-primaryLight text-primary
+    text-sm font-medium
+    px-4 py-2 rounded-full
+    hover:bg-primary hover:text-white
+    transition-colors duration-200
+  `;
+
+  const missionHighlights = [
+    {
+      icon: Stethoscope,
+      title: "Skilled Nursing",
+      text: "Professional medical care delivered at home.",
+    },
+    {
+      icon: HeartHandshake,
+      title: "Personal Care",
+      text: "Support with daily living for comfort and dignity.",
+    },
+    {
+      icon: Activity,
+      title: "Therapy Services",
+      text: "Helping clients regain strength and independence.",
+    },
+  ];
+
+  // Client-benefit copy drafted per report §3.17 — pending Juice's review
+  // and sign-off before treating the exact wording as final (scope-of-
+  // service language can matter for licensing compliance).
+  const skilledServices = [
+    {
+      icon: Stethoscope,
+      title: "Skilled Nursing",
+      text: "Registered nurses manage medications, monitor health conditions, and provide wound care at home, while teaching clients and family caregivers how to manage day-to-day between visits.",
+    },
+    {
+      icon: Activity,
+      title: "Physical Therapy",
+      text: "Helps clients rebuild strength, balance, and mobility after an illness, injury, or surgery, so they can move safely and confidently in their own home.",
+    },
+    {
+      icon: HeartHandshake,
+      title: "Occupational Therapy",
+      text: "Focuses on relearning everyday tasks like dressing, bathing, and cooking, helping clients regain independence in their own routines.",
+    },
+    {
+      icon: MessageCircle,
+      title: "Speech Therapy",
+      text: "Supports communication and swallowing difficulties, often following a stroke or other medical event, helping clients eat safely and express themselves clearly.",
+    },
+    {
+      icon: Users,
+      title: "Medical Social Work",
+      text: "Connects clients and families with community resources, emotional support, and guidance for navigating care decisions and next steps.",
+    },
+  ];
+
+  const nonSkilledServices = [
+    {
+      icon: HeartPulse,
+      title: "Home Health Aide (HHA)",
+      text: "Hands-on help with bathing, dressing, grooming, and mobility, so clients can maintain their comfort, dignity, and daily routines at home.",
+    },
+    {
+      icon: ClipboardCheck,
+      title: "Personal Care Attendant (PCA)",
+      text: "Day-to-day support with personal care and household tasks for clients who qualify for long-term care services through Texas Medicaid.",
+    },
+  ];
+
+  const trustBadges = [
+    { icon: ShieldCheck, label: "Licensed by Texas HHSC" },
+    { icon: MapPinned, label: "Serving the DFW Metroplex" },
+    { icon: BadgeCheck, label: "Medicare & Medicaid Accepted" },
+  ];
 
   return (
     <>
@@ -55,7 +157,7 @@ export default function HomePage() {
               id="hero-heading"
               className="font-heading text-4xl md:text-5xl font-bold text-primary mb-6"
             >
-              Restorative Care HHS
+              Compassionate Home Health Care in Bedford, TX
             </h1>
 
             {/* Decorative tagline */}
@@ -71,21 +173,37 @@ export default function HomePage() {
               support comfort, dignity, and independence.
             </p>
 
+            {/* Call is the higher-intent action for healthcare leads, so
+                it's the solid primary button; messaging is secondary
+                (report §1.2) */}
             <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="#contact"
-                className={buttonClasses}
-              >
-                Message Us
-              </a>
-
               <a
                 href="tel:8172858515"
                 className={buttonClasses}
               >
                 Call Us: (817) 285-8515
               </a>
+
+              <a
+                href="#contact"
+                className={buttonOutlineClasses}
+              >
+                Message Us
+              </a>
             </div>
+
+            {/* Trust bar (report §1.3) */}
+            <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-10 text-sm text-gray-700">
+              {trustBadges.map(({ icon: Icon, label }) => (
+                <li key={label} className="flex items-center gap-2">
+                  <Icon
+                    className="w-4 h-4 text-primary"
+                    aria-hidden="true"
+                  />
+                  {label}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -111,17 +229,45 @@ export default function HomePage() {
                 About Our Mission
               </h2>
 
-              <p className="text-gray-800 leading-relaxed mb-4">
+              <p className="text-gray-800 leading-relaxed mb-8">
                 At <strong>Restorative Care HHS</strong>, we believe everyone
                 deserves comfort and dignity at home. Our skilled nurses and
                 compassionate caregivers are dedicated to helping each client
                 live with independence, safety, and respect.
               </p>
 
-              <p className="text-gray-800 leading-relaxed">
+              {/* Mission broken into scannable bullets instead of a dense
+                  paragraph (report §2.2) */}
+              <ul className="grid sm:grid-cols-3 gap-6 mb-8">
+                {missionHighlights.map(({ icon: Icon, title, text }) => (
+                  <li key={title}>
+                    <Icon
+                      className="w-8 h-8 text-primary mb-2"
+                      aria-hidden="true"
+                    />
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {text}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-gray-800 leading-relaxed mb-8">
                 Whether it’s daily living assistance, therapy, or specialized
-                medical care — we’re here to bridge care and compassion.
+                medical care, our team is here for you. We bring care and
+                compassion together, right where it’s needed most.
               </p>
+
+              <RouterLink
+                to="/services"
+                className={buttonOutlineClasses}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                Learn About Our Services →
+              </RouterLink>
             </div>
           </div>
         </section>
@@ -135,71 +281,79 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-6">
             <h2
               id="services-heading"
-              className="text-3xl font-semibold text-primary text-center mb-12"
+              className="text-3xl font-semibold text-primary text-center mb-4"
             >
               Our Home Health Services
             </h2>
 
-            <div className="grid md:grid-cols-3 gap-10">
-              {/* Card 1 */}
-              <article className="bg-white p-8 rounded-2xl shadow-md text-left">
-                <HeartPulse
-                  className="w-10 h-10 text-primary mx-auto mb-4"
-                  aria-hidden="true"
-                />
+            <p className="text-center text-gray-700 max-w-2xl mx-auto mb-12">
+              Care falls into two categories, depending on what your loved
+              one needs.
+            </p>
 
-                <h3 className="text-xl text-center font-semibold text-gray-900 mb-4">
-                  Home Health Aide / CNA
-                </h3>
+            {/* Skilled Services */}
+            <div className="mb-16">
+              <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-8 inline-block">
+                Skilled Services
+              </h3>
 
-                <ul className="text-gray-800 text-sm list-disc list-inside space-y-2">
-                  <li>Bathing assistance</li>
-                  <li>Dressing and grooming</li>
-                  <li>Toileting support</li>
-                  <li>Mobility assistance</li>
-                  <li>Oral hygiene and denture care</li>
-                  <li>Additional daily living support</li>
-                </ul>
-              </article>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {skilledServices.map(({ icon: Icon, title, text }) => (
+                  <article
+                    key={title}
+                    className="bg-white p-8 rounded-2xl shadow-md text-left"
+                  >
+                    <Icon
+                      className="w-10 h-10 text-primary mb-4"
+                      aria-hidden="true"
+                    />
 
-              {/* Card 2 */}
-              <article className="bg-white p-8 rounded-2xl shadow-md text-left">
-                <Users
-                  className="w-10 h-10 text-primary mx-auto mb-4"
-                  aria-hidden="true"
-                />
+                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                      {title}
+                    </h4>
 
-                <h3 className="text-xl text-center font-semibold text-gray-900 mb-4">
-                  Skilled Nursing / Non-Skilled Nursing
-                </h3>
-
-                <p className="text-gray-800 text-sm leading-relaxed">
-                  Professional in-home nursing care including health monitoring,
-                  medication administration, recovery support, and chronic care
-                  management.
-                </p>
-              </article>
-
-              {/* Card 3 */}
-              <article className="bg-white p-8 rounded-2xl shadow-md text-left">
-                <Home
-                  className="w-10 h-10 text-primary mx-auto mb-4"
-                  aria-hidden="true"
-                />
-
-                <h3 className="text-xl text-center font-semibold text-gray-900 mb-4">
-                  Other Services
-                </h3>
-
-                <ul className="text-gray-800 text-sm list-disc list-inside space-y-2">
-                  <li>Wound care</li>
-                  <li>Occupational therapy</li>
-                  <li>Physical therapy</li>
-                </ul>
-              </article>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {text}
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-20 text-center">
+            {/* Personal Care / Non-Skilled Services */}
+            <div>
+              <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-2 inline-block">
+                Personal Care Services (Non-Skilled)
+              </h3>
+
+              <p className="text-sm text-gray-700 mb-8">
+                Available through Long-Term Care via Texas Medicaid.
+              </p>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {nonSkilledServices.map(({ icon: Icon, title, text }) => (
+                  <article
+                    key={title}
+                    className="bg-white p-8 rounded-2xl shadow-md text-left"
+                  >
+                    <Icon
+                      className="w-10 h-10 text-primary mb-4"
+                      aria-hidden="true"
+                    />
+
+                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                      {title}
+                    </h4>
+
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {text}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-16 text-center">
               <RouterLink
                 to="/services"
                 className={buttonClasses}
@@ -211,19 +365,26 @@ export default function HomePage() {
           </div>
         </section>
 
+        <InsuranceSection />
+
         {/* Contact Form */}
         <section
           id="contact"
           aria-labelledby="contact-heading"
-          className="py-20 bg-white"
+          className="py-20 bg-white
+          
+                             bg-gradient-to-b from-white to-primaryLight
+         py-20
+       border-t border-gray-200
+       "
         >
           <div className="max-w-6xl mx-auto px-6">
-            <h2
+            {/* <h2
               id="contact-heading"
               className="text-3xl font-semibold text-primary mb-8 text-center"
             >
               Contact Us
-            </h2>
+            </h2> */}
 
             <ContactForm />
           </div>
@@ -231,7 +392,10 @@ export default function HomePage() {
 
         {/* Contact CTA */}
         <section
-          className="py-20 bg-gray-50"
+          className="py-20 bg-gray-50
+          
+
+        "
           aria-labelledby="cta-heading"
         >
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
@@ -250,17 +414,52 @@ export default function HomePage() {
                 </h2>
               </div>
 
-              <p className="text-gray-800 mb-8 leading-relaxed">
+              <p className="text-gray-800 mb-6 leading-relaxed">
                 We’re here to answer your questions and help you find the best
                 care plan for your loved ones.
               </p>
 
-              <a
-                href="tel:8172858515"
-                className={buttonClasses}
-              >
-                Call Us Today: (817) 285-8515
-              </a>
+              {/* Quick-link pills (report §3.18) */}
+              <div className="flex flex-wrap gap-3 mb-8">
+                <RouterLink
+                  to="/services"
+                  className={`${pillClasses} ${focusClasses}`}
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Skilled Services
+                </RouterLink>
+
+                <a
+                  href="#services"
+                  className={`${pillClasses} ${focusClasses}`}
+                >
+                  Personal Care
+                </a>
+
+                <RouterLink
+                  to="/veterans"
+                  className={`${pillClasses} ${focusClasses}`}
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Veteran Services
+                </RouterLink>
+              </div>
+
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="tel:8172858515"
+                  className={buttonClasses}
+                >
+                  Call Us Today: (817) 285-8515
+                </a>
+
+                <a
+                  href="#contact"
+                  className={buttonOutlineClasses}
+                >
+                  Message Us
+                </a>
+              </div>
             </div>
 
             <div>
@@ -279,29 +478,50 @@ export default function HomePage() {
           className="py-20 bg-primaryLight"
           aria-labelledby="veterans-heading"
         >
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            <h2
-              id="veterans-heading"
-              className="text-3xl md:text-4xl font-bold text-primary mb-4"
-            >
-              Quality Home Care for Veterans
-            </h2>
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <img
+              src={veteransImage}
+              alt="A caregiver assisting a veteran client at home"
+              className="rounded-2xl shadow-md w-full order-first md:order-last"
+              loading="lazy"
+            />
 
-            <p className="text-gray-800 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Restorative Care Home Health Services provides compassionate
-              respite and homemaker caregiving services for veterans under VCA
-              and TriWest agreements. We help veterans maintain independence,
-              comfort, and dignity at home with personalized care tailored to
-              each individual.
-            </p>
+            <div className="text-center md:text-left">
+              <h2
+                id="veterans-heading"
+                className="text-3xl md:text-4xl font-bold text-primary mb-4"
+              >
+                Quality Home Care for Veterans
+              </h2>
 
-            <RouterLink
-              to="/veterans"
-              className={buttonClasses}
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              Learn More About Veteran Services
-            </RouterLink>
+              <p className="text-gray-800 mb-8 leading-relaxed">
+                Restorative Care Home Health Services provides compassionate
+                respite and homemaker caregiving services for veterans under
+                VCA and TriWest agreements. We help veterans maintain
+                independence, comfort, and dignity at home with personalized
+                care tailored to each individual.
+              </p>
+
+              <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                <RouterLink
+                  to="/veterans"
+                  className={buttonClasses}
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Learn More About Veteran Services
+                </RouterLink>
+
+                <a
+                  href="https://www.restorativecarehhs.com/careers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonOutlineClasses}
+                  aria-label="Join Our Care Team — opens careers page in a new tab"
+                >
+                  Join Our Care Team
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </main>

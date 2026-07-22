@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { HeartPulse, Menu, X } from "lucide-react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { HeartPulse, Menu, X, Phone } from "lucide-react";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
-
-  const navigate = useNavigate();
 
   const mobileMenuRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -13,13 +11,14 @@ export default function Navbar() {
   const navLinks = [
     { label: "Services", href: "/services" },
     { label: "Veterans", href: "/veterans" },
-    {
-      label: "Careers",
-      href: "https://www.restorativecarehhs.com/careers",
-    },
+    { label: "Service Area", href: "/service-area" },
     { label: "Contact Us", href: "/contact" },
-    { label: "Call Us: (817) 285-8515", href: "tel:8172858515" },
   ];
+
+  const careersLink = {
+    label: "Careers",
+    href: "https://www.restorativecarehhs.com/careers",
+  };
 
   const focusClasses =
     "focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md";
@@ -67,24 +66,6 @@ export default function Navbar() {
     }
   }, [open]);
 
-  const handleScrollLink = (e, id) => {
-    e.preventDefault();
-
-    navigate("/");
-
-    setTimeout(() => {
-      const element = document.getElementById(id);
-
-      if (element) {
-        element.scrollIntoView({
-          behavior: "smooth",
-        });
-      }
-    }, 50);
-
-    setOpen(false);
-  };
-
   const closeMenu = () => {
     setOpen(false);
   };
@@ -126,61 +107,95 @@ export default function Navbar() {
             </span>
           </RouterLink>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation — xl breakpoint: with the 18px base type
+              size, 4 links + Careers + phone button + Request Care needs
+              roughly 1100px. md (768px) and even lg (1024px) squeeze or
+              overflow it, so the full row only shows at xl (1280px+);
+              narrower desktop/tablet widths get the hamburger menu. */}
           <ul
             className="
-              hidden md:flex
+              hidden xl:flex
               items-center
-              space-x-8
+              space-x-6
+              flex-shrink-0
             "
           >
             {navLinks.map((link) => (
               <li key={link.label}>
-                {link.label === "Message Us" ? (
-                  <button
-                    onClick={(e) => handleScrollLink(e, "contact")}
-                    className={`
-                      text-gray-900
-                      hover:text-primary
-                      transition-colors
-                      ${focusClasses}
-                    `}
-                  >
-                    {link.label}
-                  </button>
-                ) : link.href.startsWith("http") ? (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`
-                      text-gray-900
-                      hover:text-primary
-                      transition-colors
-                      ${focusClasses}
-                    `}
-                    onClick={closeMenu}
-                    aria-label={`${link.label} opens in a new tab`}
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <RouterLink
-                    to={link.href}
-                    className={`
-                      text-gray-900
-                      hover:text-primary
-                      transition-colors
-                      ${focusClasses}
-                    `}
-                    onClick={closeMenu}
-                  >
-                    {link.label}
-                  </RouterLink>
-                )}
+                <RouterLink
+                  to={link.href}
+                  className={`
+                    text-gray-900
+                    hover:text-primary
+                    transition-colors
+                    whitespace-nowrap
+                    ${focusClasses}
+                  `}
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </RouterLink>
               </li>
             ))}
+
+            <li>
+              <a
+                href={careersLink.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+                  text-gray-900
+                  hover:text-primary
+                  transition-colors
+                  whitespace-nowrap
+                  ${focusClasses}
+                `}
+                onClick={closeMenu}
+                aria-label={`${careersLink.label} opens in a new tab`}
+              >
+                {careersLink.label}
+              </a>
+            </li>
           </ul>
+
+          {/* Desktop Actions: tap-to-call + primary CTA */}
+          <div className="hidden xl:flex items-center space-x-4 ml-6 flex-shrink-0">
+            <a
+              href="tel:8172858515"
+              className={`
+                flex items-center gap-2
+                text-primary font-medium
+                border border-primary/30
+                rounded-full
+                px-4 py-2
+                whitespace-nowrap
+                hover:bg-primaryLight
+                transition-colors
+                ${focusClasses}
+              `}
+              aria-label="Call Restorative Care HHS at 817-285-8515"
+            >
+              <Phone className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+              (817) 285-8515
+            </a>
+
+            <RouterLink
+              to="/contact"
+              className={`
+                bg-primary text-white
+                rounded-full
+                px-5 py-2
+                font-medium
+                whitespace-nowrap
+                hover:bg-primary/90
+                transition-colors
+                ${focusClasses}
+              `}
+              onClick={closeMenu}
+            >
+              Request Care
+            </RouterLink>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -188,7 +203,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen(!open)}
             className={`
-              md:hidden
+              xl:hidden
               p-2
               text-gray-900
               hover:text-primary
@@ -213,7 +228,7 @@ export default function Navbar() {
             id="mobile-navigation"
             ref={mobileMenuRef}
             className="
-              md:hidden
+              xl:hidden
               bg-white
               border-t border-gray-200
               shadow-lg
@@ -222,45 +237,84 @@ export default function Navbar() {
             <ul className="flex flex-col py-2">
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  {link.href.startsWith("http") ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`
-                        block
-                        px-6 py-4
-                        text-gray-900
-                        hover:bg-primaryLight
-                        hover:text-primary
-                        transition-colors
-                        ${focusClasses}
-                      `}
-                      onClick={closeMenu}
-                      aria-label={`${link.label} opens in a new tab`}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <RouterLink
-                      to={link.href}
-                      className={`
-                        block
-                        px-6 py-4
-                        text-gray-900
-                        hover:bg-primaryLight
-                        hover:text-primary
-                        transition-colors
-                        ${focusClasses}
-                      `}
-                      onClick={closeMenu}
-                    >
-                      {link.label}
-                    </RouterLink>
-                  )}
+                  <RouterLink
+                    to={link.href}
+                    className={`
+                      block
+                      px-6 py-4
+                      text-gray-900
+                      hover:bg-primaryLight
+                      hover:text-primary
+                      transition-colors
+                      ${focusClasses}
+                    `}
+                    onClick={closeMenu}
+                  >
+                    {link.label}
+                  </RouterLink>
                 </li>
               ))}
+
+              <li>
+                <a
+                  href={careersLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`
+                    block
+                    px-6 py-4
+                    text-gray-900
+                    hover:bg-primaryLight
+                    hover:text-primary
+                    transition-colors
+                    ${focusClasses}
+                  `}
+                  onClick={closeMenu}
+                  aria-label={`${careersLink.label} opens in a new tab`}
+                >
+                  {careersLink.label}
+                </a>
+              </li>
             </ul>
+
+            {/* Mobile Actions: tap-to-call + primary CTA */}
+            <div className="flex flex-col gap-3 px-6 py-4 border-t border-gray-200">
+              <a
+                href="tel:8172858515"
+                className={`
+                  flex items-center justify-center gap-2
+                  text-primary font-medium
+                  border border-primary/30
+                  rounded-full
+                  px-4 py-3
+                  hover:bg-primaryLight
+                  transition-colors
+                  ${focusClasses}
+                `}
+                aria-label="Call Restorative Care HHS at 817-285-8515"
+                onClick={closeMenu}
+              >
+                <Phone className="w-4 h-4" aria-hidden="true" />
+                (817) 285-8515
+              </a>
+
+              <RouterLink
+                to="/contact"
+                className={`
+                  flex items-center justify-center
+                  bg-primary text-white
+                  rounded-full
+                  px-4 py-3
+                  font-medium
+                  hover:bg-primary/90
+                  transition-colors
+                  ${focusClasses}
+                `}
+                onClick={closeMenu}
+              >
+                Request Care
+              </RouterLink>
+            </div>
           </div>
         )}
       </nav>

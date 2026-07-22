@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
+import { Link as RouterLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import ContactForm from "../components/ContactForm";
 import contactHeroImg from "../assets/images/contact_hero.jpg";
@@ -24,6 +26,14 @@ export default function ContactPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Contact Us | Restorative Care HHS</title>
+        <meta
+          name="description"
+          content="Reach Restorative Care Home Health Services in Bedford, TX by phone, email, or our contact form to schedule a free in-home assessment."
+        />
+      </Helmet>
+
       {/* Skip Navigation */}
       <a
         href="#main-content"
@@ -111,10 +121,22 @@ export default function ContactPage() {
               We’re Here to Help
             </h2>
 
-            <p className="text-gray-800 max-w-2xl mx-auto leading-relaxed mb-12">
+            <p className="text-gray-800 max-w-2xl mx-auto leading-relaxed mb-4">
               Whether you're exploring home health services, need information
               about insurance, or want assistance creating a personalized care
               plan, our team is ready to guide you every step of the way.
+            </p>
+
+            <p className="text-gray-800 max-w-2xl mx-auto leading-relaxed mb-12">
+              Not sure if we serve your area?{" "}
+              <RouterLink
+                to="/service-area"
+                className="text-primary underline underline-offset-4 hover:text-primary/80"
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                See the counties we cover
+              </RouterLink>
+              .
             </p>
 
             {/* Contact Cards */}

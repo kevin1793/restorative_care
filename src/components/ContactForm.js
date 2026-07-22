@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 
+import {
+  GOVERNMENT_PROGRAMS,
+  MANAGED_CARE_ORGANIZATIONS,
+} from "./InsuranceSection";
+
+const PAYER_OPTIONS = [
+  ...GOVERNMENT_PROGRAMS.map((program) => program.name),
+  ...MANAGED_CARE_ORGANIZATIONS,
+  "Private Pay",
+  "Not sure",
+];
+
 export default function ContactForm() {
   const [state, handleSubmit] = useForm("mgvpkdba");
   const formRef = useRef(null);
@@ -35,9 +47,7 @@ export default function ContactForm() {
     <section
       id="contact"
       className="
-        bg-gradient-to-b from-white to-primaryLight
-        py-20
-        border-t border-gray-200
+
       "
       aria-labelledby="contact-form-heading"
     >
@@ -75,96 +85,96 @@ export default function ContactForm() {
             All required fields must be completed before submitting the form.
           </p>
 
-          {/* Name */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-gray-900 font-medium mb-2"
-            >
-              Name <span aria-hidden="true">*</span>
-            </label>
+          {/* Name / Email / Phone — 2-column grid on desktop (report §3.9) */}
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-gray-900 font-medium mb-2"
+              >
+                Name <span aria-hidden="true">*</span>
+              </label>
 
-            <input
-              id="name"
-              type="text"
-              name="name"
-              autoComplete="name"
-              required
-              aria-required="true"
-              aria-invalid={state.errors?.some(
-                (error) => error.field === "name"
-              )}
-              className={inputClasses}
-            />
+              <input
+                id="name"
+                type="text"
+                name="name"
+                autoComplete="name"
+                required
+                aria-required="true"
+                aria-invalid={state.errors?.some(
+                  (error) => error.field === "name"
+                )}
+                className={inputClasses}
+              />
 
-            <ValidationError
-              prefix="Name"
-              field="name"
-              errors={state.errors}
-              className="text-red-700 mt-2 text-sm"
-            />
-          </div>
+              <ValidationError
+                prefix="Name"
+                field="name"
+                errors={state.errors}
+                className="text-red-700 mt-2 text-sm"
+              />
+            </div>
 
-          {/* Email */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-gray-900 font-medium mb-2"
-            >
-              Email Address <span aria-hidden="true">*</span>
-            </label>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-gray-900 font-medium mb-2"
+              >
+                Email Address <span aria-hidden="true">*</span>
+              </label>
 
-            <input
-              id="email"
-              type="email"
-              name="email"
-              autoComplete="email"
-              inputMode="email"
-              required
-              aria-required="true"
-              aria-invalid={state.errors?.some(
-                (error) => error.field === "email"
-              )}
-              className={inputClasses}
-            />
+              <input
+                id="email"
+                type="email"
+                name="email"
+                autoComplete="email"
+                inputMode="email"
+                required
+                aria-required="true"
+                aria-invalid={state.errors?.some(
+                  (error) => error.field === "email"
+                )}
+                className={inputClasses}
+              />
 
-            <ValidationError
-              prefix="Email"
-              field="email"
-              errors={state.errors}
-              className="text-red-700 mt-2 text-sm"
-            />
-          </div>
+              <ValidationError
+                prefix="Email"
+                field="email"
+                errors={state.errors}
+                className="text-red-700 mt-2 text-sm"
+              />
+            </div>
 
-          {/* Phone */}
-          <div>
-            <label
-              htmlFor="phone"
-              className="block text-gray-900 font-medium mb-2"
-            >
-              Phone Number <span aria-hidden="true">*</span>
-            </label>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="phone"
+                className="block text-gray-900 font-medium mb-2"
+              >
+                Phone Number <span aria-hidden="true">*</span>
+              </label>
 
-            <input
-              id="phone"
-              type="tel"
-              name="phone"
-              autoComplete="tel"
-              inputMode="tel"
-              required
-              aria-required="true"
-              aria-invalid={state.errors?.some(
-                (error) => error.field === "phone"
-              )}
-              className={inputClasses}
-            />
+              <input
+                id="phone"
+                type="tel"
+                name="phone"
+                autoComplete="tel"
+                inputMode="tel"
+                required
+                aria-required="true"
+                aria-invalid={state.errors?.some(
+                  (error) => error.field === "phone"
+                )}
+                className={inputClasses}
+              />
 
-            <ValidationError
-              prefix="Phone"
-              field="phone"
-              errors={state.errors}
-              className="text-red-700 mt-2 text-sm"
-            />
+              <ValidationError
+                prefix="Phone"
+                field="phone"
+                errors={state.errors}
+                className="text-red-700 mt-2 text-sm"
+              />
+            </div>
           </div>
 
           {/* Service Needed */}
@@ -215,6 +225,42 @@ export default function ContactForm() {
             <ValidationError
               prefix="Service"
               field="service"
+              errors={state.errors}
+              className="text-red-700 mt-2 text-sm"
+            />
+          </div>
+
+          {/* Insurance / Payer — lets leads self-identify coverage so
+              office staff can triage faster (report §4.2) */}
+          <div>
+            <label
+              htmlFor="insurance"
+              className="block text-gray-900 font-medium mb-2"
+            >
+              Insurance / Payer
+            </label>
+
+            <select
+              id="insurance"
+              name="insurance"
+              aria-invalid={state.errors?.some(
+                (error) => error.field === "insurance"
+              )}
+              className={inputClasses}
+              defaultValue=""
+            >
+              <option value="">Select your insurance or payer</option>
+
+              {PAYER_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+
+            <ValidationError
+              prefix="Insurance"
+              field="insurance"
               errors={state.errors}
               className="text-red-700 mt-2 text-sm"
             />
@@ -275,6 +321,13 @@ export default function ContactForm() {
               className="text-red-700 mt-2 text-sm"
             />
           </div>
+
+          {/* Privacy-conscious note (report §3.9) */}
+          <p className="text-sm text-gray-700 text-center leading-relaxed">
+            For your privacy, please avoid including sensitive medical
+            details in this form. A team member will follow up to discuss
+            your care needs directly.
+          </p>
 
           {/* Submit Button */}
           <div className="text-center">

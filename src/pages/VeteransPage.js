@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import veteransHero from "../assets/images/veterans.jpg";
 
 export default function VeteransPage() {
@@ -29,6 +30,14 @@ export default function VeteransPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Veteran Services | Restorative Care HHS</title>
+        <meta
+          name="description"
+          content="Restorative Care HHS provides compassionate respite and homemaker caregiving services for veterans under VCA and TriWest agreements. Learn how to get started."
+        />
+      </Helmet>
+
       {/* Skip Navigation */}
       <a
         href="#main-content"

@@ -1,0 +1,39 @@
+# Restorative Care HHS — React SPA routing for Apache (Hostinger)
+#
+# Without this, only "/" works. Visiting or refreshing a client-side
+# route directly (e.g. /services, /veterans, /service-area) returns
+# Apache's own 404 page instead of index.html, and any request for a
+# file that doesn't actually exist on the server (a stale JS/CSS bundle
+# reference, a missing icon) does the same — which is what produces
+# "Unexpected token '<'" in the console: the browser asked for a .js
+# file and got an HTML error page back instead.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Serve real files and directories as-is (JS/CSS/images/etc.)
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else falls back to index.html so React Router can handle it
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Cache hashed static assets aggressively; never cache index.html so
+# visitors always get the build that matches the current asset hashes
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>

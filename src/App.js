@@ -6,6 +6,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import { useEffect } from "react";
 
@@ -13,6 +14,9 @@ import HomePage from "./pages/HomePage";
 import ServicesPage from "./pages/ServicesPage";
 import VeteransPage from "./pages/VeteransPage";
 import ContactPage from "./pages/ContactPage";
+import ServiceAreaPage from "./pages/ServiceAreaPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -40,43 +44,51 @@ function RouteAnnouncer({ children }) {
 
 function App() {
   return (
-    <Router>
-      {/* Skip link target should exist on every page */}
-      <a
-        href="#main-content"
-        className="
-          sr-only
-          focus:not-sr-only
-          focus:absolute
-          focus:top-2
-          focus:left-2
-          focus:bg-white
-          focus:text-black
-          focus:px-4
-          focus:py-2
-          focus:z-50
-          focus:rounded-md
-        "
-      >
-        Skip to main content
-      </a>
+    <HelmetProvider>
+      <Router>
+        {/* Skip link target should exist on every page */}
+        <a
+          href="#main-content"
+          className="
+            sr-only
+            focus:not-sr-only
+            focus:absolute
+            focus:top-2
+            focus:left-2
+            focus:bg-white
+            focus:text-black
+            focus:px-4
+            focus:py-2
+            focus:z-50
+            focus:rounded-md
+          "
+        >
+          Skip to main content
+        </a>
 
-      <Navbar />
+        <Navbar />
 
-      {/* Main landmark for accessibility */}
-      <main id="main-content" tabIndex={-1}>
-        <RouteAnnouncer>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/veterans" element={<VeteransPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </RouteAnnouncer>
-      </main>
+        {/* Main landmark for accessibility */}
+        <main id="main-content" tabIndex={-1}>
+          <RouteAnnouncer>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/veterans" element={<VeteransPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/service-area" element={<ServiceAreaPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route
+                path="/terms-of-service"
+                element={<TermsOfServicePage />}
+              />
+            </Routes>
+          </RouteAnnouncer>
+        </main>
 
-      <Footer />
-    </Router>
+        <Footer />
+      </Router>
+    </HelmetProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { HeartPulse, Users, Home } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 import servicesHeroImg from "../assets/images/services.jpg";
 
@@ -23,6 +24,14 @@ export default function ServicesPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Our Services | Restorative Care HHS</title>
+        <meta
+          name="description"
+          content="Explore Restorative Care HHS's home health, personal attendant, and private duty services — skilled nursing, therapy, and daily living support in Bedford, TX."
+        />
+      </Helmet>
+
       {/* Skip Navigation */}
       <a
         href="#main-content"
