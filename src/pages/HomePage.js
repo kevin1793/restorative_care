@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 
-import nurseImage1 from "../assets/images/nurse_care1.jpg";
-import nurseCall from "../assets/images/calling.jpg";
-import veteransImage from "../assets/images/veterans.jpg";
+import nurseImage1 from "../assets/images/nurse_care1.webp";
+import nurseCall from "../assets/images/calling.webp";
+import veteransImage from "../assets/images/veterans.webp";
 import ContactForm from "../components/ContactForm";
 import InsuranceSection from "../components/InsuranceSection";
 
@@ -149,13 +149,24 @@ export default function HomePage() {
       <main id="main-content" className="pt-16">
         {/* Hero Section */}
         <section
-          className="bg-gradient-to-b from-primaryLight to-white py-20"
+          className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white py-20"
           aria-labelledby="hero-heading"
         >
-          <div className="max-w-7xl mx-auto px-6 text-center">
+          {/* Subtle background texture — soft blurred accent instead of a
+              flat wash, so the hero doesn't read identically to the other
+              light-blue sections on the page (report §4.4) */}
+          <div
+            className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            {/* Serif headline echoes the brand's existing serif wordmark
+                (already used for the logo/footer name) and is sized up for
+                more visual weight (report §4.4) */}
             <h1
               id="hero-heading"
-              className="font-heading text-4xl md:text-5xl font-bold text-primary mb-6"
+              className="font-serif text-5xl md:text-6xl font-bold text-primary mb-6"
             >
               Compassionate Home Health Care in Bedford, TX
             </h1>
@@ -241,10 +252,9 @@ export default function HomePage() {
               <ul className="grid sm:grid-cols-3 gap-6 mb-8">
                 {missionHighlights.map(({ icon: Icon, title, text }) => (
                   <li key={title}>
-                    <Icon
-                      className="w-8 h-8 text-primary mb-2"
-                      aria-hidden="true"
-                    />
+                    <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primaryLight text-primary mb-3">
+                      <Icon className="w-6 h-6" aria-hidden="true" />
+                    </span>
                     <h3 className="font-semibold text-gray-900 mb-1">
                       {title}
                     </h3>
@@ -286,22 +296,57 @@ export default function HomePage() {
               Our Home Health Services
             </h2>
 
-            <p className="text-center text-gray-700 max-w-2xl mx-auto mb-12">
+            <p className="text-center text-gray-700 max-w-2xl mx-auto mb-8">
               Care falls into two categories, depending on what your loved
               one needs.
             </p>
 
+            {/* "At a glance" quick-scan strip (report §4.6) — a light
+                version scoped to the taxonomy that's actually live today.
+                The full 4-path comparison (adding HHA/PAS/Private Duty)
+                belongs on the dedicated Services page once that page is
+                rebuilt off the old, retired Home Health/PAS/Private Duty
+                structure — building it there now would mean building on
+                a page structure the plan already marked as retired. */}
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-12">
+              <a
+                href="#skilled-services"
+                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-md transition-shadow ${focusClasses}`}
+              >
+                <span className="block font-semibold text-gray-900 mb-1">
+                  Skilled Services
+                </span>
+                <span className="block text-sm text-gray-700">
+                  Best for recovering from an illness, injury, or surgery, or
+                  managing an ongoing medical condition at home.
+                </span>
+              </a>
+
+              <a
+                href="#personal-care-services"
+                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-md transition-shadow ${focusClasses}`}
+              >
+                <span className="block font-semibold text-gray-900 mb-1">
+                  Personal Care Services
+                </span>
+                <span className="block text-sm text-gray-700">
+                  Best for help with daily living &mdash; bathing, dressing,
+                  grooming, and mobility &mdash; through Medicaid.
+                </span>
+              </a>
+            </div>
+
             {/* Skilled Services */}
-            <div className="mb-16">
+            <div id="skilled-services" className="mb-16 scroll-mt-24">
               <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-8 inline-block">
                 Skilled Services
               </h3>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="flex flex-wrap justify-center gap-8">
                 {skilledServices.map(({ icon: Icon, title, text }) => (
                   <article
                     key={title}
-                    className="bg-white p-8 rounded-2xl shadow-md text-left"
+                    className="bg-white p-8 rounded-2xl shadow-md text-left flex-1 basis-[280px] max-w-sm"
                   >
                     <Icon
                       className="w-10 h-10 text-primary mb-4"
@@ -321,7 +366,7 @@ export default function HomePage() {
             </div>
 
             {/* Personal Care / Non-Skilled Services */}
-            <div>
+            <div id="personal-care-services" className="scroll-mt-24">
               <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-2 inline-block">
                 Personal Care Services (Non-Skilled)
               </h3>
@@ -330,11 +375,11 @@ export default function HomePage() {
                 Available through Long-Term Care via Texas Medicaid.
               </p>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="flex flex-wrap justify-center gap-8">
                 {nonSkilledServices.map(({ icon: Icon, title, text }) => (
                   <article
                     key={title}
-                    className="bg-white p-8 rounded-2xl shadow-md text-left"
+                    className="bg-white p-8 rounded-2xl shadow-md text-left flex-1 basis-[280px] max-w-sm"
                   >
                     <Icon
                       className="w-10 h-10 text-primary mb-4"
@@ -361,6 +406,18 @@ export default function HomePage() {
               >
                 Learn More About Our Services
               </RouterLink>
+
+              {/* Cross-link to Insurance & Payers (report §4.6) — each
+                  service's payer note relates directly to that section */}
+              <p className="mt-4 text-sm text-gray-700">
+                Wondering if we accept your insurance?{" "}
+                <a
+                  href="#insurance"
+                  className={`text-primary underline underline-offset-4 hover:text-primary/80 ${focusClasses}`}
+                >
+                  See Insurance &amp; Payers we accept →
+                </a>
+              </p>
             </div>
           </div>
         </section>
@@ -466,7 +523,7 @@ export default function HomePage() {
               <img
                 src={nurseCall}
                 alt="A medical care coordinator taking a phone call to assist a patient's family"
-                className="rounded-2xl shadow-lg w-full object-cover"
+                className="rounded-2xl shadow-md w-full object-cover"
                 loading="lazy"
               />
             </div>

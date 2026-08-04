@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 import ContactForm from "../components/ContactForm";
-import contactHeroImg from "../assets/images/contact_hero.jpg";
+import contactHeroImg from "../assets/images/contact_hero.webp";
 
 export default function ContactPage() {
   useEffect(() => {

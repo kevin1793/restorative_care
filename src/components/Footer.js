@@ -1,6 +1,10 @@
 import React from "react";
-import { HeartPulse } from "lucide-react";
+import { HeartPulse, Facebook } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
+
+// Confirmed active account (Status Update, July 23) — only list platforms
+// Juice has actually confirmed are active.
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61584362892488";
 
 export default function Footer() {
   const focusClasses =
@@ -126,9 +130,15 @@ export default function Footer() {
             Connect
           </h3>
 
-          <p className="text-sm text-gray-700 mb-6">
-            Follow us on social media for updates and care information.
-          </p>
+          <a
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Restorative Care HHS on Facebook — opens in a new tab"
+            className={`inline-flex items-center justify-center w-10 h-10 rounded-full bg-white border border-gray-200 text-primary hover:bg-primary hover:text-white hover:border-primary transition-colors mb-6 ${focusClasses}`}
+          >
+            <Facebook className="w-5 h-5" aria-hidden="true" />
+          </a>
 
           <h3 className="text-md font-semibold mb-3 text-gray-900">
             Legal

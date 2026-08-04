@@ -82,7 +82,7 @@ export default function Navbar() {
         <div
           className="
             max-w-7xl mx-auto
-            px-6 py-4
+            px-6 py-5
             flex justify-between items-center
           "
         >
@@ -159,7 +159,7 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop Actions: tap-to-call + primary CTA */}
-          <div className="hidden xl:flex items-center space-x-4 ml-6 flex-shrink-0">
+          <div className="hidden xl:flex items-center space-x-5 ml-6 flex-shrink-0">
             <a
               href="tel:8172858515"
               className={`

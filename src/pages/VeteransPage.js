@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import veteransHero from "../assets/images/veterans.jpg";
+import veteransHero from "../assets/images/veterans.webp";
 
 export default function VeteransPage() {
   useEffect(() => {

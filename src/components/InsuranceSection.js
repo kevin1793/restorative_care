@@ -35,7 +35,8 @@ export default function InsuranceSection() {
 
   return (
     <section
-      className="py-20 bg-white"
+      id="insurance"
+      className="py-20 bg-white scroll-mt-24"
       aria-labelledby="insurance-heading"
     >
       <div className="max-w-5xl mx-auto px-6">
@@ -56,12 +57,21 @@ export default function InsuranceSection() {
             Government Programs
           </h3>
 
-          <ul className="divide-y divide-gray-200 border-t border-b border-gray-200">
+          {/* Styled as cards to match the Managed Care badge grid below,
+              so the section reads as one cohesive system (report §4.4)
+              instead of "a list, then some badges." */}
+          <ul className="grid sm:grid-cols-3 gap-3">
             {GOVERNMENT_PROGRAMS.map((program) => (
-              <li key={program.name} className="py-3 text-gray-800">
-                <span className="font-medium">{program.name}</span>
-                {" — "}
-                <span className="text-gray-700">{program.note}</span>
+              <li
+                key={program.name}
+                className="bg-primaryLight rounded-lg py-3 px-4 text-left"
+              >
+                <span className="block font-medium text-primary text-sm">
+                  {program.name}
+                </span>
+                <span className="block text-gray-700 text-sm mt-1">
+                  {program.note}
+                </span>
               </li>
             ))}
           </ul>

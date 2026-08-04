@@ -40,6 +40,8 @@ export default function ContactForm() {
     text-gray-900
     bg-white
     placeholder:text-gray-500
+    transition-colors
+    focus:border-primary
     ${focusClasses}
   `;
 

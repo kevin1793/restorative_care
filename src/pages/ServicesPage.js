@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { HeartPulse, Users, Home } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
-import servicesHeroImg from "../assets/images/services.jpg";
+import servicesHeroImg from "../assets/images/services.webp";
 
 export default function ServicesPage() {
   useEffect(() => {
@@ -281,6 +281,17 @@ export default function ServicesPage() {
             <p className="text-gray-800 mb-6 max-w-xl mx-auto leading-relaxed">
               Contact Restorative Care Home Health Services to schedule your
               free in-home assessment and begin your care plan today.
+            </p>
+
+            {/* Cross-link to Insurance & Payers on the homepage (report §4.6) */}
+            <p className="text-sm text-gray-700 mb-6">
+              Wondering if we accept your insurance?{" "}
+              <a
+                href="/#insurance"
+                className={`text-primary underline underline-offset-4 hover:text-primary/80 ${focusClasses}`}
+              >
+                See Insurance &amp; Payers we accept →
+              </a>
             </p>
 
             <a
