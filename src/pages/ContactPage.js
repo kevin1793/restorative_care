@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 import ContactForm from "../components/ContactForm";
 import contactHeroImg from "../assets/images/contact_hero.webp";
+import PageHero from "../components/PageHero";
 
 export default function ContactPage() {
   useEffect(() => {
@@ -57,56 +58,14 @@ export default function ContactPage() {
 
       {/* Main Content */}
       <main id="main-content" className="pt-10">
-        {/* Hero Section */}
-        <section
-          className="
-            relative w-full
-            min-h-[350px] md:min-h-[650px]
-            flex items-center justify-center
-            text-center px-6
-          "
-          aria-labelledby="contact-hero-heading"
-        >
-          {/* Background Image */}
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${contactHeroImg})` }}
-            aria-hidden="true"
-          />
-
-          {/* Overlay */}
-          <div
-            className="absolute inset-0 bg-teal-950/60"
-            aria-hidden="true"
-          />
-
-          {/* Hero Content */}
-          <div className="relative z-10 max-w-3xl mx-auto px-4">
-            <h1
-              id="contact-hero-heading"
-              className="
-                text-4xl md:text-5xl
-                font-bold text-white
-                mb-4 drop-shadow-lg
-              "
-            >
-              Contact Us
-            </h1>
-
-            <p
-              className="
-                text-white
-                max-w-2xl mx-auto
-                text-lg md:text-xl
-                leading-relaxed
-                drop-shadow
-              "
-            >
-              Reach out with any questions — we’re here to support your care
-              needs with compassion and professionalism.
-            </p>
-          </div>
-        </section>
+        {/* Hero Section — shared component (report §4.9.1); also fixes
+            the off-brand teal overlay that used to sit here */}
+        <PageHero
+          title="Contact Us"
+          subtitle="Reach out with any questions — we’re here to support your care needs with compassion and professionalism."
+          imageSrc={contactHeroImg}
+          imageAlt=""
+        />
 
         {/* Contact Information */}
         <section
@@ -142,7 +101,7 @@ export default function ContactPage() {
             {/* Contact Cards */}
             <div className="grid md:grid-cols-3 gap-10">
               {/* Phone */}
-              <article className="bg-primaryLight p-8 rounded-2xl shadow-md text-center">
+              <article className="bg-primaryLight p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
                 <Phone
                   className="w-10 h-10 text-primary mx-auto mb-4"
                   aria-hidden="true"
@@ -165,7 +124,7 @@ export default function ContactPage() {
               </article>
 
               {/* Email */}
-              <article className="bg-primaryLight p-8 rounded-2xl shadow-md text-center">
+              <article className="bg-primaryLight p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
                 <Mail
                   className="w-10 h-10 text-primary mx-auto mb-4"
                   aria-hidden="true"
@@ -189,7 +148,7 @@ export default function ContactPage() {
               </article>
 
               {/* Address */}
-              <article className="bg-primaryLight p-8 rounded-2xl shadow-md text-center">
+              <article className="bg-primaryLight p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
                 <MapPin
                   className="w-10 h-10 text-primary mx-auto mb-4"
                   aria-hidden="true"

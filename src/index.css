@@ -32,3 +32,20 @@ html {
 body {
   line-height: 1.6;
 }
+
+/*
+  Design-system typography (report §4.3): pair the logo's serif wordmark
+  with headings site-wide instead of the generic sans used everywhere
+  before. Applied as a base-layer rule (not per-component classes) so
+  every h1/h2/h3 on every page picks it up automatically, including
+  pages added later.
+*/
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: theme("fontFamily.heading");
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+}

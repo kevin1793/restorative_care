@@ -3,40 +3,46 @@ import { HeartPulse, Facebook } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 
 // Confirmed active account (Status Update, July 23) — only list platforms
-// Juice has actually confirmed are active.
-const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61584362892488";
+// Juice has actually confirmed are active. Shared with FacebookFeedEmbed
+// so the URL only lives in one place.
+import { FACEBOOK_PAGE_URL as FACEBOOK_URL } from "./FacebookFeedEmbed";
 
 export default function Footer() {
   const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md";
+    "focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primaryDark rounded-md";
 
-  const linkClasses = `text-gray-700 hover:text-primary transition-colors ${focusClasses}`;
+  // Solid dark-navy background is the highest-visual-impact change in the
+  // design system pass (report §4.4) — a thin, low-contrast footer is the
+  // single biggest signal of "default template" rather than a considered
+  // build, so light text/links on primaryDark replace the old light-gray
+  // treatment throughout.
+  const linkClasses = `text-white/75 hover:text-white transition-colors ${focusClasses}`;
 
   return (
     <footer
-      className="bg-gray-50 border-t border-gray-200"
+      className="bg-primaryDark"
       role="contentinfo"
     >
       <div
         className="
-          max-w-7xl mx-auto px-6 py-12
+          max-w-7xl mx-auto px-6 py-16
           grid md:grid-cols-4 gap-10
-          text-gray-800
+          text-white
         "
       >
         {/* Company */}
         <div className="md:col-span-1">
           <div className="flex items-center space-x-2 mb-3">
             <HeartPulse
-              className="text-primary w-6 h-6"
+              className="text-white w-6 h-6"
               aria-hidden="true"
             />
-            <span className="text-lg font-merriweather text-primary">
+            <span className="text-lg font-serif font-bold text-white">
               Restorative Care Home Health Services, Inc.
             </span>
           </div>
 
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-white/75 leading-relaxed">
             Dedicated to providing compassionate home health care that empowers
             independence and promotes wellness.
           </p>
@@ -44,7 +50,7 @@ export default function Footer() {
 
         {/* Quick Links */}
         <nav aria-label="Footer quick links">
-          <h3 className="text-md font-semibold mb-3 text-gray-900">
+          <h3 className="text-md font-semibold mb-3 text-white">
             Quick Links
           </h3>
 
@@ -85,7 +91,7 @@ export default function Footer() {
 
         {/* Contact */}
         <nav aria-label="Footer contact links">
-          <h3 className="text-md font-semibold mb-3 text-gray-900">
+          <h3 className="text-md font-semibold mb-3 text-white">
             Contact
           </h3>
 
@@ -126,7 +132,7 @@ export default function Footer() {
 
         {/* Connect + Legal */}
         <div>
-          <h3 className="text-md font-semibold mb-3 text-gray-900">
+          <h3 className="text-md font-semibold mb-3 text-white">
             Connect
           </h3>
 
@@ -135,12 +141,12 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Restorative Care HHS on Facebook — opens in a new tab"
-            className={`inline-flex items-center justify-center w-10 h-10 rounded-full bg-white border border-gray-200 text-primary hover:bg-primary hover:text-white hover:border-primary transition-colors mb-6 ${focusClasses}`}
+            className={`inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white hover:text-primaryDark transition-colors mb-6 ${focusClasses}`}
           >
             <Facebook className="w-5 h-5" aria-hidden="true" />
           </a>
 
-          <h3 className="text-md font-semibold mb-3 text-gray-900">
+          <h3 className="text-md font-semibold mb-3 text-white">
             Legal
           </h3>
 
@@ -162,9 +168,9 @@ export default function Footer() {
       {/* Copyright */}
       <div
         className="
-          border-t border-gray-200
+          border-t border-white/10
           text-center py-4
-          text-sm text-gray-700
+          text-sm text-white/60
         "
       >
         © {new Date().getFullYear()} Restorative Care Home Health Services, Inc. All rights reserved.

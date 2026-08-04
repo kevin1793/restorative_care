@@ -1,16 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 
-import {
-  GOVERNMENT_PROGRAMS,
-  MANAGED_CARE_ORGANIZATIONS,
-} from "./InsuranceSection";
-
-const PAYER_OPTIONS = [
-  ...GOVERNMENT_PROGRAMS.map((program) => program.name),
-  ...MANAGED_CARE_ORGANIZATIONS,
-  "Private Pay",
-  "Not sure",
+// Matches the site-wide taxonomy exactly (report §3.17 / §4.9.3) — 5
+// Skilled Services + 2 Personal Care Services. "Private Duty" is
+// intentionally not a checkbox here: it describes how care is paid for,
+// not a type of service, and that's exactly what the free-text Insurance
+// field below is for.
+const SERVICE_OPTIONS = [
+  "Skilled Nursing",
+  "Occupational Therapy",
+  "Physical Therapy",
+  "Speech Therapy",
+  "Medical Social Work",
+  "Home Health Aide",
+  "Personal Attendant Services",
 ];
 
 export default function ContactForm() {
@@ -73,7 +76,7 @@ export default function ContactForm() {
           onSubmit={handleSubmit}
           className="
             bg-gray-50
-            shadow-md
+            shadow-brand
             rounded-2xl
             p-8
             space-y-6
@@ -179,61 +182,44 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Service Needed */}
-          <div>
-            <label
-              htmlFor="service"
-              className="block text-gray-900 font-medium mb-2"
-            >
-              Service Needed <span aria-hidden="true">*</span>
-            </label>
+          {/* Service(s) Needed — multi-select checkboxes instead of a
+              single-select dropdown, since clients often need more than
+              one type of care at once (report §4.9.3) */}
+          <fieldset>
+            <legend className="text-gray-900 font-medium mb-2">
+              Service(s) Needed <span aria-hidden="true">*</span>
+            </legend>
 
-            <select
-              id="service"
-              name="service"
-              required
-              aria-required="true"
-              aria-invalid={state.errors?.some(
-                (error) => error.field === "service"
-              )}
-              className={inputClasses}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select a service
-              </option>
+            <p className="text-sm text-gray-700 mb-3">Select all that apply</p>
 
-              <option value="Home Health Care">
-                Home Health Care
-              </option>
-
-              <option value="Therapy Services">
-                Therapy Services
-              </option>
-
-              <option value="Nursing Support">
-                Nursing Support
-              </option>
-
-              <option value="Personal Care Assistance">
-                Personal Care Assistance
-              </option>
-
-              <option value="Other">
-                Other
-              </option>
-            </select>
+            <div className="grid sm:grid-cols-2 gap-x-4 gap-y-2">
+              {SERVICE_OPTIONS.map((service) => (
+                <label
+                  key={service}
+                  className="flex items-center gap-2 text-gray-800"
+                >
+                  <input
+                    type="checkbox"
+                    name="services"
+                    value={service}
+                    className={`w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary ${focusClasses}`}
+                  />
+                  {service}
+                </label>
+              ))}
+            </div>
 
             <ValidationError
-              prefix="Service"
-              field="service"
+              prefix="Services"
+              field="services"
               errors={state.errors}
               className="text-red-700 mt-2 text-sm"
             />
-          </div>
+          </fieldset>
 
-          {/* Insurance / Payer — lets leads self-identify coverage so
-              office staff can triage faster (report §4.2) */}
+          {/* Insurance / Payer — free text rather than a fixed dropdown,
+              so PPO/out-of-network clients aren't silently filtered out
+              before a human ever sees the lead (report §4.9.3) */}
           <div>
             <label
               htmlFor="insurance"
@@ -242,23 +228,23 @@ export default function ContactForm() {
               Insurance / Payer
             </label>
 
-            <select
+            <input
               id="insurance"
+              type="text"
               name="insurance"
+              autoComplete="off"
+              placeholder="e.g. Medicare, Molina, Blue Cross PPO, etc."
               aria-invalid={state.errors?.some(
                 (error) => error.field === "insurance"
               )}
               className={inputClasses}
-              defaultValue=""
-            >
-              <option value="">Select your insurance or payer</option>
+            />
 
-              {PAYER_OPTIONS.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <p className="text-sm text-gray-700 mt-2">
+              Not sure if we accept your plan? Tell us what you have —
+              including PPO or out-of-network coverage — and we'll help you
+              find out.
+            </p>
 
             <ValidationError
               prefix="Insurance"

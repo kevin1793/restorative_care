@@ -1,8 +1,77 @@
 import React, { useEffect } from "react";
-import { HeartPulse, Users, Home } from "lucide-react";
+import {
+  Stethoscope,
+  Activity,
+  HeartHandshake,
+  MessageCircle,
+  Users,
+  HeartPulse,
+  ClipboardCheck,
+  Home,
+} from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 import servicesHeroImg from "../assets/images/services.webp";
+import nurseImage1 from "../assets/images/nurse_care1.webp";
+import PageHero from "../components/PageHero";
+
+// Kept identical to the homepage's Skilled Services copy (report §4.6 —
+// the two pages must not contradict each other) so this page can serve as
+// the fuller reference without duplicating drafting decisions.
+const skilledServices = [
+  {
+    icon: Stethoscope,
+    title: "Skilled Nursing",
+    text: "Registered nurses manage medications, monitor health conditions, and provide wound care at home, while teaching clients and family caregivers how to manage day-to-day between visits.",
+  },
+  {
+    icon: Activity,
+    title: "Physical Therapy",
+    text: "Helps clients rebuild strength, balance, and mobility after an illness, injury, or surgery, so they can move safely and confidently in their own home.",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Occupational Therapy",
+    text: "Focuses on relearning everyday tasks like dressing, bathing, and cooking, helping clients regain independence in their own routines.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Speech Therapy",
+    text: "Supports communication and swallowing difficulties, often following a stroke or other medical event, helping clients eat safely and express themselves clearly.",
+  },
+  {
+    icon: Users,
+    title: "Medical Social Work",
+    text: "Connects clients and families with community resources, emotional support, and guidance for navigating care decisions and next steps.",
+  },
+];
+
+// Personal Care Services aren't one program — they're three different
+// payer paths (report §4.6, correction from Juice July 23). Each is tied
+// to a specific program, not a generic "non-skilled care" bucket.
+const payerPaths = [
+  {
+    icon: HeartPulse,
+    title: "Home Health Aide (HHA)",
+    payer: "Via Medicare",
+    bestFor: "Personal care alongside skilled nursing or therapy",
+    text: "A Home Health Aide provides hands-on personal care — like bathing, dressing, and grooming — as part of a Medicare-covered home health plan. This service is only available when a doctor has also ordered skilled care, such as nursing or therapy, for a medical reason. The aide works alongside that skilled team to support daily comfort while the medical needs are being treated. It isn't offered as a standalone service — it comes as part of the larger Medicare home health plan.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Personal Attendant Services (PAS)",
+    payer: "Via Medicaid",
+    bestFor: "Ongoing daily-living support, no skilled order needed",
+    text: "Personal Attendant Services provide ongoing, hands-on help with everyday tasks — bathing, dressing, meal preparation, light housekeeping, and more — for clients who qualify for long-term care support through Texas Medicaid. Unlike a Home Health Aide, PAS doesn't require a skilled nursing order — it's available on its own for anyone who needs regular help staying safe and independent at home, based on their Medicaid eligibility.",
+  },
+  {
+    icon: Home,
+    title: "Private Duty",
+    payer: "Private pay",
+    bestFor: "Flexible hours, no wait for approval",
+    text: "Private Duty care offers the same kind of personal, hands-on support as Personal Attendant Services — help with bathing, dressing, meals, companionship, and more — but is paid for directly by the client or family rather than through Medicaid or Medicare. Families often choose Private Duty when they want more flexible hours, don't qualify for Medicaid's program, or want to begin care right away without waiting through an approval process.",
+  },
+];
 
 export default function ServicesPage() {
   useEffect(() => {
@@ -55,212 +124,169 @@ export default function ServicesPage() {
 
       {/* Main Content */}
       <main id="main-content" className="pt-10">
-        {/* Hero Section */}
+        {/* Hero Section — shared component (report §4.6/§4.7.1); also
+            fixes the off-brand teal overlay that used to sit here */}
+        <PageHero
+          title="Our Services"
+          subtitle="Restorative Care HHS is dedicated to providing compassionate, professional, and personalized care to support comfort, dignity, and independence at home."
+          imageSrc={servicesHeroImg}
+          imageAlt=""
+        />
+
+        {/* "Which service is right for you?" quick-scan snapshot (report
+            §4.6, optional-but-recommended) — safe to build in full now
+            that the taxonomy below actually matches it. */}
         <section
-          className="
-            relative w-full
-            min-h-[350px] md:min-h-[650px]
-            flex items-center justify-center
-            text-center px-6
-          "
-          aria-labelledby="services-hero-heading"
+          className="py-16 bg-white"
+          aria-labelledby="comparison-heading"
         >
-          {/* Background Image */}
-          <div
-            className="absolute inset-0 bg-cover bg-top"
-            style={{
-              backgroundImage: `url(${servicesHeroImg})`,
-            }}
-            aria-hidden="true"
-          />
-
-          {/* Overlay */}
-          <div
-            className="absolute inset-0 bg-teal-950/60"
-            aria-hidden="true"
-          />
-
-          {/* Hero Content */}
-          <div className="relative z-10 max-w-3xl mx-auto px-4">
-            <h1
-              id="services-hero-heading"
-              className="
-                text-4xl md:text-5xl
-                font-bold text-white
-                mb-4 drop-shadow-lg
-              "
-            >
-              Our Services
-            </h1>
-
-            <p
-              className="
-                text-white
-                max-w-2xl mx-auto
-                text-lg md:text-xl
-                leading-relaxed
-                drop-shadow
-              "
-            >
-              Restorative Care HHS is dedicated to providing compassionate,
-              professional, and personalized care to support comfort, dignity,
-              and independence at home.
-            </p>
-          </div>
-        </section>
-
-        {/* Home Health Section */}
-        <section
-          className="py-20 bg-white"
-          aria-labelledby="home-health-heading"
-        >
-          <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
-            <HeartPulse
-              className="w-12 h-12 text-primary mb-4"
-              aria-hidden="true"
-            />
-
+          <div className="max-w-5xl mx-auto px-6">
             <h2
-              id="home-health-heading"
-              className="text-3xl font-semibold text-primary mb-4"
+              id="comparison-heading"
+              className="text-2xl font-semibold text-primary text-center mb-8"
             >
-              Home Health
+              Which service is right for you?
             </h2>
 
-            <div className="space-y-4 max-w-2xl">
-              <p className="text-gray-800 leading-relaxed">
-                <strong>Restorative</strong> is more than a word—it represents
-                our mission to bring comfort, healing, and dignity to every
-                person we serve. Our philosophy of care shines through the
-                commitment of our skilled nurses and caregivers who work
-                tirelessly to make a positive impact.
-              </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a
+                href="#skilled-services-heading"
+                className={`block bg-white border border-gray-200 rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
+              >
+                <span className="block font-semibold text-gray-900 mb-1">
+                  Skilled Services
+                </span>
+                <span className="block text-sm text-gray-700 mb-2">
+                  Recovering from illness, injury, or surgery
+                </span>
+                <span className="inline-block text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1">
+                  Medicare &amp; Medicaid
+                </span>
+              </a>
 
-              <p className="text-gray-800 leading-relaxed">
-                Home health care may be appropriate if a new diagnosis, chronic
-                illness, hospitalization, or surgery requires changes in daily
-                lifestyle. Our compassionate, expert team provides specialized
-                care so you receive the proper support for your unique needs.
-              </p>
-
-              <p className="text-gray-800 leading-relaxed">
-                Our primary goal is to help you return to the activities you
-                love, improve independence, and confidently manage your
-                condition — all within the comfort and safety of your home.
-              </p>
+              {payerPaths.map((path) => (
+                <a
+                  key={path.title}
+                  href="#personal-care-heading"
+                  className={`block bg-white border border-gray-200 rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
+                >
+                  <span className="block font-semibold text-gray-900 mb-1">
+                    {path.title}
+                  </span>
+                  <span className="block text-sm text-gray-700 mb-2">
+                    {path.bestFor}
+                  </span>
+                  <span className="inline-block text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1">
+                    {path.payer}
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* PAS Section */}
+        {/* Skilled Services */}
         <section
           className="py-20 bg-primaryLight"
-          aria-labelledby="pas-heading"
+          aria-labelledby="skilled-services-heading"
         >
-          <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
-            <Users
-              className="w-12 h-12 text-primary mb-4"
-              aria-hidden="true"
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <img
+              src={nurseImage1}
+              alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
+              className="rounded-2xl shadow-brand w-full order-first md:order-last"
+              loading="lazy"
             />
 
-            <h2
-              id="pas-heading"
-              className="text-3xl font-semibold text-primary mb-4"
-            >
-              Personal Attendant Services (PAS)
-            </h2>
+            <div>
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-primary mb-4">
+                <Stethoscope className="w-6 h-6" aria-hidden="true" />
+              </span>
 
-            <div className="space-y-4 max-w-2xl">
-              <p className="text-gray-800 leading-relaxed">
-                We strive to make a meaningful difference in the lives of those
-                we care for by helping them regain independence. Our attendants
-                provide warm, dependable care that allows you to remain
-                comfortable at home while maintaining autonomy.
+              <h2
+                id="skilled-services-heading"
+                className="text-3xl font-semibold text-primary mb-2 scroll-mt-28"
+              >
+                Skilled Services
+              </h2>
+
+              <p className="text-sm font-semibold text-primary mb-4">
+                Medicare &amp; Medicaid-certified, clinical care
               </p>
 
-              <p className="text-gray-800 leading-relaxed">
-                Our PAS caregivers assist with a wide range of daily,
-                non-medical needs:
+              <p className="text-gray-800 leading-relaxed mb-6">
+                Registered nurses and licensed therapists provide medical care
+                at home for clients recovering from illness, injury, or
+                surgery, or managing an ongoing condition.
               </p>
 
-              {/* Service List */}
-              <div className="text-left">
-                <ul className="list-disc list-inside text-gray-800 space-y-2">
-                  <li>House cleaning and laundry</li>
-                  <li>Meal preparation and feeding assistance</li>
-                  <li>Transportation to doctor’s visits</li>
-                  <li>Dressing, bathing, and grooming assistance</li>
-                  <li>Walking and exercising support</li>
-                  <li>Shopping and errands</li>
-                </ul>
-              </div>
-
-              <p className="text-gray-800 leading-relaxed">
-                Our attendants are available 24/7 for clients who need
-                assistance with daily activities. Our support team also ensures
-                seamless scheduling and coordination to create the best care
-                experience possible.
-              </p>
+              <ul className="space-y-4">
+                {skilledServices.map(({ icon: Icon, title, text }) => (
+                  <li key={title} className="flex gap-3">
+                    <Icon
+                      className="w-5 h-5 text-primary flex-shrink-0 mt-1"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <span className="block font-semibold text-gray-900">
+                        {title}
+                      </span>
+                      <span className="block text-sm text-gray-700">
+                        {text}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Private Duty Section */}
+        {/* Personal Care Services (Non-Skilled) — three payer paths, not
+            one blended service (report §4.6 correction, July 23) */}
         <section
-          className="py-20 bg-white"
-          aria-labelledby="private-duty-heading"
+          className="py-20 bg-white text-center"
+          aria-labelledby="personal-care-heading"
         >
-          <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
-            <Home
-              className="w-12 h-12 text-primary mb-4"
-              aria-hidden="true"
-            />
-
+          <div className="max-w-5xl mx-auto px-6">
             <h2
-              id="private-duty-heading"
-              className="text-3xl font-semibold text-primary mb-4"
+              id="personal-care-heading"
+              className="text-3xl font-semibold text-primary mb-4 scroll-mt-28"
             >
-              Private Duty
+              Personal Care Services (Non-Skilled)
             </h2>
 
-            <div className="space-y-4 max-w-2xl">
-              <p className="text-gray-800 leading-relaxed">
-                Restorative offers private duty care for clients who need
-                additional assistance to remain safe, comfortable, and
-                independent in their homes. This service also provides respite
-                care for family caregivers.
-              </p>
+            <p className="text-gray-700 max-w-2xl mx-auto mb-12 leading-relaxed">
+              Non-skilled personal care — help with daily activities like
+              bathing, dressing, and meal preparation — can be accessed in
+              three different ways, depending on your situation and coverage.
+              Here's how each option works:
+            </p>
 
-              <p className="text-primary font-bold leading-relaxed">
-                Private duty services may include:
-              </p>
+            <div className="grid md:grid-cols-3 gap-6">
+              {payerPaths.map(({ icon: Icon, title, payer, text }) => (
+                <article
+                  key={title}
+                  className="bg-white border border-gray-200 rounded-2xl p-6 text-left shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <Icon
+                    className="w-8 h-8 text-primary mb-3"
+                    aria-hidden="true"
+                  />
 
-              {/* Service List */}
-              <div className="text-left">
-                <ul className="list-disc list-inside text-gray-800 space-y-2">
-                  <li>
-                    Personal care including bathing, dressing, hygiene,
-                    transfers, and ambulation
-                  </li>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    {title}
+                  </h3>
 
-                  <li>Homemaker and companion care</li>
+                  <span className="inline-block text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1 mb-3">
+                    {payer}
+                  </span>
 
-                  <li>Meal preparation</li>
-
-                  <li>Medication reminders</li>
-
-                  <li>
-                    Trained support for clients with specific needs such as
-                    Alzheimer’s care, hospice care, or end-of-life care
-                  </li>
-                </ul>
-              </div>
-
-              <p className="text-gray-800 leading-relaxed">
-                Private duty care may better suit individuals whose needs differ
-                from traditional home health care, especially regarding payment
-                methods.
-              </p>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {text}
+                  </p>
+                </article>
+              ))}
             </div>
           </div>
         </section>

@@ -62,7 +62,9 @@ export default function ServiceAreaMap() {
         el.setAttribute("d", path(county));
         el.setAttribute(
           "fill",
-          SERVED_COUNTIES.has(county.properties.name) ? "#2d6db2" : "#e1e0d9"
+          // Confirmed brand navy (report §4.8) — was the old placeholder
+          // blue from before the real color was sampled from the logo
+          SERVED_COUNTIES.has(county.properties.name) ? "#122C71" : "#e1e0d9"
         );
         el.setAttribute("stroke", "#ffffff");
         el.setAttribute("stroke-width", "0.75");

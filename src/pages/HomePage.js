@@ -19,6 +19,9 @@ import nurseCall from "../assets/images/calling.webp";
 import veteransImage from "../assets/images/veterans.webp";
 import ContactForm from "../components/ContactForm";
 import InsuranceSection from "../components/InsuranceSection";
+import FacebookFeedEmbed, {
+  FACEBOOK_PAGE_URL,
+} from "../components/FacebookFeedEmbed";
 
 export default function HomePage() {
   const focusClasses =
@@ -311,7 +314,7 @@ export default function HomePage() {
             <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-12">
               <a
                 href="#skilled-services"
-                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-md transition-shadow ${focusClasses}`}
+                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
               >
                 <span className="block font-semibold text-gray-900 mb-1">
                   Skilled Services
@@ -324,7 +327,7 @@ export default function HomePage() {
 
               <a
                 href="#personal-care-services"
-                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-md transition-shadow ${focusClasses}`}
+                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
               >
                 <span className="block font-semibold text-gray-900 mb-1">
                   Personal Care Services
@@ -346,7 +349,7 @@ export default function HomePage() {
                 {skilledServices.map(({ icon: Icon, title, text }) => (
                   <article
                     key={title}
-                    className="bg-white p-8 rounded-2xl shadow-md text-left flex-1 basis-[280px] max-w-sm"
+                    className="bg-white p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
                   >
                     <Icon
                       className="w-10 h-10 text-primary mb-4"
@@ -379,7 +382,7 @@ export default function HomePage() {
                 {nonSkilledServices.map(({ icon: Icon, title, text }) => (
                   <article
                     key={title}
-                    className="bg-white p-8 rounded-2xl shadow-md text-left flex-1 basis-[280px] max-w-sm"
+                    className="bg-white p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
                   >
                     <Icon
                       className="w-10 h-10 text-primary mb-4"
@@ -579,6 +582,40 @@ export default function HomePage() {
                 </a>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Tips From Our Team — live Facebook feed (report §4.10).
+            Supportive/supplementary content, so it sits after the main
+            CTAs and just before the footer rather than competing with
+            them for attention. */}
+        <section
+          className="py-20 bg-primaryLight"
+          aria-labelledby="tips-heading"
+        >
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <h2
+              id="tips-heading"
+              className="text-3xl font-semibold text-primary mb-4"
+            >
+              Tips From Our Team
+            </h2>
+
+            <p className="text-gray-700 mb-10 leading-relaxed">
+              We regularly share home health tips, caregiving advice, and
+              agency updates on Facebook — follow along for more.
+            </p>
+
+            <FacebookFeedEmbed />
+
+            <a
+              href={FACEBOOK_PAGE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${buttonOutlineClasses} mt-10`}
+            >
+              Follow Us on Facebook
+            </a>
           </div>
         </section>
       </main>

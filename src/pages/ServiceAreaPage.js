@@ -89,23 +89,29 @@ export default function ServiceAreaPage() {
         </section>
 
         {/* Map + County List */}
-        <section className="py-16 bg-white" aria-labelledby="county-list-heading">
+        <section className="py-16 bg-primaryLight" aria-labelledby="county-list-heading">
           <div className="max-w-4xl mx-auto px-6">
-            <ServiceAreaMap />
+            {/* Elevated card container instead of the map floating
+                directly on the page (report §4.8.2) */}
+            <div className="bg-white rounded-2xl shadow-brand p-6 md:p-10">
+              <ServiceAreaMap />
+            </div>
 
             <h2 id="county-list-heading" className="sr-only">
               List of counties served
             </h2>
 
             {/* Plain-text list — required for SEO and screen readers,
-                not just decoration alongside the map (report §4.1) */}
-            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3 mt-10 text-gray-800">
+                not just decoration alongside the map (report §4.1).
+                Restyled as badge pills reusing the payer-badge treatment
+                from the Insurance section, for one consistent visual
+                language site-wide (report §4.8.3). */}
+            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-10">
               {COUNTIES.map((county) => (
-                <li key={county} className="flex items-center gap-2">
-                  <span
-                    className="w-2 h-2 rounded-full bg-primary"
-                    aria-hidden="true"
-                  />
+                <li
+                  key={county}
+                  className="bg-white text-primary text-center font-medium text-sm rounded-lg py-3 px-4 shadow-sm"
+                >
                   {county} County
                 </li>
               ))}
