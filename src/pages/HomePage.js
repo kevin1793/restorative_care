@@ -169,7 +169,7 @@ export default function HomePage() {
                 more visual weight (report §4.4) */}
             <h1
               id="hero-heading"
-              className="font-serif text-5xl md:text-6xl font-bold text-primary mb-6"
+              className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-primary mb-6"
             >
               Compassionate Home Health Care in Bedford, TX
             </h1>

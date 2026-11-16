@@ -174,6 +174,19 @@ export default function Footer() {
         "
       >
         © {new Date().getFullYear()} Restorative Care Home Health Services, Inc. All rights reserved.
+
+        <p className="mt-2">
+          Design and Built by{" "}
+          <a
+            href="https://omniweb.tech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${linkClasses} font-semibold underline underline-offset-2`}
+            aria-label="OmniWeb, designer and builder of this website — opens in a new tab"
+          >
+            OmniWeb
+          </a>
+        </p>
       </div>
     </footer>
   );
