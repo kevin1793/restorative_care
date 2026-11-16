@@ -10,6 +10,18 @@ const fs = require("fs");
 const readline = require("readline");
 const ftp = require("basic-ftp");
 
+// Optional: load FTP_* settings (including FTP_PASSWORD) from a git-ignored
+// .env.deploy file in the project root. Create it with `npm run deploy:setup`.
+// Real environment variables take precedence over the file.
+(function loadEnvFile() {
+  const file = path.resolve(__dirname, "..", ".env.deploy");
+  if (!fs.existsSync(file)) return;
+  for (const line of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*?)\s*$/);
+    if (m && process.env[m[1]] === undefined) process.env[m[1]] = m[2];
+  }
+})();
+
 const config = {
   // ftp.restorativecarehhs.com has no DNS record, so connect by the server IP
   // shown in hPanel > FTP Accounts.

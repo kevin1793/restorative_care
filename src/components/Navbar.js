@@ -102,7 +102,7 @@ export default function Navbar() {
               aria-hidden="true"
             />
 
-            <span className="text-2xl font-serif font-bold">
+            <span className="text-base min-[400px]:text-xl sm:text-2xl font-serif font-bold whitespace-nowrap">
               Restorative Care HHS
             </span>
           </RouterLink>

@@ -164,22 +164,19 @@ export default function HomePage() {
           />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-            {/* Serif headline echoes the brand's existing serif wordmark
-                (already used for the logo/footer name) and is sized up for
-                more visual weight (report §4.4) */}
-            <h1
-              id="hero-heading"
-              className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-primary mb-6"
-            >
+            {/* Keyword-rich h1 is visually hidden (sr-only) but stays in the
+                page for search engines and screen readers; the script
+                tagline below is the visible hero text. */}
+            <h1 id="hero-heading" className="sr-only">
               Compassionate Home Health Care in Bedford, TX
             </h1>
 
-            {/* Decorative tagline */}
+            {/* Visible hero tagline (decorative duplicate of the h1 message) */}
             <p
-              className="font-fancy text-4xl md:text-5xl font-bold text-primary mb-6"
+              className="font-fancy text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl text-balance !leading-[1.8] font-bold text-primary mb-6"
               aria-hidden="true"
             >
-              Compassionate Care, Right at Home
+              Compassionate Care, Right at Home in Bedford, TX
             </p>
 
             <p className="text-gray-800 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
