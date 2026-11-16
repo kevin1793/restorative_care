@@ -11,7 +11,12 @@ const readline = require("readline");
 const ftp = require("basic-ftp");
 
 const config = {
-  host: process.env.FTP_HOST || "ftp.restorativecarehhs.com",
+  // ftp.restorativecarehhs.com has no DNS record, so connect by the server IP
+  // shown in hPanel > FTP Accounts.
+  host: process.env.FTP_HOST || "46.202.182.15",
+  // Hostinger's FTPS certificate is issued for *.hstgr.io, not the IP, so
+  // verify it against that name instead of disabling certificate checks.
+  tlsServerName: process.env.FTP_TLS_SERVERNAME || "hstgr.io",
   user: process.env.FTP_USER || "u700592427.kevin",
   // The FTP account's root is already the site's public_html folder.
   remoteDir: process.env.FTP_REMOTE_DIR || "/",
@@ -63,7 +68,7 @@ async function main() {
       user: config.user,
       password,
       secure: config.secure,
-      secureOptions: { servername: config.host },
+      secureOptions: { servername: config.tlsServerName },
     });
 
     await client.ensureDir(config.remoteDir);
