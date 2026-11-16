@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
 
   const mobileMenuRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -66,6 +67,39 @@ export default function Navbar() {
     }
   }, [open]);
 
+  // Hide the navbar when scrolling down and bring it back on scroll up.
+  // Only takes effect below the xl breakpoint (hamburger layout); the full
+  // desktop navbar always stays visible via the xl:translate-y-0 class.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const DELTA = 8; // ignore tiny scroll jitters
+    const REVEAL_ZONE = 80; // always visible near the top of the page
+
+    const update = () => {
+      const y = window.scrollY;
+      if (y <= REVEAL_ZONE) {
+        setHidden(false);
+      } else if (y - lastY > DELTA) {
+        setHidden(true);
+      } else if (lastY - y > DELTA) {
+        setHidden(false);
+      }
+      if (Math.abs(y - lastY) > DELTA) lastY = y;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const closeMenu = () => {
     setOpen(false);
   };
@@ -73,11 +107,15 @@ export default function Navbar() {
   return (
     <header>
       <nav
-        className="
+        className={`
           w-full bg-white shadow-md
           fixed top-0 left-0 z-50
-        "
+          transition-transform duration-300 motion-reduce:transition-none
+          xl:translate-y-0
+          ${hidden && !open ? "-translate-y-[110%]" : "translate-y-0"}
+        `}
         aria-label="Main navigation"
+        onFocus={() => setHidden(false)}
       >
         <div
           className="
