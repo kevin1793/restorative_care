@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, ValidationError } from "@formspree/react";
+import { Check } from "lucide-react";
 
 // Matches the site-wide taxonomy exactly (report §3.17 / §4.9.3) — 5
 // Skilled Services + 2 Personal Care Services. "Private Duty" is
@@ -16,7 +17,10 @@ const SERVICE_OPTIONS = [
   "Personal Attendant Services",
 ];
 
-export default function ContactForm() {
+// showHeading: the Contact page already has its own "Send Us a Message"
+// heading right above the form, so it passes false to avoid two stacked
+// headings (and a duplicate element id).
+export default function ContactForm({ showHeading = true }) {
   const [state, handleSubmit] = useForm("mgvpkdba");
   const formRef = useRef(null);
   const successRef = useRef(null);
@@ -49,23 +53,23 @@ export default function ContactForm() {
   `;
 
   return (
-    <section
-      id="contact"
-      className="
-
-      "
-      aria-labelledby="contact-form-heading"
+    <div
+      {...(showHeading ? { role: "region", "aria-labelledby": "contact-form-heading" } : {})}
     >
-      <div className="max-w-2xl mx-auto px-6">
+      {/* Parent sections already supply the horizontal page padding, so no
+          extra px here — otherwise the form lost ~50px of width on phones. */}
+      <div className="max-w-2xl mx-auto">
         {/* Section Heading */}
-        <h2
-          id="contact-form-heading"
-          className="text-2xl sm:text-3xl font-semibold text-center text-primary mb-8"
-        >
-          Get in Touch
-        </h2>
+        {showHeading && (
+          <h2
+            id="contact-form-heading"
+            className="text-2xl sm:text-3xl font-semibold text-center text-primary mb-4"
+          >
+            Get in Touch
+          </h2>
+        )}
 
-        <p className="text-center text-gray-800 mb-10 leading-relaxed">
+        <p className="text-center text-gray-800 mb-6 sm:mb-8 leading-relaxed">
           Have questions about our services or need assistance? Fill out the
           form below and a member of our care team will reach out shortly.
         </p>
@@ -78,8 +82,8 @@ export default function ContactForm() {
             bg-gray-50
             shadow-brand
             rounded-2xl
-            p-5 sm:p-8
-            space-y-6
+            p-4 min-[400px]:p-6 sm:p-8
+            space-y-5 sm:space-y-6
           "
           action="https://formspree.io/f/mgvpkdba"
           method="POST"
@@ -91,11 +95,11 @@ export default function ContactForm() {
           </p>
 
           {/* Name / Email / Phone — 2-column grid on desktop (report §3.9) */}
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
             <div>
               <label
                 htmlFor="name"
-                className="block text-gray-900 font-medium mb-2"
+                className="block text-gray-900 font-medium mb-1.5"
               >
                 Name <span aria-hidden="true">*</span>
               </label>
@@ -124,7 +128,7 @@ export default function ContactForm() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-gray-900 font-medium mb-2"
+                className="block text-gray-900 font-medium mb-1.5"
               >
                 Email Address <span aria-hidden="true">*</span>
               </label>
@@ -154,7 +158,7 @@ export default function ContactForm() {
             <div className="sm:col-span-2">
               <label
                 htmlFor="phone"
-                className="block text-gray-900 font-medium mb-2"
+                className="block text-gray-900 font-medium mb-1.5"
               >
                 Phone Number <span aria-hidden="true">*</span>
               </label>
@@ -186,25 +190,34 @@ export default function ContactForm() {
               single-select dropdown, since clients often need more than
               one type of care at once (report §4.9.3) */}
           <fieldset>
-            <legend className="text-gray-900 font-medium mb-2">
+            <legend className="text-gray-900 font-medium mb-1">
               Service(s) Needed <span aria-hidden="true">*</span>
             </legend>
 
             <p className="text-sm text-gray-700 mb-3">Select all that apply</p>
 
-            <div className="grid sm:grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid sm:grid-cols-2 gap-2.5">
               {SERVICE_OPTIONS.map((service) => (
                 <label
                   key={service}
-                  className="flex items-center gap-2 text-gray-800"
+                  className="flex items-start gap-3 min-h-[3rem] rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-gray-800 cursor-pointer hover:border-primary/40 has-[:checked]:border-primary has-[:checked]:bg-primaryLight transition-colors"
                 >
-                  <input
-                    type="checkbox"
-                    name="services"
-                    value={service}
-                    className={`w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary ${focusClasses}`}
-                  />
-                  {service}
+                  {/* Custom-drawn box: the native one rendered as a dark
+                      square before it was checked */}
+                  <span className="relative mt-0.5 w-5 h-5 shrink-0">
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={service}
+                      className={`peer appearance-none w-5 h-5 rounded border-2 border-gray-400 bg-white checked:bg-primary checked:border-primary cursor-pointer transition-colors ${focusClasses}`}
+                    />
+                    <Check
+                      className="absolute inset-0 m-auto w-3.5 h-3.5 text-white hidden peer-checked:block pointer-events-none"
+                      strokeWidth={3}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span className="leading-snug">{service}</span>
                 </label>
               ))}
             </div>
@@ -223,7 +236,7 @@ export default function ContactForm() {
           <div>
             <label
               htmlFor="insurance"
-              className="block text-gray-900 font-medium mb-2"
+              className="block text-gray-900 font-medium mb-1.5"
             >
               Insurance / Payer
             </label>
@@ -233,14 +246,14 @@ export default function ContactForm() {
               type="text"
               name="insurance"
               autoComplete="off"
-              placeholder="e.g. Medicare, Molina, Blue Cross PPO, etc."
+              placeholder="e.g. Medicare, Molina"
               aria-invalid={state.errors?.some(
                 (error) => error.field === "insurance"
               )}
               className={inputClasses}
             />
 
-            <p className="text-sm text-gray-700 mt-2">
+            <p className="text-sm text-gray-700 mt-2 leading-snug">
               Not sure if we accept your plan? Tell us what you have —
               including PPO or out-of-network coverage — and we'll help you
               find out.
@@ -258,7 +271,7 @@ export default function ContactForm() {
           <div>
             <label
               htmlFor="referral"
-              className="block text-gray-900 font-medium mb-2"
+              className="block text-gray-900 font-medium mb-1.5"
             >
               How did you hear about us?
             </label>
@@ -268,7 +281,7 @@ export default function ContactForm() {
               type="text"
               name="referral"
               autoComplete="off"
-              placeholder="For example: Google, friend, doctor, or hospital"
+              placeholder="e.g. Google or a friend"
               className={inputClasses}
             />
 
@@ -284,7 +297,7 @@ export default function ContactForm() {
           <div>
             <label
               htmlFor="message"
-              className="block text-gray-900 font-medium mb-2"
+              className="block text-gray-900 font-medium mb-1.5"
             >
               Message <span aria-hidden="true">*</span>
             </label>
@@ -311,7 +324,7 @@ export default function ContactForm() {
           </div>
 
           {/* Privacy-conscious note (report §3.9) */}
-          <p className="text-sm text-gray-700 text-center leading-relaxed">
+          <p className="text-sm text-gray-700 text-center leading-snug sm:leading-relaxed">
             For your privacy, please avoid including sensitive medical
             details in this form. A team member will follow up to discuss
             your care needs directly.
@@ -325,8 +338,9 @@ export default function ContactForm() {
               aria-disabled={state.submitting}
               className={`
                 inline-flex items-center justify-center
+                w-full sm:w-auto
                 bg-primary text-white
-                px-6 py-3 rounded-full
+                px-8 py-3 rounded-full
                 font-medium
                 transition-colors duration-200
                 hover:bg-primary/90
@@ -351,7 +365,6 @@ export default function ContactForm() {
               className="
                 text-green-700
                 text-center
-                mt-4
                 font-medium
                 bg-green-50
                 border border-green-200
@@ -364,6 +377,6 @@ export default function ContactForm() {
           )}
         </form>
       </div>
-    </section>
+    </div>
   );
 }

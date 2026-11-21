@@ -192,7 +192,7 @@ export default function ContactPage() {
               Send Us a Message
             </h2>
 
-            <ContactForm />
+            <ContactForm showHeading={false} />
           </div>
         </section>
 

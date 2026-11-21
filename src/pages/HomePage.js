@@ -429,8 +429,8 @@ export default function HomePage() {
         {/* Contact Form */}
         <section
           id="contact"
-          aria-labelledby="contact-heading"
-          className="py-12 md:py-20 bg-gradient-to-b from-white to-primaryLight border-t border-gray-200"
+          aria-labelledby="contact-form-heading"
+          className="scroll-mt-24 py-12 md:py-20 bg-gradient-to-b from-white to-primaryLight border-t border-gray-200"
         >
           <div className="max-w-6xl mx-auto px-6">
             {/* <h2
