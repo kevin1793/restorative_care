@@ -70,13 +70,13 @@ export default function ServiceAreaPage() {
       <main id="main-content" className="pt-16">
         {/* Hero */}
         <section
-          className="bg-gradient-to-b from-primaryLight to-white py-20"
+          className="bg-gradient-to-b from-primaryLight to-white py-12 md:py-20"
           aria-labelledby="service-area-heading"
         >
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h1
               id="service-area-heading"
-              className="text-4xl md:text-5xl font-bold text-primary mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-6"
             >
               Counties We Serve
             </h1>
@@ -89,7 +89,7 @@ export default function ServiceAreaPage() {
         </section>
 
         {/* Map + County List */}
-        <section className="py-16 bg-primaryLight" aria-labelledby="county-list-heading">
+        <section className="py-10 md:py-16 bg-primaryLight" aria-labelledby="county-list-heading">
           <div className="max-w-4xl mx-auto px-6">
             {/* Elevated card container instead of the map floating
                 directly on the page (report §4.8.2) */}

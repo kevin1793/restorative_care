@@ -57,7 +57,7 @@ export default function ContactPage() {
       </a>
 
       {/* Main Content */}
-      <main id="main-content" className="pt-10">
+      <main id="main-content" className="pt-[87px] xl:pt-[94px]">
         {/* Hero Section — shared component (report §4.9.1); also fixes
             the off-brand teal overlay that used to sit here */}
         <PageHero
@@ -69,13 +69,13 @@ export default function ContactPage() {
 
         {/* Contact Information */}
         <section
-          className="py-20 bg-white"
+          className="py-12 md:py-20 bg-white"
           aria-labelledby="contact-info-heading"
         >
           <div className="max-w-5xl mx-auto px-6 text-center">
             <h2
               id="contact-info-heading"
-              className="text-3xl font-semibold text-primary mb-6"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-6"
             >
               We’re Here to Help
             </h2>
@@ -99,9 +99,9 @@ export default function ContactPage() {
             </p>
 
             {/* Contact Cards */}
-            <div className="grid md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
               {/* Phone */}
-              <article className="bg-primaryLight p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
+              <article className="min-w-0 bg-primaryLight p-5 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
                 <Phone
                   className="w-10 h-10 text-primary mx-auto mb-4"
                   aria-hidden="true"
@@ -124,7 +124,7 @@ export default function ContactPage() {
               </article>
 
               {/* Email */}
-              <article className="bg-primaryLight p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
+              <article className="min-w-0 bg-primaryLight p-5 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
                 <Mail
                   className="w-10 h-10 text-primary mx-auto mb-4"
                   aria-hidden="true"
@@ -137,7 +137,8 @@ export default function ContactPage() {
                 <a
                   href="mailto:inforestorativecare@gmail.com"
                   className={`
-                    break-words
+                    [overflow-wrap:anywhere]
+                    text-[13.5px] min-[360px]:text-sm min-[400px]:text-base
                     text-gray-800 underline underline-offset-4
                     hover:text-primary
                     ${focusClasses}
@@ -148,7 +149,7 @@ export default function ContactPage() {
               </article>
 
               {/* Address */}
-              <article className="bg-primaryLight p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
+              <article className="min-w-0 bg-primaryLight p-5 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-center">
                 <MapPin
                   className="w-10 h-10 text-primary mx-auto mb-4"
                   aria-hidden="true"
@@ -180,13 +181,13 @@ export default function ContactPage() {
 
         {/* Contact Form */}
         <section
-          className="py-20 bg-primaryLight"
+          className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="contact-form-heading"
         >
           <div className="max-w-5xl mx-auto px-6">
             <h2
               id="contact-form-heading"
-              className="text-3xl font-semibold text-primary text-center mb-8"
+              className="text-2xl sm:text-3xl font-semibold text-primary text-center mb-8"
             >
               Send Us a Message
             </h2>
@@ -197,13 +198,13 @@ export default function ContactPage() {
 
         {/* Map Section */}
         <section
-          className="py-20 bg-white"
+          className="py-12 md:py-20 bg-white"
           aria-labelledby="map-heading"
         >
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2
               id="map-heading"
-              className="text-3xl font-semibold text-primary mb-6"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-6"
             >
               Our Location
             </h2>
@@ -230,7 +231,7 @@ export default function ContactPage() {
 
         {/* CTA Section */}
         <section
-          className="py-16 bg-primaryLight text-center"
+          className="py-10 md:py-16 bg-primaryLight text-center"
           aria-labelledby="cta-heading"
         >
           <div className="max-w-3xl mx-auto px-6">

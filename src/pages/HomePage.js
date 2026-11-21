@@ -152,7 +152,7 @@ export default function HomePage() {
       <main id="main-content" className="pt-16">
         {/* Hero Section */}
         <section
-          className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white py-20"
+          className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white pt-12 pb-8 md:py-20"
           aria-labelledby="hero-heading"
         >
           {/* Subtle background texture — soft blurred accent instead of a
@@ -221,10 +221,10 @@ export default function HomePage() {
         {/* About Section */}
         <section
           id="about"
-          className="py-20 bg-white"
+          className="py-12 md:py-20 bg-white"
           aria-labelledby="about-heading"
         >
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <img
               src={nurseImage1}
               alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
@@ -235,7 +235,7 @@ export default function HomePage() {
             <div>
               <h2
                 id="about-heading"
-                className="text-3xl font-semibold text-primary mb-4"
+                className="text-2xl sm:text-3xl font-semibold text-primary mb-4"
               >
                 About Our Mission
               </h2>
@@ -249,18 +249,20 @@ export default function HomePage() {
 
               {/* Mission broken into scannable bullets instead of a dense
                   paragraph (report §2.2) */}
-              <ul className="grid sm:grid-cols-3 gap-6 mb-8">
+              <ul className="grid sm:grid-cols-3 gap-5 sm:gap-6 mb-8">
                 {missionHighlights.map(({ icon: Icon, title, text }) => (
-                  <li key={title}>
-                    <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primaryLight text-primary mb-3">
+                  <li key={title} className="flex items-start gap-4 sm:block">
+                    <span className="inline-flex shrink-0 items-center justify-center w-12 h-12 rounded-full bg-primaryLight text-primary sm:mb-3">
                       <Icon className="w-6 h-6" aria-hidden="true" />
                     </span>
-                    <h3 className="font-semibold text-gray-900 mb-1">
-                      {title}
-                    </h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {text}
-                    </p>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">
+                        {title}
+                      </h3>
+                      <p className="text-sm text-gray-700 leading-relaxed">
+                        {text}
+                      </p>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -285,13 +287,13 @@ export default function HomePage() {
         {/* Services Section */}
         <section
           id="services"
-          className="py-20 bg-primaryLight"
+          className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="services-heading"
         >
           <div className="max-w-7xl mx-auto px-6">
             <h2
               id="services-heading"
-              className="text-3xl font-semibold text-primary text-center mb-4"
+              className="text-2xl sm:text-3xl font-semibold text-primary text-center mb-4"
             >
               Our Home Health Services
             </h2>
@@ -342,11 +344,11 @@ export default function HomePage() {
                 Skilled Services
               </h3>
 
-              <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-wrap justify-center gap-5 sm:gap-8">
                 {skilledServices.map(({ icon: Icon, title, text }) => (
                   <article
                     key={title}
-                    className="bg-white p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
+                    className="bg-white p-6 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
                   >
                     <Icon
                       className="w-10 h-10 text-primary mb-4"
@@ -375,11 +377,11 @@ export default function HomePage() {
                 Available through Long-Term Care via Texas Medicaid.
               </p>
 
-              <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-wrap justify-center gap-5 sm:gap-8">
                 {nonSkilledServices.map(({ icon: Icon, title, text }) => (
                   <article
                     key={title}
-                    className="bg-white p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
+                    className="bg-white p-6 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
                   >
                     <Icon
                       className="w-10 h-10 text-primary mb-4"
@@ -428,17 +430,12 @@ export default function HomePage() {
         <section
           id="contact"
           aria-labelledby="contact-heading"
-          className="py-20 bg-white
-          
-                             bg-gradient-to-b from-white to-primaryLight
-         py-20
-       border-t border-gray-200
-       "
+          className="py-12 md:py-20 bg-gradient-to-b from-white to-primaryLight border-t border-gray-200"
         >
           <div className="max-w-6xl mx-auto px-6">
             {/* <h2
               id="contact-heading"
-              className="text-3xl font-semibold text-primary mb-8 text-center"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-8 text-center"
             >
               Contact Us
             </h2> */}
@@ -449,13 +446,13 @@ export default function HomePage() {
 
         {/* Contact CTA */}
         <section
-          className="py-20 bg-gray-50
+          className="py-12 md:py-20 bg-gray-50
           
 
         "
           aria-labelledby="cta-heading"
         >
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <div className="flex items-center mb-4">
                 <Phone
@@ -465,7 +462,7 @@ export default function HomePage() {
 
                 <h2
                   id="cta-heading"
-                  className="text-3xl font-semibold text-primary"
+                  className="text-2xl sm:text-3xl font-semibold text-primary"
                 >
                   Let’s Talk About Your Care Needs
                 </h2>
@@ -532,10 +529,10 @@ export default function HomePage() {
 
         {/* Veterans Section */}
         <section
-          className="py-20 bg-primaryLight"
+          className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="veterans-heading"
         >
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <img
               src={veteransImage}
               alt="A caregiver assisting a veteran client at home"
@@ -546,7 +543,7 @@ export default function HomePage() {
             <div className="text-center md:text-left">
               <h2
                 id="veterans-heading"
-                className="text-3xl md:text-4xl font-bold text-primary mb-4"
+                className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4"
               >
                 Quality Home Care for Veterans
               </h2>
@@ -587,13 +584,13 @@ export default function HomePage() {
             CTAs and just before the footer rather than competing with
             them for attention. */}
         <section
-          className="py-20 bg-primaryLight"
+          className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="tips-heading"
         >
           <div className="max-w-3xl mx-auto px-6 text-center">
             <h2
               id="tips-heading"
-              className="text-3xl font-semibold text-primary mb-4"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-4"
             >
               Tips From Our Team
             </h2>

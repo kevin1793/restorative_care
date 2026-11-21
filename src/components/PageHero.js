@@ -9,7 +9,7 @@ import React from "react";
 export default function PageHero({ title, subtitle, imageSrc, imageAlt }) {
   return (
     <section
-      className="relative w-full h-80 md:h-96 flex items-center justify-center text-center px-6 overflow-hidden"
+      className="relative w-full min-h-80 md:min-h-96 py-12 flex items-center justify-center text-center px-6 overflow-hidden"
       aria-labelledby="page-hero-heading"
     >
       <img
@@ -27,13 +27,13 @@ export default function PageHero({ title, subtitle, imageSrc, imageAlt }) {
       <div className="relative z-10 max-w-3xl mx-auto px-4">
         <h1
           id="page-hero-heading"
-          className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg"
+          className="text-3xl min-[400px]:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg"
         >
           {title}
         </h1>
 
         {subtitle && (
-          <p className="text-white max-w-2xl mx-auto text-lg md:text-xl leading-relaxed drop-shadow">
+          <p className="text-white max-w-2xl mx-auto text-base min-[400px]:text-lg md:text-xl leading-relaxed drop-shadow">
             {subtitle}
           </p>
         )}

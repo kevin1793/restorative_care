@@ -136,7 +136,7 @@ export default function VeteransPage() {
       </a>
 
       {/* Main Content */}
-      <main id="main-content" className="pt-16">
+      <main id="main-content" className="pt-[87px] xl:pt-[94px]">
         {/* Hero Section — shared component (report §4.7.1); also fixes
             the plain black overlay that used to sit here */}
         <PageHero
@@ -148,13 +148,13 @@ export default function VeteransPage() {
 
         {/* How to Get Care — numbered step timeline (report §4.7.2) */}
         <section
-          className="py-20 bg-white"
+          className="py-12 md:py-20 bg-white"
           aria-labelledby="care-steps-heading"
         >
           <div className="max-w-3xl mx-auto px-6">
             <h2
               id="care-steps-heading"
-              className="text-3xl font-semibold text-primary mb-10 text-center"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-10 text-center"
             >
               How to Get Care
             </h2>
@@ -206,7 +206,7 @@ export default function VeteransPage() {
 
         {/* CTA Section */}
         <section
-          className="py-16 bg-primaryLight text-center"
+          className="py-10 md:py-16 bg-primaryLight text-center"
           aria-labelledby="cta-heading"
         >
           <div className="max-w-3xl mx-auto px-6">

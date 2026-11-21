@@ -60,7 +60,7 @@ export default function ContactForm() {
         {/* Section Heading */}
         <h2
           id="contact-form-heading"
-          className="text-3xl font-semibold text-center text-primary mb-8"
+          className="text-2xl sm:text-3xl font-semibold text-center text-primary mb-8"
         >
           Get in Touch
         </h2>
@@ -78,7 +78,7 @@ export default function ContactForm() {
             bg-gray-50
             shadow-brand
             rounded-2xl
-            p-8
+            p-5 sm:p-8
             space-y-6
           "
           action="https://formspree.io/f/mgvpkdba"

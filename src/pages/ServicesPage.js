@@ -123,7 +123,7 @@ export default function ServicesPage() {
       </a>
 
       {/* Main Content */}
-      <main id="main-content" className="pt-10">
+      <main id="main-content" className="pt-[87px] xl:pt-[94px]">
         {/* Hero Section — shared component (report §4.6/§4.7.1); also
             fixes the off-brand teal overlay that used to sit here */}
         <PageHero
@@ -137,7 +137,7 @@ export default function ServicesPage() {
             §4.6, optional-but-recommended) — safe to build in full now
             that the taxonomy below actually matches it. */}
         <section
-          className="py-16 bg-white"
+          className="py-10 md:py-16 bg-white"
           aria-labelledby="comparison-heading"
         >
           <div className="max-w-5xl mx-auto px-6">
@@ -187,10 +187,10 @@ export default function ServicesPage() {
 
         {/* Skilled Services */}
         <section
-          className="py-20 bg-primaryLight"
+          className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="skilled-services-heading"
         >
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <img
               src={nurseImage1}
               alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
@@ -205,7 +205,7 @@ export default function ServicesPage() {
 
               <h2
                 id="skilled-services-heading"
-                className="text-3xl font-semibold text-primary mb-2 scroll-mt-28"
+                className="text-2xl sm:text-3xl font-semibold text-primary mb-2 scroll-mt-28"
               >
                 Skilled Services
               </h2>
@@ -245,13 +245,13 @@ export default function ServicesPage() {
         {/* Personal Care Services (Non-Skilled) — three payer paths, not
             one blended service (report §4.6 correction, July 23) */}
         <section
-          className="py-20 bg-white text-center"
+          className="py-12 md:py-20 bg-white text-center"
           aria-labelledby="personal-care-heading"
         >
           <div className="max-w-5xl mx-auto px-6">
             <h2
               id="personal-care-heading"
-              className="text-3xl font-semibold text-primary mb-4 scroll-mt-28"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-4 scroll-mt-28"
             >
               Personal Care Services (Non-Skilled)
             </h2>
@@ -293,7 +293,7 @@ export default function ServicesPage() {
 
         {/* CTA Section */}
         <section
-          className="py-16 bg-primaryLight text-center"
+          className="py-10 md:py-16 bg-primaryLight text-center"
           aria-labelledby="cta-heading"
         >
           <div className="max-w-3xl mx-auto px-6">

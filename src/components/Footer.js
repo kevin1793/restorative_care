@@ -25,16 +25,16 @@ export default function Footer() {
     >
       <div
         className="
-          max-w-7xl mx-auto px-6 py-16
-          grid md:grid-cols-4 gap-10
+          max-w-7xl mx-auto px-6 py-12 md:py-16
+          grid sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10
           text-white
         "
       >
         {/* Company */}
-        <div className="md:col-span-1">
+        <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center space-x-2 mb-3">
             <HeartPulse
-              className="text-white w-6 h-6"
+              className="text-white w-6 h-6 shrink-0"
               aria-hidden="true"
             />
             <span className="text-lg font-serif font-bold text-white">

@@ -38,11 +38,11 @@ export default function PrivacyPolicyPage() {
       </a>
 
       <main id="main-content" className="pt-16">
-        <section className="py-20 bg-white" aria-labelledby="privacy-heading">
+        <section className="py-12 md:py-20 bg-white" aria-labelledby="privacy-heading">
           <div className="max-w-3xl mx-auto px-6">
             <h1
               id="privacy-heading"
-              className="text-4xl font-bold text-primary mb-4"
+              className="text-3xl sm:text-4xl font-bold text-primary mb-4"
             >
               Privacy Policy
             </h1>

@@ -38,11 +38,11 @@ export default function TermsOfServicePage() {
       </a>
 
       <main id="main-content" className="pt-16">
-        <section className="py-20 bg-white" aria-labelledby="terms-heading">
+        <section className="py-12 md:py-20 bg-white" aria-labelledby="terms-heading">
           <div className="max-w-3xl mx-auto px-6">
             <h1
               id="terms-heading"
-              className="text-4xl font-bold text-primary mb-4"
+              className="text-3xl sm:text-4xl font-bold text-primary mb-4"
             >
               Terms of Service
             </h1>
