@@ -15,6 +15,8 @@ export default function PageHero({ title, subtitle, imageSrc, imageAlt }) {
       <img
         src={imageSrc}
         alt={imageAlt || ""}
+        fetchPriority="high"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
         aria-hidden="true"
       />

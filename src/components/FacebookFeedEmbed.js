@@ -25,6 +25,7 @@ export default function FacebookFeedEmbed() {
         allowFullScreen
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
         title="Restorative Care HHS Facebook feed"
+        loading="lazy"
       />
     </div>
   );

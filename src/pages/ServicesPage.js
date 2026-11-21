@@ -168,6 +168,8 @@ export default function ServicesPage() {
             <img
               src={nurseImage1}
               alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
+              width="799"
+              height="533"
               className="rounded-2xl shadow-brand w-full order-first md:order-last"
               loading="lazy"
             />

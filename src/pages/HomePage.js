@@ -210,6 +210,8 @@ export default function HomePage() {
             <img
               src={nurseImage1}
               alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
+              width="799"
+              height="533"
               className="rounded-2xl shadow-md w-full"
               loading="lazy"
             />
@@ -502,6 +504,8 @@ export default function HomePage() {
               <img
                 src={nurseCall}
                 alt="A medical care coordinator taking a phone call to assist a patient's family"
+                width="612"
+                height="408"
                 className="rounded-2xl shadow-md w-full object-cover"
                 loading="lazy"
               />
@@ -518,6 +522,8 @@ export default function HomePage() {
             <img
               src={veteransImage}
               alt="A caregiver assisting a veteran client at home"
+              width="1000"
+              height="688"
               className="rounded-2xl shadow-md w-full order-first md:order-last"
               loading="lazy"
             />

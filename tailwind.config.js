@@ -14,7 +14,6 @@ module.exports = {
       sans: ['"Inter"', 'ui-sans-serif', 'system-ui'],
       serif: ['"Merriweather"', 'serif'],
       heading: ['"Merriweather"', 'serif'],
-      body: ['"Roboto"', 'sans-serif'],
       fancy: ['"Playwrite AU TAS"', 'cursive']
     },
     boxShadow: {

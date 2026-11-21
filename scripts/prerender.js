@@ -20,6 +20,7 @@
 // (see the rewrite rules in public/.htaccess).
 
 const fs = require("fs");
+const { execFileSync } = require("child_process");
 const path = require("path");
 const {
   SITE_URL,
@@ -165,14 +166,34 @@ fs.writeFileSync(
 console.log(`prerender: ${"(not found)".padEnd(20)} -> 404.html`);
 
 // sitemap.xml
-const lastmod = new Date().toISOString().slice(0, 10);
+const today = new Date().toISOString().slice(0, 10);
+const projectRoot = path.resolve(__dirname, "..");
+
+// The date a page's source file last changed in git (YYYY-MM-DD). Search
+// engines use <lastmod> to decide when to re-crawl, so it should not claim
+// every page changed on every deploy. Falls back to today when the file has
+// uncommitted edits, or git isn't available.
+function lastmodFor(route) {
+  try {
+    const run = (args) =>
+      execFileSync("git", args, {
+        cwd: projectRoot,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+    if (run(["status", "--porcelain", "--", route.source])) return today;
+    return run(["log", "-1", "--format=%cs", "--", route.source]) || today;
+  } catch (e) {
+    return today;
+  }
+}
 const sitemap =
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
   `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   routes
     .map(
       (r) =>
-        `  <url>\n    <loc>${esc(urlFor(r))}</loc>\n    <lastmod>${lastmod}</lastmod>\n` +
+        `  <url>\n    <loc>${esc(urlFor(r))}</loc>\n    <lastmod>${lastmodFor(r)}</lastmod>\n` +
         `    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`
     )
     .join("\n") +

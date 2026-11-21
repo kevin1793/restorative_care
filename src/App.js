@@ -1,5 +1,3 @@
-import "./App.css";
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,7 +6,7 @@ import {
 } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import HomePage from "./pages/HomePage";
 import ServicesPage from "./pages/ServicesPage";
@@ -26,10 +24,15 @@ import Footer from "./components/Footer";
 import AccessibilityControls from "./components/AccessibilityControls";
 
 /**
- * Handles scroll + focus reset on route change (important for screen readers)
+ * Handles scroll + focus reset on route change (important for screen readers),
+ * and announces the new page's title in a polite live region. In a single-page
+ * app the browser doesn't announce a page load on navigation, so without this
+ * a screen reader user gets no confirmation that the page changed.
  */
 function RouteAnnouncer({ children }) {
   const location = useLocation();
+  const [announcement, setAnnouncement] = useState("");
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     // Move focus to top of page on route change
@@ -41,9 +44,26 @@ function RouteAnnouncer({ children }) {
 
     // Ensure page scroll resets
     window.scrollTo(0, 0);
+
+    // The first load is announced by the browser itself
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return undefined;
+    }
+
+    // Wait a moment for the new page's <Seo /> to update document.title
+    const timer = setTimeout(() => setAnnouncement(document.title), 300);
+    return () => clearTimeout(timer);
   }, [location]);
 
-  return children;
+  return (
+    <>
+      {children}
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </div>
+    </>
+  );
 }
 
 function App() {

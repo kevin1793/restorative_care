@@ -16,9 +16,12 @@ const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const OG_IMAGE_ALT =
   "Restorative Care HHS — compassionate home health care in Bedford, Texas";
 
+// `source` is the page's file, used by scripts/prerender.js to give each
+// sitemap entry the date it last really changed.
 const routes = [
   {
     path: "/",
+    source: "src/pages/HomePage.js",
     title: "Restorative Care HHS – Home Health Care Services in Texas",
     description:
       "Restorative Care HHS provides professional in-home health care, skilled nursing, and personal care services to support comfort, independence, and wellbeing for patients at home.",
@@ -28,6 +31,7 @@ const routes = [
   },
   {
     path: "/services",
+    source: "src/pages/ServicesPage.js",
     title: "Our Services | Restorative Care HHS",
     description:
       "Explore Restorative Care HHS's home health, personal attendant, and private duty services — skilled nursing, therapy, and daily living support in Bedford, TX.",
@@ -37,6 +41,7 @@ const routes = [
   },
   {
     path: "/veterans",
+    source: "src/pages/VeteransPage.js",
     title: "Veteran Services | Restorative Care HHS",
     description:
       "Restorative Care HHS provides compassionate respite and homemaker caregiving services for veterans under VCA and TriWest agreements. Learn how to get started.",
@@ -46,6 +51,7 @@ const routes = [
   },
   {
     path: "/service-area",
+    source: "src/pages/ServiceAreaPage.js",
     title: "Counties We Serve | Restorative Care HHS",
     description:
       "Restorative Care HHS serves 11 counties across North and Central Texas, including Collin, Dallas, Denton, Ellis, Hood, Johnson, Kaufman, Navarro, Parker, Tarrant, and Wise.",
@@ -55,6 +61,7 @@ const routes = [
   },
   {
     path: "/contact",
+    source: "src/pages/ContactPage.js",
     title: "Contact Us | Restorative Care HHS",
     description:
       "Reach Restorative Care Home Health Services in Bedford, TX by phone, email, or our contact form to schedule a free in-home assessment.",
@@ -64,6 +71,7 @@ const routes = [
   },
   {
     path: "/privacy-policy",
+    source: "src/pages/PrivacyPolicyPage.js",
     title: "Privacy Policy | Restorative Care HHS",
     description:
       "How Restorative Care Home Health Services collects, uses, and protects the personal information you share with us.",
@@ -73,6 +81,7 @@ const routes = [
   },
   {
     path: "/terms-of-service",
+    source: "src/pages/TermsOfServicePage.js",
     title: "Terms of Service | Restorative Care HHS",
     description:
       "Terms governing your use of the Restorative Care Home Health Services website.",
@@ -82,6 +91,7 @@ const routes = [
   },
   {
     path: "/accessibility",
+    source: "src/pages/AccessibilityStatementPage.js",
     title: "Accessibility Statement | Restorative Care HHS",
     description:
       "Restorative Care Home Health Services is committed to making this website accessible to everyone, including people with disabilities. Learn what we do and how to reach us for help.",
@@ -91,6 +101,7 @@ const routes = [
   },
   {
     path: "/nondiscrimination",
+    source: "src/pages/NondiscriminationPage.js",
     title: "Notice of Nondiscrimination | Restorative Care HHS",
     description:
       "Restorative Care Home Health Services does not discriminate. Free language assistance and aids for people with disabilities are available. Learn how to file a complaint.",

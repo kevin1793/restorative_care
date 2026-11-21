@@ -1,17 +1,3 @@
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
 /*
   The @font-face rules for Inter, Merriweather and Playwrite live in a
   <style> block in public/index.html (the fonts are self-hosted in
@@ -284,5 +270,73 @@ html.a11y-contrast :focus-visible {
 @media (min-width: 1024px) {
   html.a11y-size-3 .md\:grid-cols-2 .sm\:grid-cols-3 {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+
+/* Respect the visitor's "reduce motion" system setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Printing                                                            */
+/* ------------------------------------------------------------------ */
+
+/* Families print pages like Services and Contact. Drop the interactive
+   chrome and the dark/decorative backgrounds (white text on a removed
+   background would print invisible), and print at a normal body size no
+   matter which text size the visitor picked on screen. */
+@media print {
+  nav[aria-label="Main navigation"],
+  .a11y-controls,
+  a[href="#main-content"],
+  iframe,
+  [aria-hidden="true"].absolute,
+  section[aria-labelledby="page-hero-heading"] img {
+    display: none !important;
+  }
+
+  :root {
+    --nav-h: 0px !important;
+  }
+  html {
+    font-size: 12pt !important;
+  }
+  body {
+    color: #000;
+    background: #fff;
+  }
+  main *,
+  footer,
+  footer * {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a {
+    text-decoration: underline;
+  }
+  footer {
+    border-top: 1px solid #000;
+  }
+  section,
+  li {
+    break-inside: avoid;
+  }
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
   }
 }

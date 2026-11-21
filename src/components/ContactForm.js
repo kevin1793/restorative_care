@@ -183,6 +183,14 @@ export default function ContactForm({ showHeading = true }) {
             All required fields must be completed before submitting the form.
           </p>
 
+          {/* Subject line for the notification email Formspree sends, so
+              website inquiries are easy to spot in the inbox. */}
+          <input
+            type="hidden"
+            name="_subject"
+            value="New website inquiry - Restorative Care HHS"
+          />
+
           {/* Spam trap (Formspree honeypot). People never see or reach this
               field: it is moved off-screen, hidden from screen readers, and
               skipped by the Tab key. Bots that fill in every input will fill
