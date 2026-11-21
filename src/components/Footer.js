@@ -23,8 +23,11 @@ const TRUST_BADGES = [
 ];
 
 export default function Footer() {
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primaryDark rounded-md";
+  // Focus ring only (no corner radius), so round buttons can keep their own
+  // shape. focusClasses adds the small radius used by text links.
+  const ringClasses =
+    "focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primaryDark";
+  const focusClasses = `${ringClasses} rounded-md`;
 
   // Solid dark-navy background is the highest-visual-impact change in the
   // design system pass (report §4.4) — a thin, low-contrast footer is the
@@ -78,10 +81,12 @@ export default function Footer() {
             ))}
           </ul>
 
+          {/* Call and Facebook buttons share one height (h-12) and a fully
+              round shape so they line up as a pair. */}
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="tel:8172858515"
-              className={`inline-flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-full bg-white text-primaryDark font-medium hover:bg-primaryLight transition-colors ${focusClasses}`}
+              className={`inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full border border-white bg-white text-primaryDark font-medium hover:bg-primaryLight transition-colors ${ringClasses}`}
               aria-label="Call Restorative Care HHS at 817-285-8515"
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
@@ -93,7 +98,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Restorative Care HHS on Facebook — opens in a new tab"
-              className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white hover:text-primaryDark transition-colors ${focusClasses}`}
+              className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white hover:text-primaryDark transition-colors ${ringClasses}`}
             >
               <Facebook className="w-5 h-5" aria-hidden="true" />
             </a>
@@ -208,10 +213,11 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar: legal links + copyright. Extra bottom padding keeps the
-          floating accessibility button off the last line. */}
+      {/* Bottom bar: legal links + copyright. On phones, extra bottom padding
+          keeps the floating accessibility button (fixed, bottom-left) off the
+          last line; from md up the centered text is well clear of it. */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 pt-4 pb-24 flex flex-col items-center gap-2 text-sm text-white/70">
+        <div className="max-w-7xl mx-auto px-6 pt-4 pb-20 md:pb-6 flex flex-col items-center gap-2 text-sm text-white/70">
           <div className="text-center order-last">
             <p>
               © {new Date().getFullYear()} Restorative Care Home Health

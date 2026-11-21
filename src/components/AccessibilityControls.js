@@ -146,7 +146,7 @@ export default function AccessibilityControls() {
         aria-expanded={open}
         aria-controls="a11y-panel"
         aria-label="Accessibility options: text size, contrast and links"
-        className="fixed bottom-4 left-4 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-lg border-2 border-white hover:bg-primaryDark focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2"
+        className="fixed bottom-4 left-4 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-xl ring-4 ring-white/40 border-2 border-white hover:bg-primaryDark focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2"
       >
         <Accessibility className="w-6 h-6" aria-hidden="true" />
       </button>
