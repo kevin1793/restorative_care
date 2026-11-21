@@ -1,3 +1,5 @@
+import OpenStatus from "./OpenStatus";
+import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED, EMAIL, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE } from "../siteInfo";
 import React from "react";
 import {
   HeartPulse,
@@ -85,12 +87,12 @@ export default function Footer() {
               round shape so they line up as a pair. */}
           <div className="flex flex-wrap items-center gap-3">
             <a
-              href="tel:8172858515"
+              href={PHONE_HREF}
               className={`inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full border border-white bg-white text-primaryDark font-medium hover:bg-primaryLight transition-colors ${ringClasses}`}
-              aria-label="Call Restorative Care HHS at 817-285-8515"
+              aria-label={`Call Restorative Care HHS at ${PHONE_DASHED}`}
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
-              (817) 285-8515
+              {PHONE_DISPLAY}
             </a>
 
             <a
@@ -107,7 +109,7 @@ export default function Footer() {
 
         {/* Quick Links */}
         <nav aria-label="Footer quick links" className="lg:col-span-2">
-          <h3 className={headingClasses}>Quick Links</h3>
+          <h2 className={headingClasses}>Quick Links</h2>
 
           <ul className="grid grid-cols-2 sm:grid-cols-1 gap-x-4">
             <li>
@@ -150,14 +152,14 @@ export default function Footer() {
 
         {/* Contact */}
         <nav aria-label="Footer contact links" className="lg:col-span-3">
-          <h3 className={headingClasses}>Contact</h3>
+          <h2 className={headingClasses}>Contact</h2>
 
           <ul>
             <li>
               <a
-                href="mailto:inforestorativecare@gmail.com"
+                href={EMAIL_HREF}
                 className={`flex items-start gap-3 py-2.5 text-white/80 hover:text-white transition-colors ${focusClasses}`}
-                aria-label="Send email to Restorative Care HHS"
+                aria-label={`Email us at ${EMAIL}`}
               >
                 <Mail
                   className="w-5 h-5 shrink-0 mt-0.5 text-[#F2A58A]"
@@ -177,25 +179,30 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-start gap-3 py-2.5 text-white/80 hover:text-white transition-colors ${focusClasses}`}
-                aria-label="Open address in Google Maps — opens in a new tab"
+                aria-label={`${ADDRESS_STREET}, ${ADDRESS_CITY_LINE}: open in Google Maps, opens in a new tab`}
               >
                 <MapPin
                   className="w-5 h-5 shrink-0 mt-0.5 text-[#F2A58A]"
                   aria-hidden="true"
                 />
                 <span>
-                  221 Bedford Road Suite 320
+                  {ADDRESS_STREET}
                   <br />
-                  Bedford, TX 76022
+                  {ADDRESS_CITY_LINE}
                 </span>
               </a>
+            </li>
+
+            {/* Only appears once HOURS is set in src/siteInfo.js */}
+            <li className="py-1">
+              <OpenStatus tone="dark" />
             </li>
           </ul>
         </nav>
 
         {/* Service area teaser */}
         <div className="sm:col-span-2 lg:col-span-3">
-          <h3 className={headingClasses}>Where We Serve</h3>
+          <h2 className={headingClasses}>Where We Serve</h2>
 
           <p className="text-white/80 leading-relaxed mb-2">
             Proudly serving families across 11 counties in North and Central

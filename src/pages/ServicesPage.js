@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React, { useEffect } from "react";
 import {
   Stethoscope,
@@ -125,7 +126,7 @@ export default function ServicesPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <a
                 href="#skilled-services-heading"
-                className={`block bg-white border border-gray-200 rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
+                className={`block bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusClasses}`}
               >
                 <span className="block font-semibold text-gray-900 mb-1">
                   Skilled Services
@@ -142,7 +143,7 @@ export default function ServicesPage() {
                 <a
                   key={path.title}
                   href="#personal-care-heading"
-                  className={`block bg-white border border-gray-200 rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
+                  className={`block bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusClasses}`}
                 >
                   <span className="block font-semibold text-gray-900 mb-1">
                     {path.title}
@@ -199,10 +200,9 @@ export default function ServicesPage() {
               <ul className="space-y-4">
                 {skilledServices.map(({ icon: Icon, title, text }) => (
                   <li key={title} className="flex gap-3">
-                    <Icon
-                      className="w-5 h-5 text-primary flex-shrink-0 mt-1"
-                      aria-hidden="true"
-                    />
+                    <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-primary">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
                     <span>
                       <span className="block font-semibold text-gray-900">
                         {title}
@@ -243,12 +243,11 @@ export default function ServicesPage() {
               {payerPaths.map(({ icon: Icon, title, payer, text }) => (
                 <article
                   key={title}
-                  className="bg-white border border-gray-200 rounded-2xl p-6 text-left shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200"
+                  className="bg-white border border-primary/10 rounded-2xl p-6 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand"
                 >
-                  <Icon
-                    className="w-8 h-8 text-primary mb-3"
-                    aria-hidden="true"
-                  />
+                  <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primaryLight text-primary">
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                  </span>
 
                   <h3 className="text-lg font-semibold text-gray-900 mb-1">
                     {title}
@@ -297,10 +296,10 @@ export default function ServicesPage() {
             </p>
 
             <a
-              href="tel:8172858515"
+              href={PHONE_HREF}
               className={buttonClasses}
             >
-              Call Us Now: (817) 285-8515
+              Call Us Now: {PHONE_DISPLAY}
             </a>
           </div>
         </section>

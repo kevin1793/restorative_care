@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY, EMAIL, EMAIL_HREF, ADDRESS_FULL } from "../siteInfo";
 import React, { useEffect } from "react";
 import Seo from "../components/Seo";
 
@@ -16,12 +17,16 @@ export default function PrivacyPolicyPage() {
           <div className="max-w-3xl mx-auto px-6">
             <h1
               id="privacy-heading"
-              className="text-3xl sm:text-4xl font-bold text-primary mb-4"
+              style={{ "--i": 0 }}
+              className="hero-rise text-3xl sm:text-4xl font-bold text-primary mb-4"
             >
               Privacy Policy
             </h1>
 
-            <p className="text-sm text-gray-700 mb-10">
+            <p
+              style={{ "--i": 1 }}
+              className="hero-rise text-sm text-gray-700 mb-10"
+            >
               Last updated: July 21, 2026
             </p>
 
@@ -86,22 +91,22 @@ export default function PrivacyPolicyPage() {
                 <p>
                   Restorative Care Home Health Services, Inc.
                   <br />
-                  221 Bedford Road Suite 320, Bedford, TX 76022
+                  {ADDRESS_FULL}
                   <br />
                   Phone:{" "}
                   <a
-                    href="tel:8172858515"
+                    href={PHONE_HREF}
                     className="text-primary underline underline-offset-4"
                   >
-                    (817) 285-8515
+                    {PHONE_DISPLAY}
                   </a>
                   <br />
                   Email:{" "}
                   <a
-                    href="mailto:inforestorativecare@gmail.com"
+                    href={EMAIL_HREF}
                     className="text-primary underline underline-offset-4"
                   >
-                    inforestorativecare@gmail.com
+                    {EMAIL}
                   </a>
                 </p>
               </div>

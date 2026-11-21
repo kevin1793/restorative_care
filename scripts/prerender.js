@@ -30,6 +30,8 @@ const {
   routes,
   notFound,
 } = require("../src/seo/routes");
+const { jsonLdFor } = require("../src/seo/jsonld");
+const siteInfo = require("../src/siteInfo");
 
 const buildDir = path.resolve(__dirname, "..", "build");
 const templatePath = path.join(buildDir, "index.html");
@@ -95,6 +97,17 @@ function headTags(route, isNotFound = false) {
     `<meta name="twitter:image" content="${esc(OG_IMAGE)}" />`,
   ].filter(Boolean);
 
+  // Page-specific structured data (breadcrumbs, services). "<" is escaped so
+  // nothing in the data can close the script tag early.
+  jsonLdFor(route).forEach((entry) => {
+    tags.push(
+      `<script type="application/ld+json">${JSON.stringify(entry).replace(
+        /</g,
+        "\u003c"
+      )}</script>`
+    );
+  });
+
   // The home page hero uses the decorative script font; load it early there
   // only (other pages don't use it).
   if (route.path === "/") {
@@ -113,8 +126,8 @@ function noscriptSummary(route) {
     `<noscript><main>` +
     `<h1>${esc(route.heading)}</h1>` +
     `<p>${esc(route.description)}</p>` +
-    `<p>Restorative Care Home Health Services, Inc. · 221 Bedford Road Suite 320, Bedford, TX 76022 · ` +
-    `<a href="tel:8172858515">(817) 285-8515</a></p>` +
+    `<p>Restorative Care Home Health Services, Inc. · ${esc(siteInfo.ADDRESS_FULL)} · ` +
+    `<a href="${esc(siteInfo.PHONE_HREF)}">${esc(siteInfo.PHONE_DISPLAY)}</a></p>` +
     `<nav aria-label="Site pages"><ul>${links}</ul></nav>` +
     `</main></noscript>`
   );

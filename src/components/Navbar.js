@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED } from "../siteInfo";
 import React, { useEffect, useRef } from "react";
 import { HeartPulse, Menu, X, Phone } from "lucide-react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
@@ -31,9 +32,25 @@ export default function Navbar() {
 
     publish();
     if (typeof ResizeObserver === "undefined") return undefined;
-    const observer = new ResizeObserver(publish);
+
+    // Apply later changes on the next frame, not inside the observer's own
+    // callback: changing --nav-h moves the page content, and doing that
+    // inside the callback makes the browser report "ResizeObserver loop
+    // completed with undelivered notifications".
+    let frame = 0;
+    const observer = new ResizeObserver(() => {
+      if (!frame) {
+        frame = window.requestAnimationFrame(() => {
+          frame = 0;
+          publish();
+        });
+      }
+    });
     observer.observe(bar);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   const navLinks = [
@@ -284,7 +301,7 @@ export default function Navbar() {
           {/* Desktop Actions: tap-to-call + primary CTA */}
           <div className="nav-desktop-actions items-center space-x-5 ml-6 flex-shrink-0">
             <a
-              href="tel:8172858515"
+              href={PHONE_HREF}
               className={`
                 flex items-center gap-2
                 text-primary font-medium
@@ -296,10 +313,10 @@ export default function Navbar() {
                 transition-colors
                 ${focusClasses}
               `}
-              aria-label="Call Restorative Care HHS at 817-285-8515"
+              aria-label={`Call Restorative Care HHS at ${PHONE_DASHED}`}
             >
               <Phone className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
-              (817) 285-8515
+              {PHONE_DISPLAY}
             </a>
 
             <RouterLink
@@ -415,7 +432,7 @@ export default function Navbar() {
             {/* Mobile Actions: tap-to-call + primary CTA */}
             <div className="flex flex-col gap-3 px-6 py-4 border-t border-gray-200">
               <a
-                href="tel:8172858515"
+                href={PHONE_HREF}
                 className={`
                   flex items-center justify-center gap-2
                   text-primary font-medium
@@ -426,11 +443,11 @@ export default function Navbar() {
                   transition-colors
                   ${focusClasses}
                 `}
-                aria-label="Call Restorative Care HHS at 817-285-8515"
+                aria-label={`Call Restorative Care HHS at ${PHONE_DASHED}`}
                 onClick={closeMenu}
               >
                 <Phone className="w-4 h-4" aria-hidden="true" />
-                (817) 285-8515
+                {PHONE_DISPLAY}
               </a>
 
               <RouterLink

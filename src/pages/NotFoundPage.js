@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -24,11 +25,17 @@ export default function NotFoundPage() {
           aria-labelledby="not-found-heading"
         >
           <div className="max-w-2xl mx-auto px-6 text-center">
-            <p className="text-primary font-semibold mb-2">Error 404</p>
+            <p
+              style={{ "--i": 0 }}
+              className="hero-rise text-primary font-semibold mb-2"
+            >
+              Error 404
+            </p>
 
             <h1
               id="not-found-heading"
-              className="text-3xl sm:text-4xl font-bold text-primary mb-4"
+              style={{ "--i": 1 }}
+              className="hero-rise text-3xl sm:text-4xl font-bold text-primary mb-4"
             >
               {notFound.heading}
             </h1>
@@ -38,10 +45,10 @@ export default function NotFoundPage() {
               have moved, or the web address may have a typo. You can head
               back to our home page, browse our services, or call us at{" "}
               <a
-                href="tel:8172858515"
+                href={PHONE_HREF}
                 className="text-primary underline underline-offset-4"
               >
-                (817) 285-8515
+                {PHONE_DISPLAY}
               </a>{" "}
               and we'll be glad to help.
             </p>

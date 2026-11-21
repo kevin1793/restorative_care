@@ -1,10 +1,11 @@
+import { PHONE_HREF, PHONE_DISPLAY, EMAIL, EMAIL_HREF, ADDRESS_FULL } from "../siteInfo";
 import React, { useEffect } from "react";
 import Seo from "../components/Seo";
 
 const linkClasses =
   "text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2";
 
-const PHONE = "(817) 285-8515";
+const PHONE = PHONE_DISPLAY;
 
 // Language-assistance taglines. Each is shown in its own language and marked
 // with a lang attribute so screen readers pronounce it correctly. The federal
@@ -60,12 +61,16 @@ export default function NondiscriminationPage() {
           <div className="max-w-3xl mx-auto px-6">
             <h1
               id="nondiscrimination-heading"
-              className="text-3xl sm:text-4xl font-bold text-primary mb-4"
+              style={{ "--i": 0 }}
+              className="hero-rise text-3xl sm:text-4xl font-bold text-primary mb-4"
             >
               Notice of Nondiscrimination
             </h1>
 
-            <p className="text-sm text-gray-700 mb-10">
+            <p
+              style={{ "--i": 1 }}
+              className="hero-rise text-sm text-gray-700 mb-10"
+            >
               Last updated: November 21, 2026
             </p>
 
@@ -103,7 +108,7 @@ export default function NondiscriminationPage() {
                 </ul>
                 <p className="mt-3">
                   To request any of these services, call{" "}
-                  <a href="tel:8172858515" className={linkClasses}>
+                  <a href={PHONE_HREF} className={linkClasses}>
                     {PHONE}
                   </a>
                   . Callers who are deaf, hard of hearing, or have a speech
@@ -144,19 +149,19 @@ export default function NondiscriminationPage() {
                   <br />
                   Restorative Care Home Health Services, Inc.
                   <br />
-                  221 Bedford Road Suite 320, Bedford, TX 76022
+                  {ADDRESS_FULL}
                   <br />
                   Phone:{" "}
-                  <a href="tel:8172858515" className={linkClasses}>
+                  <a href={PHONE_HREF} className={linkClasses}>
                     {PHONE}
                   </a>
                   <br />
                   Email:{" "}
                   <a
-                    href="mailto:inforestorativecare@gmail.com"
+                    href={EMAIL_HREF}
                     className={linkClasses}
                   >
-                    inforestorativecare@gmail.com
+                    {EMAIL}
                   </a>
                 </p>
               </div>
@@ -204,7 +209,7 @@ export default function NondiscriminationPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={linkClasses}
-                    aria-label="HHS Office for Civil Rights complaint forms — opens in a new tab"
+                    aria-label="hhs.gov/ocr/office/file, HHS Office for Civil Rights complaint forms — opens in a new tab"
                   >
                     hhs.gov/ocr/office/file
                   </a>

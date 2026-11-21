@@ -1,9 +1,15 @@
+import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
 import { MapPin, Phone, MessageSquare } from "lucide-react";
 
-import ServiceAreaMap, { SERVED_COUNTIES } from "../components/ServiceAreaMap";
+import { lazy, Suspense } from "react";
+import { SERVED_COUNTIES } from "../servedCounties";
+
+// The map (and the d3 libraries behind it) loads on its own after the page,
+// so it stays out of the main download that every page needs
+const ServiceAreaMap = lazy(() => import("../components/ServiceAreaMap"));
 
 export default function ServiceAreaPage() {
   // Hovering a county in the list lights it up on the map (mouse/touch
@@ -28,19 +34,26 @@ export default function ServiceAreaPage() {
           aria-labelledby="service-area-heading"
         >
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <p className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-medium text-primary shadow-sm border border-primary/10 mb-5">
+            <p
+              style={{ "--i": 0 }}
+              className="hero-rise inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-medium text-primary shadow-sm border border-primary/10 mb-5"
+            >
               <MapPin className="w-4 h-4" aria-hidden="true" />
               Based in Bedford, Texas
             </p>
 
             <h1
               id="service-area-heading"
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-6"
+              style={{ "--i": 1 }}
+              className="hero-rise text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-6"
             >
               Counties We Serve
             </h1>
 
-            <p className="text-gray-800 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p
+              style={{ "--i": 2 }}
+              className="hero-rise text-gray-800 text-lg leading-relaxed max-w-2xl mx-auto"
+            >
               Restorative Care Home Health Services proudly serves families
               across 11 counties in North and Central Texas.
             </p>
@@ -56,7 +69,18 @@ export default function ServiceAreaPage() {
             <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
               {/* Map card */}
               <div className="lg:col-span-3 bg-white rounded-2xl shadow-brand p-4 sm:p-6">
-                <ServiceAreaMap activeCounty={activeCounty} />
+                <Suspense
+                  fallback={
+                    <div
+                      className="w-full rounded-xl bg-primaryLight animate-pulse motion-reduce:animate-none"
+                      style={{ aspectRatio: "600 / 540" }}
+                      role="status"
+                      aria-label="Loading map"
+                    />
+                  }
+                >
+                  <ServiceAreaMap activeCounty={activeCounty} />
+                </Suspense>
 
                 {/* Legend */}
                 <ul className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-gray-800">
@@ -138,11 +162,11 @@ export default function ServiceAreaPage() {
               </p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
                 <a
-                  href="tel:8172858515"
+                  href={PHONE_HREF}
                   className={`inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 min-h-[48px] rounded-full font-medium hover:bg-primaryLight transition-colors ${focusClasses} focus-visible:ring-white focus-visible:ring-offset-primary`}
                 >
                   <Phone className="w-5 h-5" aria-hidden="true" />
-                  Call (817) 285-8515
+                  Call {PHONE_DISPLAY}
                 </a>
                 <RouterLink
                   to="/contact"

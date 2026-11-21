@@ -22,7 +22,10 @@ import { useLayoutEffect } from "react";
 // reports crossings, so it would leave those hidden for good.
 //
 // Pass something that changes when the page changes (the pathname).
-const ITEM_SELECTOR = "article, ul.grid > li, ol.grid > li";
+// Cards, grid lists, and anything inside an element marked .reveal-blocks
+// (used on the long text pages so each block rises on its own)
+const ITEM_SELECTOR =
+  "article, ul.grid > li, ol.grid > li, .reveal-blocks > *";
 const MAX_STAGGER = 6;
 
 export default function useScrollReveal(pageKey) {

@@ -124,7 +124,7 @@ function WebsiteLink({ url, name }) {
       target="_blank"
       rel="noopener noreferrer"
       title={hostOf(url)}
-      aria-label={`${name} website (${hostOf(url)}) — opens in a new tab`}
+      aria-label={`Visit website: ${name} (${hostOf(url)}), opens in a new tab`}
       className="mt-auto pt-3 w-full min-h-[48px] border-t border-primary/10 inline-flex items-center justify-center gap-1.5 text-sm text-primary underline underline-offset-4 hover:text-primary/80 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md whitespace-nowrap"
     >
       <span>Visit website</span>

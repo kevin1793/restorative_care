@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React, { useEffect } from "react";
 import Seo from "../components/Seo";
 import veteransHero from "../assets/images/veterans.webp";
@@ -133,7 +134,7 @@ export default function VeteransPage() {
               How to Get Care
             </h2>
 
-            <ol className="relative">
+            <ol className="reveal-blocks relative">
               {steps.map((step, i) => (
                 <li key={step.title} className="flex gap-5 pb-10 last:pb-0">
                   <span className="relative flex-shrink-0">
@@ -197,10 +198,10 @@ export default function VeteransPage() {
             </p>
 
             <a
-              href="tel:8172858515"
+              href={PHONE_HREF}
               className={buttonClasses}
             >
-              Call Us Now: (817) 285-8515
+              Call Us Now: {PHONE_DISPLAY}
             </a>
           </div>
         </section>

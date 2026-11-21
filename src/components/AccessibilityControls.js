@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Accessibility, Minus, Plus, RotateCcw, X } from "lucide-react";
 
@@ -242,10 +243,10 @@ export default function AccessibilityControls() {
           <p className="mt-3 text-sm text-gray-700 text-center">
             Need help using this site? Call{" "}
             <a
-              href="tel:8172858515"
+              href={PHONE_HREF}
               className="text-primary underline underline-offset-4"
             >
-              (817) 285-8515
+              {PHONE_DISPLAY}
             </a>
             .
           </p>

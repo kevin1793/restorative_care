@@ -1,7 +1,9 @@
+import { PHONE_HREF, PHONE_DISPLAY, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE } from "../siteInfo";
 import { useEffect } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
+import OpenStatus from "../components/OpenStatus";
 
 import ContactForm from "../components/ContactForm";
 import contactHeroImg from "../assets/images/contact_hero.webp";
@@ -82,14 +84,20 @@ export default function ContactPage() {
                 {
                   icon: Phone,
                   title: "Call Us",
-                  text: "Talk with a member of our care team.",
+                  text: (
+                    <>
+                      Talk with a member of our care team.
+                      {/* Only appears once HOURS is set in src/siteInfo.js */}
+                      <OpenStatus className="mt-2 justify-center" />
+                    </>
+                  ),
                   action: (
                     <a
-                      href="tel:8172858515"
+                      href={PHONE_HREF}
                       className={`inline-flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary/90 transition-colors ${focusClasses}`}
                     >
                       <Phone className="w-4 h-4 shrink-0" aria-hidden="true" />
-                      (817) 285-8515
+                      {PHONE_DISPLAY}
                     </a>
                   ),
                 },
@@ -109,7 +117,7 @@ export default function ContactPage() {
                   ),
                   action: (
                     <a
-                      href="mailto:inforestorativecare@gmail.com"
+                      href={EMAIL_HREF}
                       className={`inline-flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full border-2 border-primary text-primary font-medium hover:bg-primaryLight transition-colors ${focusClasses}`}
                     >
                       <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
@@ -122,9 +130,9 @@ export default function ContactPage() {
                   title: "Visit Us",
                   text: (
                     <>
-                      221 Bedford Road Suite 320
+                      {ADDRESS_STREET}
                       <br />
-                      Bedford, TX 76022
+                      {ADDRESS_CITY_LINE}
                     </>
                   ),
                   action: (
@@ -242,10 +250,10 @@ export default function ContactPage() {
             </p>
 
             <a
-              href="tel:8172858515"
+              href={PHONE_HREF}
               className={buttonClasses}
             >
-              Call Us Now: (817) 285-8515
+              Call Us Now: {PHONE_DISPLAY}
             </a>
           </div>
         </section>

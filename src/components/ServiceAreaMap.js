@@ -1,20 +1,7 @@
 import { useEffect, useState } from "react";
 import { geoMercator, geoPath } from "d3-geo";
 import { json } from "d3-fetch";
-
-export const SERVED_COUNTIES = [
-  "Collin",
-  "Dallas",
-  "Denton",
-  "Ellis",
-  "Hood",
-  "Johnson",
-  "Kaufman",
-  "Navarro",
-  "Parker",
-  "Tarrant",
-  "Wise",
-];
+import { SERVED_COUNTIES } from "../servedCounties";
 
 const SERVED_SET = new Set(SERVED_COUNTIES);
 

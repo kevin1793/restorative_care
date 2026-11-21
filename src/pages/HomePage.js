@@ -1,3 +1,4 @@
+import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React from "react";
 import {
   HeartPulse,
@@ -197,10 +198,10 @@ export default function HomePage() {
               className="hero-rise flex flex-wrap justify-center gap-4"
             >
               <a
-                href="tel:8172858515"
+                href={PHONE_HREF}
                 className={buttonClasses}
               >
-                Call Us: (817) 285-8515
+                Call Us: {PHONE_DISPLAY}
               </a>
 
               <a
@@ -482,10 +483,10 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="tel:8172858515"
+                  href={PHONE_HREF}
                   className={buttonClasses}
                 >
-                  Call Us Today: (817) 285-8515
+                  Call Us Today: {PHONE_DISPLAY}
                 </a>
 
                 <a
