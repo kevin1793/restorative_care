@@ -1,0 +1,27 @@
+name: CI
+
+# Builds the site and runs the tests on every push and pull request, so a
+# change that breaks the build or a test is caught before it is deployed.
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Tests
+        run: npm test -- --watchAll=false
+        env:
+          CI: "true"
+      - name: Build (also pre-renders the pages and sitemap)
+        run: npm run build

@@ -61,6 +61,38 @@ function askHidden(question) {
   });
 }
 
+// Every deploy uploads new hashed JS/CSS/image files but never removes the old
+// ones, so they pile up on the server. This deletes files in the three build
+// folders that are not part of the build just uploaded. It touches only those
+// folders (static/js, static/css, static/media), never the rest of the site,
+// so the separate /careers app and anything else on the host is left alone.
+// Pass --keep-old to skip it.
+async function removeStaleBuildFiles(client) {
+  const remoteBase = config.remoteDir.replace(/\/$/, "");
+  let removed = 0;
+  for (const folder of ["js", "css", "media"]) {
+    const localDir = path.join(buildDir, "static", folder);
+    if (!fs.existsSync(localDir)) continue;
+    const keep = new Set(fs.readdirSync(localDir));
+    const remoteDir = `${remoteBase}/static/${folder}`;
+    let listing;
+    try {
+      listing = await client.list(remoteDir);
+    } catch (e) {
+      continue; // folder doesn't exist on the server yet
+    }
+    for (const entry of listing) {
+      if (entry.isFile && !keep.has(entry.name)) {
+        await client.remove(`${remoteDir}/${entry.name}`);
+        removed += 1;
+      }
+    }
+  }
+  console.log(
+    `Removed ${removed} old build file${removed === 1 ? "" : "s"} from the server.`
+  );
+}
+
 async function main() {
   if (!fs.existsSync(path.join(buildDir, "index.html"))) {
     throw new Error("build/index.html not found. Run `npm run build` first.");
@@ -91,6 +123,10 @@ async function main() {
     console.log(`Uploading build/ to ${await client.pwd()} ...`);
     await client.uploadFromDir(buildDir);
     process.stdout.write("\n");
+
+    if (!process.argv.includes("--keep-old")) {
+      await removeStaleBuildFiles(client);
+    }
     console.log(
       `Deploy complete: https://restorativecarehhs.com${
         config.remoteDir === "/" ? "/" : config.remoteDir + "/"
