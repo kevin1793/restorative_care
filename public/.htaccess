@@ -10,6 +10,14 @@
   RewriteEngine On
   RewriteBase /
 
+  # One canonical host: send www.restorativecarehhs.com to
+  # restorativecarehhs.com (canonical URLs, the sitemap and structured data all
+  # use the non-www address). HTTP -> HTTPS is already handled by Hostinger's
+  # CDN in front of this server, so it is not repeated here: this server can't
+  # reliably tell HTTP from HTTPS and the rule could loop.
+  RewriteCond %{HTTP_HOST} ^www\.restorativecarehhs\.com$ [NC]
+  RewriteRule ^ https://restorativecarehhs.com%{REQUEST_URI} [R=301,L]
+
   # Serve real files and directories as-is (JS/CSS/images/etc.)
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
@@ -32,19 +40,71 @@
 
 ErrorDocument 404 /404.html
 
-# Cache hashed static assets aggressively; never cache index.html so
-# visitors always get the build that matches the current asset hashes
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType application/javascript "access plus 1 year"
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
+# ---------------------------------------------------------------------------
+# Security headers (sent on every response, including 404s)
+# ---------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Browsers must use HTTPS for this host for the next year. (No
+  # includeSubDomains/preload: other subdomains on this domain may not have
+  # HTTPS.)
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Don't guess file types from content
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Send only the site's origin (not full URLs) to other sites
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Switch off browser features the site never uses
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+  # Stop other sites from embedding this one in a frame (clickjacking).
+  # frame-ancestors can't be set from a <meta> CSP tag, so it lives here; the
+  # rest of the CSP is injected into each page by scripts/prerender.js.
+  # X-Frame-Options is the same rule for older browsers.
+  Header always set Content-Security-Policy "frame-ancestors 'self'"
+  Header always set X-Frame-Options "SAMEORIGIN"
 </IfModule>
 
+# ---------------------------------------------------------------------------
+# Caching (Cache-Control). When two rules match a file, the later one wins.
+# ---------------------------------------------------------------------------
 <IfModule mod_headers.c>
-  <FilesMatch "\.html$">
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  # Anything not listed below: re-check after a day
+  <FilesMatch "\.(js|css|json|txt|xml|webmanifest)$">
+    Header set Cache-Control "public, max-age=86400"
   </FilesMatch>
+
+  # Images and icons keep their original file names (logos, og-image.png...),
+  # so a changed file must show up reasonably soon: 30 days
+  <FilesMatch "\.(png|jpe?g|webp|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # Self-hosted fonts almost never change. To replace one, give the new file a
+  # new name (e.g. inter-latin-v2.woff2) and update public/index.html.
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Build output has a content hash in its name (main.163a3077.js,
+  # calling.34f686882539a223c8e3.webp), so a changed file always gets a new
+  # name and the old one can be cached for a year
+  <FilesMatch "\.[0-9a-f]{8,32}(\.chunk)?\.(js|css|webp|png|jpe?g|gif|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Pages: always check with the server (cheap 304 when unchanged) so visitors
+  # get the build that matches the current asset hashes. Not "no-store", which
+  # would also disable the browser's instant back/forward cache.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Compression (Hostinger's CDN already gzips; this covers direct requests)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript text/javascript
+  AddOutputFilterByType DEFLATE application/json application/xml image/svg+xml
 </IfModule>

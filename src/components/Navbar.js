@@ -18,7 +18,7 @@ export default function Navbar() {
 
   const careersLink = {
     label: "Careers",
-    href: "https://www.restorativecarehhs.com/careers",
+    href: "https://restorativecarehhs.com/careers/",
   };
 
   const focusClasses =

@@ -131,7 +131,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="https://www.restorativecarehhs.com/careers"
+                href="https://restorativecarehhs.com/careers/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={linkClasses}

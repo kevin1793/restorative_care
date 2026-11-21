@@ -548,7 +548,7 @@ export default function HomePage() {
                 </RouterLink>
 
                 <a
-                  href="https://www.restorativecarehhs.com/careers"
+                  href="https://restorativecarehhs.com/careers/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={buttonOutlineClasses}
