@@ -426,7 +426,7 @@ html.a11y-contrast :focus-visible {
 
 [data-reveal="pending"] {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translateY(44px);
 }
 /* A section that contains cards only fades; the cards rise one after another */
 [data-reveal="pending"][data-reveal-kind="fade"] {
@@ -439,8 +439,8 @@ html.a11y-contrast :focus-visible {
 [data-reveal="shown"] {
   opacity: 1;
   transform: none;
-  transition: opacity 800ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 90ms),
-    transform 800ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 90ms),
+  transition: opacity 950ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 110ms),
+    transform 950ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 110ms),
     border-color 200ms ease, box-shadow 200ms ease;
 }
 

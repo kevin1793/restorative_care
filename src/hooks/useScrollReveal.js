@@ -17,7 +17,7 @@ import { useLayoutEffect } from "react";
 // layout effect so hiding happens before the browser paints.
 //
 // An element is revealed once its top edge gets within the lower part of the
-// screen. That also covers content scrolled past in one jump (End key,
+// screen (a bit above the very bottom edge, so the motion is easy to notice). That also covers content scrolled past in one jump (End key,
 // dragging the scrollbar, a long anchor link): an IntersectionObserver only
 // reports crossings, so it would leave those hidden for good.
 //
@@ -56,7 +56,7 @@ export default function useScrollReveal(pageKey) {
 
     const check = () => {
       frame = 0;
-      const line = window.innerHeight * 0.92;
+      const line = window.innerHeight * 0.86;
       let order = 0;
       pending.forEach((el) => {
         if (el.getAttribute("data-reveal") !== "pending") return;
