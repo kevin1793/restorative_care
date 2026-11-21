@@ -150,17 +150,40 @@ export default function Navbar() {
     if (location.pathname !== "/") return;
 
     event.preventDefault();
-    if (location.hash) navigate("/", { replace: true });
+
+    // Drop a leftover #section from the address, but only once the scroll
+    // has finished: changing the URL while a smooth scroll is starting makes
+    // the browser hold the animation back for about a second.
+    const clearHash = () => {
+      if (window.location.hash) navigate("/", { replace: true });
+    };
+
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    // "auto" defers to the CSS scroll-behavior, which index.css sets to
-    // instant for visitors who ask for reduced motion
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
+
+    if (reduceMotion) {
+      // "auto" defers to the CSS scroll-behavior, which index.css sets to
+      // instant for visitors who ask for reduced motion
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      clearHash();
+      return;
+    }
+
+    let finished = false;
+    let fallbackTimer;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      window.removeEventListener("scrollend", finish);
+      clearTimeout(fallbackTimer);
+      clearHash();
+    };
+    window.addEventListener("scrollend", finish);
+    // Browsers without the scrollend event: assume the animation is done
+    fallbackTimer = setTimeout(finish, 1500);
+
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   return (
