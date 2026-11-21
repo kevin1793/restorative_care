@@ -1,32 +1,52 @@
 import { useLayoutEffect } from "react";
 
-// Gentle "rise and fade in" for page sections as they scroll into view.
+// Rise-and-fade-in for page content as it scrolls into view.
 //
-// Only sections that start below the fold are hidden, so nothing visible on
-// arrival ever flickers, and nothing is ever hidden for people who ask for
-// reduced motion. The state lives in a data-reveal attribute ("pending" ->
-// "shown") that React doesn't manage, styled in src/index.css. Runs in a
-// layout effect so the hiding happens before the browser paints (no flash of
-// visible-then-hidden content).
+// What animates:
+//  - the inner container of each section (so full-width background colors
+//    stay put and only the content moves), and
+//  - for sections that hold cards or grid lists, each card on its own: the
+//    section itself just fades and the cards rise one after another, as soon
+//    as each nears the screen. Cards that appear in the same moment are
+//    staggered (--reveal-i); ones far down the page animate when reached.
 //
-// A section is revealed once its top edge gets within the lower part of the
-// screen, which also covers sections scrolled past in one jump (End key,
-// dragging the scrollbar, a long anchor link) — an IntersectionObserver only
+// Only things that start below the fold are hidden, so nothing visible on
+// arrival flickers, and nothing is hidden at all for people who ask for
+// reduced motion. State lives in a data-reveal attribute ("pending" ->
+// "shown") that React doesn't manage; the look is in src/index.css. Runs in a
+// layout effect so hiding happens before the browser paints.
+//
+// An element is revealed once its top edge gets within the lower part of the
+// screen. That also covers content scrolled past in one jump (End key,
+// dragging the scrollbar, a long anchor link): an IntersectionObserver only
 // reports crossings, so it would leave those hidden for good.
 //
 // Pass something that changes when the page changes (the pathname).
+const ITEM_SELECTOR = "article, ul.grid > li, ol.grid > li";
+const MAX_STAGGER = 6;
+
 export default function useScrollReveal(pageKey) {
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return undefined;
     }
 
-    // The inner container of each section, not the section itself, so full-
-    // width background colors stay put and only the content moves.
-    const triggerLine = () => window.innerHeight * 0.92;
-    const pending = [...document.querySelectorAll("main section > div")].filter(
-      (el) => el.getBoundingClientRect().top > window.innerHeight * 0.9
+    const foldLine = window.innerHeight * 0.9;
+    const targets = [];
+
+    document.querySelectorAll("main section > div").forEach((container) => {
+      const items = [...container.querySelectorAll(ITEM_SELECTOR)];
+      if (items.length > 0) container.setAttribute("data-reveal-kind", "fade");
+      targets.push(container, ...items);
+    });
+
+    const pending = targets.filter(
+      (el) => el.getBoundingClientRect().top > foldLine
     );
+    // Tidy up the marker on containers that stay visible
+    targets.forEach((el) => {
+      if (!pending.includes(el)) el.removeAttribute("data-reveal-kind");
+    });
     if (pending.length === 0) return undefined;
 
     pending.forEach((el) => el.setAttribute("data-reveal", "pending"));
@@ -36,10 +56,20 @@ export default function useScrollReveal(pageKey) {
 
     const check = () => {
       frame = 0;
-      const line = triggerLine();
+      const line = window.innerHeight * 0.92;
+      let order = 0;
       pending.forEach((el) => {
         if (el.getAttribute("data-reveal") !== "pending") return;
-        if (el.getBoundingClientRect().top < line) {
+        const top = el.getBoundingClientRect().top;
+        if (top < line) {
+          // Stagger only what is actually on screen; anything scrolled past
+          // in a jump (top < 0) just appears
+          const onScreen = top >= 0;
+          el.style.setProperty(
+            "--reveal-i",
+            onScreen ? Math.min(order, MAX_STAGGER) : 0
+          );
+          if (onScreen) order += 1;
           el.setAttribute("data-reveal", "shown");
           remaining -= 1;
         }
@@ -51,8 +81,8 @@ export default function useScrollReveal(pageKey) {
       if (!frame) frame = window.requestAnimationFrame(check);
     };
 
-    // Content above can change height after load (images, the map), moving a
-    // section into view without any scrolling
+    // Content above can change height after load (images, the map), moving
+    // something into view without any scrolling
     const resizeObserver =
       typeof ResizeObserver === "undefined"
         ? null
@@ -71,7 +101,11 @@ export default function useScrollReveal(pageKey) {
 
     return () => {
       stop();
-      pending.forEach((el) => el.removeAttribute("data-reveal"));
+      targets.forEach((el) => {
+        el.removeAttribute("data-reveal");
+        el.removeAttribute("data-reveal-kind");
+        el.style.removeProperty("--reveal-i");
+      });
     };
   }, [pageKey]);
 }

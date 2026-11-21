@@ -160,7 +160,7 @@ export default function HomePage() {
               flat wash, so the hero doesn't read identically to the other
               light-blue sections on the page (report §4.4) */}
           <div
-            className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none"
+            className="hero-glow absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
 
@@ -174,13 +174,17 @@ export default function HomePage() {
 
             {/* Visible hero tagline (decorative duplicate of the h1 message) */}
             <p
-              className="font-fancy text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl text-balance !leading-[1.8] font-bold text-primary mb-6"
+              style={{ "--i": 0 }}
+              className="hero-rise font-fancy text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl text-balance !leading-[1.8] font-bold text-primary mb-6"
               aria-hidden="true"
             >
               Compassionate Care, Right at Home in Bedford, TX
             </p>
 
-            <p className="text-gray-800 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p
+              style={{ "--i": 1 }}
+              className="hero-rise text-gray-800 text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
+            >
               We provide professional, personalized home health services that
               support comfort, dignity, and independence.
             </p>
@@ -188,7 +192,10 @@ export default function HomePage() {
             {/* Call is the higher-intent action for healthcare leads, so
                 it's the solid primary button; messaging is secondary
                 (report §1.2) */}
-            <div className="flex flex-wrap justify-center gap-4">
+            <div
+              style={{ "--i": 2 }}
+              className="hero-rise flex flex-wrap justify-center gap-4"
+            >
               <a
                 href="tel:8172858515"
                 className={buttonClasses}
@@ -205,7 +212,10 @@ export default function HomePage() {
             </div>
 
             {/* Trust bar (report §1.3) */}
-            <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-10 text-sm text-gray-700">
+            <ul
+              style={{ "--i": 3 }}
+              className="hero-rise flex flex-wrap justify-center gap-x-8 gap-y-3 mt-10 text-sm text-gray-700"
+            >
               {trustBadges.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center gap-2">
                   <Icon

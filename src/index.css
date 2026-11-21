@@ -358,39 +358,97 @@ html.a11y-contrast :focus-visible {
 /* Page and section transitions                                        */
 /* ------------------------------------------------------------------ */
 
-/* Deliberately small and quick: a short fade with a few pixels of rise when
-   a page loads, and a slightly longer one as sections scroll into view
-   (src/hooks/useScrollReveal.js). Opacity and position only, nothing that
-   changes layout. Turned off for visitors who ask for reduced motion and when
-   printing, so content is never left hidden. */
+/* Page load: the top of the page (hero) builds in piece by piece, a headline,
+   then the text, then the buttons, each rising and fading in a beat after
+   the last (--i is the position, set in the markup). As the visitor scrolls,
+   each section, and each card within it, rises into place as it nears the
+   screen (src/hooks/useScrollReveal.js). Opacity and position only, nothing
+   that changes layout. Turned off for visitors who ask for reduced motion
+   and when printing, so content is never left hidden. */
+:root {
+  /* Quick start, long gentle landing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+.page-enter {
+  animation: page-enter 250ms ease-out both;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
   }
   to {
     opacity: 1;
     transform: none;
   }
 }
-.page-enter {
-  animation: page-enter 280ms ease-out both;
+.hero-rise {
+  animation: hero-rise 800ms var(--ease-out-expo) both;
+  animation-delay: calc(120ms + var(--i, 0) * 130ms);
+}
+
+/* Photo heroes settle in from a slight zoom */
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.hero-zoom {
+  animation: hero-zoom 1600ms var(--ease-out-expo) both;
+}
+
+@keyframes hero-glow {
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-glow {
+  animation: hero-glow 1800ms ease-out both;
 }
 
 [data-reveal="pending"] {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(32px);
+}
+/* A section that contains cards only fades; the cards rise one after another */
+[data-reveal="pending"][data-reveal-kind="fade"] {
+  transform: none;
 }
 /* The transition lives on the end state only, so entering "pending" is
-   instant (no fade-out) and leaving it animates in. */
+   instant (no fade-out) and leaving it animates in. --reveal-i staggers
+   elements that appear in the same moment. The hover properties keep their
+   own quick transitions. */
 [data-reveal="shown"] {
   opacity: 1;
   transform: none;
-  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  transition: opacity 800ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 90ms),
+    transform 800ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 90ms),
+    border-color 200ms ease, box-shadow 200ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-enter {
+  .page-enter,
+  .hero-rise,
+  .hero-zoom,
+  .hero-glow {
     animation: none;
   }
   [data-reveal] {
@@ -400,6 +458,11 @@ html.a11y-contrast :focus-visible {
   }
 }
 @media print {
+  .hero-rise,
+  .hero-zoom,
+  .hero-glow {
+    animation: none;
+  }
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;

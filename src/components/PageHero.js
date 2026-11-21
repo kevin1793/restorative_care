@@ -17,7 +17,7 @@ export default function PageHero({ title, subtitle, imageSrc, imageAlt }) {
         alt={imageAlt || ""}
         fetchPriority="high"
         decoding="async"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="hero-zoom absolute inset-0 w-full h-full object-cover"
         aria-hidden="true"
       />
 
@@ -29,13 +29,17 @@ export default function PageHero({ title, subtitle, imageSrc, imageAlt }) {
       <div className="relative z-10 max-w-3xl mx-auto px-4">
         <h1
           id="page-hero-heading"
-          className="text-3xl min-[400px]:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg"
+          style={{ "--i": 0 }}
+          className="hero-rise text-3xl min-[400px]:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg"
         >
           {title}
         </h1>
 
         {subtitle && (
-          <p className="text-white max-w-2xl mx-auto text-base min-[400px]:text-lg md:text-xl leading-relaxed drop-shadow">
+          <p
+            style={{ "--i": 1 }}
+            className="hero-rise text-white max-w-2xl mx-auto text-base min-[400px]:text-lg md:text-xl leading-relaxed drop-shadow"
+          >
             {subtitle}
           </p>
         )}
