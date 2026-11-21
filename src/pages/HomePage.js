@@ -178,7 +178,7 @@ export default function HomePage() {
               className="hero-rise font-fancy text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl text-balance !leading-[1.8] font-bold text-primary mb-6"
               aria-hidden="true"
             >
-              Compassionate Care, Right at Home in Bedford, TX
+              Compassionate Care, Right at Home in the DFW Area
             </p>
 
             <p
