@@ -353,3 +353,55 @@ html.a11y-contrast :focus-visible {
     break-after: avoid;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Page and section transitions                                        */
+/* ------------------------------------------------------------------ */
+
+/* Deliberately small and quick: a short fade with a few pixels of rise when
+   a page loads, and a slightly longer one as sections scroll into view
+   (src/hooks/useScrollReveal.js). Opacity and position only, nothing that
+   changes layout. Turned off for visitors who ask for reduced motion and when
+   printing, so content is never left hidden. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-enter {
+  animation: page-enter 280ms ease-out both;
+}
+
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+/* The transition lives on the end state only, so entering "pending" is
+   instant (no fade-out) and leaving it animates in. */
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

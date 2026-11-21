@@ -22,6 +22,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AccessibilityControls from "./components/AccessibilityControls";
+import useScrollReveal from "./hooks/useScrollReveal";
 
 /**
  * Handles scroll + focus reset on page change (important for screen readers),
@@ -59,9 +60,15 @@ function RouteAnnouncer({ children }) {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
+  // Sections below the fold rise in as they scroll into view
+  useScrollReveal(location.pathname);
+
   return (
     <>
-      {children}
+      {/* Keyed by page so each new page fades in (see .page-enter) */}
+      <div key={location.pathname} className="page-enter">
+        {children}
+      </div>
       <div role="status" aria-live="polite" className="sr-only">
         {announcement}
       </div>
