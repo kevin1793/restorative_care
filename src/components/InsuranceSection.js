@@ -140,6 +140,9 @@ export default function InsuranceSection() {
   const cardClasses =
     "flex flex-col items-center text-center min-w-0 bg-white border border-primary/15 rounded-xl shadow-brand hover:shadow-brand-hover transition-shadow duration-200";
 
+  const disclaimerClasses =
+    "text-xs text-gray-600 text-center mt-4 max-w-2xl mx-auto leading-snug";
+
   return (
     <section
       id="insurance"
@@ -183,6 +186,13 @@ export default function InsuranceSection() {
               </li>
             ))}
           </ul>
+
+          <p className={disclaimerClasses}>
+            The Texas Health and Human Services and Medicare names and logos
+            belong to their respective government agencies. We are an
+            independent provider, and their use here does not imply
+            endorsement by or affiliation with any government agency.
+          </p>
         </div>
 
         <div>
@@ -210,6 +220,13 @@ export default function InsuranceSection() {
               );
             })}
           </ul>
+
+          <p className={disclaimerClasses}>
+            Molina Healthcare, TriWest, Aetna, tango and Superior HealthPlan
+            names and logos are trademarks of their respective owners and are
+            shown only to identify the plans we accept. Their use does not
+            imply endorsement.
+          </p>
         </div>
 
         <p className="text-center text-gray-700 mt-10">
