@@ -102,7 +102,19 @@ const routes = [
 
 const byPath = Object.fromEntries(routes.map((r) => [r.path, r]));
 
+// The "page not found" page. Not in `routes` on purpose: it must stay out of
+// the sitemap and carry noindex. scripts/prerender.js writes it to
+// build/404.html, which the server returns (with a real 404 status) for any
+// URL that isn't a page — see public/.htaccess.
+const notFound = {
+  title: "Page Not Found | Restorative Care HHS",
+  description:
+    "The page you were looking for could not be found. Return to the Restorative Care HHS home page or contact us for help.",
+  heading: "Page Not Found",
+};
+
 module.exports = {
+  notFound,
   SITE_URL,
   SITE_NAME,
   OG_IMAGE,

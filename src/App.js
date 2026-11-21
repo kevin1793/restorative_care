@@ -19,6 +19,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import AccessibilityStatementPage from "./pages/AccessibilityStatementPage";
 import NondiscriminationPage from "./pages/NondiscriminationPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -93,6 +94,7 @@ function App() {
                 path="/terms-of-service"
                 element={<TermsOfServicePage />}
               />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </RouteAnnouncer>
         </main>

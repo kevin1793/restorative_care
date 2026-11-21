@@ -1,12 +1,10 @@
-# Restorative Care HHS — React SPA routing for Apache (Hostinger)
+# Restorative Care HHS — routing for Apache (Hostinger)
 #
-# Without this, only "/" works. Visiting or refreshing a client-side
-# route directly (e.g. /services, /veterans, /service-area) returns
-# Apache's own 404 page instead of index.html, and any request for a
-# file that doesn't actually exist on the server (a stale JS/CSS bundle
-# reference, a missing icon) does the same — which is what produces
-# "Unexpected token '<'" in the console: the browser asked for a .js
-# file and got an HTML error page back instead.
+# Each page is prerendered to its own file (services.html, veterans.html, ...)
+# by scripts/prerender.js, and the rules below serve /services from
+# services.html and so on. The React app takes over in the browser from
+# there. Any URL that isn't a real file or page gets a genuine 404 status and
+# the branded 404.html, rather than index.html with a 200.
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -24,9 +22,15 @@
   RewriteCond %{DOCUMENT_ROOT}/$1.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
 
-  # Everything else falls back to index.html so React Router can handle it
-  RewriteRule ^ index.html [L]
+  # Anything else isn't a page on this site. Answer with a real 404 status
+  # (instead of serving index.html with 200, which search engines treat as a
+  # "soft 404") and show the branded page from build/404.html via the
+  # ErrorDocument below. Every real page is prerendered to its own .html file
+  # above, so no URL needs the index.html fallback any more.
+  RewriteRule ^ - [R=404,L]
 </IfModule>
+
+ErrorDocument 404 /404.html
 
 # Cache hashed static assets aggressively; never cache index.html so
 # visitors always get the build that matches the current asset hashes

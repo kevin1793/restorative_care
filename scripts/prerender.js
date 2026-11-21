@@ -15,7 +15,8 @@
 //     visitors; the React app replaces nothing in it when JS runs)
 //   - Content-Security-Policy (production only; the dev server needs looser
 //     rules for hot reloading)
-// It also writes build/sitemap.xml. The server maps /services -> services.html
+// It also writes build/404.html (noindex, no canonical) for URLs that aren't
+// pages, and build/sitemap.xml. The server maps /services -> services.html
 // (see the rewrite rules in public/.htaccess).
 
 const fs = require("fs");
@@ -26,6 +27,7 @@ const {
   OG_IMAGE,
   OG_IMAGE_ALT,
   routes,
+  notFound,
 } = require("../src/seo/routes");
 
 const buildDir = path.resolve(__dirname, "..", "build");
@@ -68,25 +70,29 @@ function urlFor(route) {
   return route.path === "/" ? `${SITE_URL}/` : `${SITE_URL}${route.path}`;
 }
 
-function headTags(route) {
-  const url = urlFor(route);
+// `isNotFound`: the 404 page has no canonical URL of its own and must stay out
+// of search results.
+function headTags(route, isNotFound = false) {
+  const url = isNotFound ? null : urlFor(route);
   const tags = [
     `<meta http-equiv="Content-Security-Policy" content="${esc(CSP)}" />`,
     `<meta name="description" content="${esc(route.description)}" />`,
-    `<link rel="canonical" href="${esc(url)}" />`,
+    isNotFound
+      ? `<meta name="robots" content="noindex, follow" />`
+      : `<link rel="canonical" href="${esc(url)}" />`,
     `<meta property="og:site_name" content="${esc(SITE_NAME)}" />`,
     `<meta property="og:locale" content="en_US" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:title" content="${esc(route.title)}" />`,
     `<meta property="og:description" content="${esc(route.description)}" />`,
-    `<meta property="og:url" content="${esc(url)}" />`,
+    url && `<meta property="og:url" content="${esc(url)}" />`,
     `<meta property="og:image" content="${esc(OG_IMAGE)}" />`,
     `<meta property="og:image:alt" content="${esc(OG_IMAGE_ALT)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(route.title)}" />`,
     `<meta name="twitter:description" content="${esc(route.description)}" />`,
     `<meta name="twitter:image" content="${esc(OG_IMAGE)}" />`,
-  ];
+  ].filter(Boolean);
 
   // The home page hero uses the decorative script font; load it early there
   // only (other pages don't use it).
@@ -113,7 +119,7 @@ function noscriptSummary(route) {
   );
 }
 
-function render(route) {
+function render(route, isNotFound = false) {
   let html = template;
 
   // Replace the dev-server fallback title and drop any stale per-page tags
@@ -125,13 +131,16 @@ function render(route) {
   // Put the generated tags right after <meta charset> so the CSP is first
   html = html.replace(
     /(<meta\s+charset="utf-8"\s*\/?>)/i,
-    `$1\n    ${headTags(route)}`
+    `$1\n    ${headTags(route, isNotFound)}`
   );
 
   // Crawler/no-JS summary just before the app root
   html = html.replace(/(<div id="root"><\/div>)/i, `${noscriptSummary(route)}$1`);
 
-  if (!html.includes(`<link rel="canonical" href="${esc(urlFor(route))}"`)) {
+  const marker = isNotFound
+    ? `<meta name="robots" content="noindex, follow" />`
+    : `<link rel="canonical" href="${esc(urlFor(route))}"`;
+  if (!html.includes(marker)) {
     throw new Error(`prerender: failed to inject head tags for ${route.path}`);
   }
   return html;
@@ -146,6 +155,14 @@ for (const route of routes) {
   fs.writeFileSync(file, html);
   console.log(`prerender: ${route.path.padEnd(20)} -> ${path.relative(buildDir, file)}`);
 }
+
+// 404.html: shown (with a real 404 status) for any URL that isn't a page.
+// Its noscript summary needs a path-less route object.
+fs.writeFileSync(
+  path.join(buildDir, "404.html"),
+  render({ path: "/404", ...notFound }, true)
+);
+console.log(`prerender: ${"(not found)".padEnd(20)} -> 404.html`);
 
 // sitemap.xml
 const lastmod = new Date().toISOString().slice(0, 10);
