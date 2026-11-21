@@ -439,8 +439,8 @@ html.a11y-contrast :focus-visible {
 [data-reveal="shown"] {
   opacity: 1;
   transform: none;
-  transition: opacity 950ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 110ms),
-    transform 950ms var(--ease-out-expo) calc(var(--reveal-i, 0) * 110ms),
+  transition: opacity 950ms var(--ease-out-expo) var(--reveal-delay, calc(var(--reveal-i, 0) * 110ms)),
+    transform 950ms var(--ease-out-expo) var(--reveal-delay, calc(var(--reveal-i, 0) * 110ms)),
     border-color 200ms ease, box-shadow 200ms ease;
 }
 
