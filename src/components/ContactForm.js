@@ -183,6 +183,29 @@ export default function ContactForm({ showHeading = true }) {
             All required fields must be completed before submitting the form.
           </p>
 
+          {/* Spam trap (Formspree honeypot). People never see or reach this
+              field: it is moved off-screen, hidden from screen readers, and
+              skipped by the Tab key. Bots that fill in every input will fill
+              it, and Formspree then discards the submission as spam.
+              The name must stay "_gotcha". It is deliberately not
+              display:none, which some bots detect and skip. */}
+          <div
+            aria-hidden="true"
+            className="absolute -left-[9999px] w-px h-px overflow-hidden"
+          >
+            <label htmlFor="website-hp">
+              Leave this field empty
+              <input
+                id="website-hp"
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
+              />
+            </label>
+          </div>
+
           {errorCount > 0 && (
             <div
               ref={summaryRef}

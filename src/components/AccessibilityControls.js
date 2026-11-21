@@ -36,6 +36,10 @@ function applyPrefs({ size, contrast, links }) {
   } else {
     root.style.fontSize = `${TEXT_SIZES[size]}px`;
   }
+  // a11y-size-1/2/3 lets index.css hold multi-column layouts back as text
+  // gets larger (see "Multi-column layouts at larger text sizes").
+  TEXT_SIZES.forEach((_, i) => root.classList.remove(`a11y-size-${i}`));
+  if (size > 0) root.classList.add(`a11y-size-${size}`);
   root.classList.toggle("a11y-contrast", contrast);
   root.classList.toggle("a11y-links", links);
 }
@@ -157,7 +161,7 @@ export default function AccessibilityControls() {
           ref={panelRef}
           role="dialog"
           aria-label="Accessibility options"
-          className="fixed bottom-20 left-4 z-40 w-[min(22rem,calc(100vw-2rem))] max-h-[calc(100dvh-7rem)] overflow-y-auto rounded-2xl bg-white p-4 shadow-brand-hover border border-gray-300"
+          className="fixed bottom-20 left-4 z-40 w-[min(22rem,calc(100vw-2rem))] max-h-[calc(100dvh-5rem-var(--nav-h,5.5rem)-0.75rem)] overflow-y-auto rounded-2xl bg-white p-4 shadow-brand-hover border border-gray-300"
         >
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold text-primary">

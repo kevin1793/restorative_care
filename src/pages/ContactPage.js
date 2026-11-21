@@ -31,7 +31,7 @@ export default function ContactPage() {
 
 
       {/* Main Content */}
-      <div className="pt-[87px] xl:pt-[94px]">
+      <div className="pt-[var(--nav-h,87px)]">
         {/* Hero Section — shared component (report §4.9.1); also fixes
             the off-brand teal overlay that used to sit here */}
         <PageHero

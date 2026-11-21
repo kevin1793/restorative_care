@@ -9,6 +9,7 @@ try {
     var sizes = [18, 20, 22, 24];
     if (prefs.size > 0 && prefs.size < sizes.length) {
       root.style.fontSize = sizes[prefs.size] + "px";
+      root.classList.add("a11y-size-" + prefs.size);
     }
     if (prefs.contrast) root.classList.add("a11y-contrast");
     if (prefs.links) root.classList.add("a11y-links");

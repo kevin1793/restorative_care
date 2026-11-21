@@ -52,7 +52,7 @@ export default function NondiscriminationPage() {
     <>
       <Seo path="/nondiscrimination" />
 
-      <div className="pt-[87px] xl:pt-[94px]">
+      <div className="pt-[var(--nav-h,87px)]">
         <section
           className="py-12 md:py-20 bg-white"
           aria-labelledby="nondiscrimination-heading"

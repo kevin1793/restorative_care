@@ -109,3 +109,180 @@ html.a11y-contrast :focus-visible {
   outline: 3px solid #000;
   outline-offset: 3px;
 }
+
+/* ------------------------------------------------------------------ */
+/* Navbar layout switch (see Navbar.js)                                */
+/* ------------------------------------------------------------------ */
+
+/* The full desktop row needs ~74.5rem (75rem threshold). Container-query rem units follow the
+   visitor's text size setting (the root font size), unlike media-query
+   breakpoints, so the switch to the hamburger menu moves to wider screens
+   automatically as text gets larger. Browsers without container queries just
+   keep the hamburger menu, which always works. */
+.nav-cq {
+  container: nav / inline-size;
+}
+.nav-desktop-links,
+.nav-desktop-actions {
+  display: none;
+}
+@container nav (min-width: 75rem) {
+  .nav-desktop-links,
+  .nav-desktop-actions {
+    display: flex;
+  }
+  .nav-mobile {
+    display: none;
+  }
+  .nav-logo {
+    flex-shrink: 0;
+  }
+  /* the full row never hides on scroll */
+  .nav-root {
+    --tw-translate-y: 0px !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Multi-column layouts at larger text sizes                           */
+/* ------------------------------------------------------------------ */
+
+/* Text is sized in rem, so a bigger text setting makes every column
+   narrower, but Tailwind's sm / md / lg breakpoints are fixed pixel widths.
+   Without help, "Largest" text at 768px or 1024px wide gets columns only
+   ~15 characters across. AccessibilityControls and a11y-init.js put a class
+   a11y-size-1/2/3 on <html>; for each one, a multi-column layout waits to
+   switch on until the screen is as much wider as the text is larger (the
+   breakpoint x text size ratio), and falls back to the previous layout
+   (fewer columns, image back above the text) in between. */
+
+/* 20px text (x1.11): sm 712px, md 854px, lg 1138px */
+@media (min-width: 640px) and (max-width: 711px) {
+  html.a11y-size-1 .sm\:grid-cols-2,
+  html.a11y-size-1 .sm\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-1 .sm\:col-span-2 {
+    grid-column: span 1 / span 1;
+  }
+}
+@media (min-width: 768px) and (max-width: 853px) {
+  html.a11y-size-1 .md\:grid-cols-2,
+  html.a11y-size-1 .md\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-1 .md\:order-last {
+    order: -9999;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1137px) {
+  html.a11y-size-1 .lg\:grid-cols-3,
+  html.a11y-size-1 .lg\:grid-cols-5 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-1 .lg\:grid-cols-4,
+  html.a11y-size-1 .lg\:grid-cols-12 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* footer: brand and "where we serve" span both columns, as at sm */
+  html.a11y-size-1 .sm\:col-span-2.lg\:col-span-4,
+  html.a11y-size-1 .sm\:col-span-2.lg\:col-span-3 {
+    grid-column: span 2 / span 2;
+  }
+  html.a11y-size-1 .lg\:col-span-2,
+  html.a11y-size-1 .lg\:col-span-3:not(.sm\:col-span-2) {
+    grid-column: span 1 / span 1;
+  }
+}
+
+/* 22px text (x1.22): sm 783px, md 939px, lg 1252px */
+@media (min-width: 640px) and (max-width: 782px) {
+  html.a11y-size-2 .sm\:grid-cols-2,
+  html.a11y-size-2 .sm\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-2 .sm\:col-span-2 {
+    grid-column: span 1 / span 1;
+  }
+}
+@media (min-width: 768px) and (max-width: 938px) {
+  html.a11y-size-2 .md\:grid-cols-2,
+  html.a11y-size-2 .md\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-2 .md\:order-last {
+    order: -9999;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1251px) {
+  html.a11y-size-2 .lg\:grid-cols-3,
+  html.a11y-size-2 .lg\:grid-cols-5 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-2 .lg\:grid-cols-4,
+  html.a11y-size-2 .lg\:grid-cols-12 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* footer: brand and "where we serve" span both columns, as at sm */
+  html.a11y-size-2 .sm\:col-span-2.lg\:col-span-4,
+  html.a11y-size-2 .sm\:col-span-2.lg\:col-span-3 {
+    grid-column: span 2 / span 2;
+  }
+  html.a11y-size-2 .lg\:col-span-2,
+  html.a11y-size-2 .lg\:col-span-3:not(.sm\:col-span-2) {
+    grid-column: span 1 / span 1;
+  }
+}
+
+/* 24px text (x1.33): sm 854px, md 1024px, lg 1366px */
+@media (min-width: 640px) and (max-width: 853px) {
+  html.a11y-size-3 .sm\:grid-cols-2,
+  html.a11y-size-3 .sm\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-3 .sm\:col-span-2 {
+    grid-column: span 1 / span 1;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  html.a11y-size-3 .md\:grid-cols-2,
+  html.a11y-size-3 .md\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-3 .md\:order-last {
+    order: -9999;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1365px) {
+  html.a11y-size-3 .lg\:grid-cols-3,
+  html.a11y-size-3 .lg\:grid-cols-5 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html.a11y-size-3 .lg\:grid-cols-4,
+  html.a11y-size-3 .lg\:grid-cols-12 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* footer: brand and "where we serve" span both columns, as at sm */
+  html.a11y-size-3 .sm\:col-span-2.lg\:col-span-4,
+  html.a11y-size-3 .sm\:col-span-2.lg\:col-span-3 {
+    grid-column: span 2 / span 2;
+  }
+  html.a11y-size-3 .lg\:col-span-2,
+  html.a11y-size-3 .lg\:col-span-3:not(.sm\:col-span-2) {
+    grid-column: span 1 / span 1;
+  }
+}
+
+/* A 3-column list inside one half of a two-column section (the Home page
+   highlights) is only ~5 characters wide per column at the two largest sizes
+   at any screen width, so keep it to one column there. */
+@media (min-width: 939px) {
+  html.a11y-size-2 .md\:grid-cols-2 .sm\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  html.a11y-size-3 .md\:grid-cols-2 .sm\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -110,7 +110,7 @@ export default function VeteransPage() {
 
 
       {/* Main Content */}
-      <div className="pt-[87px] xl:pt-[94px]">
+      <div className="pt-[var(--nav-h,87px)]">
         {/* Hero Section — shared component (report §4.7.1); also fixes
             the plain black overlay that used to sit here */}
         <PageHero

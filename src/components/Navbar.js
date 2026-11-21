@@ -8,6 +8,31 @@ export default function Navbar() {
 
   const mobileMenuRef = useRef(null);
   const menuButtonRef = useRef(null);
+  const barRef = useRef(null);
+
+  // Publish the navbar's real height as --nav-h on <html>. The navbar is
+  // fixed, and its height grows with the visitor's text size setting (rem
+  // padding and type), so pages use `pt-[var(--nav-h)]` to start below it
+  // instead of a hard-coded pixel offset that goes stale at larger sizes.
+  // Measures the bar only (not the open mobile menu) so opening the menu
+  // doesn't shift the page.
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return undefined;
+
+    const publish = () => {
+      document.documentElement.style.setProperty(
+        "--nav-h",
+        `${bar.getBoundingClientRect().height}px`
+      );
+    };
+
+    publish();
+    if (typeof ResizeObserver === "undefined") return undefined;
+    const observer = new ResizeObserver(publish);
+    observer.observe(bar);
+    return () => observer.disconnect();
+  }, []);
 
   const navLinks = [
     { label: "Services", href: "/services" },
@@ -78,8 +103,8 @@ export default function Navbar() {
   }, [open]);
 
   // Hide the navbar when scrolling down and bring it back on scroll up.
-  // Only takes effect below the xl breakpoint (hamburger layout); the full
-  // desktop navbar always stays visible via the xl:translate-y-0 class.
+  // Only takes effect in the hamburger layout; the full desktop navbar
+  // always stays visible (see the .nav-root rule in src/index.css).
   useEffect(() => {
     let lastY = window.scrollY;
     let ticking = false;
@@ -115,19 +140,20 @@ export default function Navbar() {
   };
 
   return (
-    <header>
+    <header className="nav-cq">
       <nav
         className={`
+          nav-root
           w-full bg-white shadow-md
           fixed top-0 left-0 z-50
           transition-transform duration-300 motion-reduce:transition-none
-          xl:translate-y-0
           ${hidden && !open ? "-translate-y-[110%]" : "translate-y-0"}
         `}
         aria-label="Main navigation"
         onFocus={() => setHidden(false)}
       >
         <div
+          ref={barRef}
           className="
             max-w-7xl mx-auto
             px-6 py-5
@@ -138,7 +164,7 @@ export default function Navbar() {
           <RouterLink
             to="/"
             className={`
-              flex items-center space-x-2 min-h-[44px] min-w-0 xl:shrink-0
+              nav-logo flex items-center space-x-2 min-h-[44px] min-w-0
               text-gray-900
               ${focusClasses}
             `}
@@ -155,14 +181,16 @@ export default function Navbar() {
             </span>
           </RouterLink>
 
-          {/* Desktop Navigation — xl breakpoint: with the 18px base type
-              size, 4 links + Careers + phone button + Request Care needs
-              roughly 1100px. md (768px) and even lg (1024px) squeeze or
-              overflow it, so the full row only shows at xl (1280px+);
-              narrower desktop/tablet widths get the hamburger menu. */}
+          {/* Desktop Navigation — shown only when the navbar is wide enough
+              for the whole row (4 links + Careers + phone button + Request
+              Care). The threshold is in rem inside a container query (see
+              .nav-cq in src/index.css), and rem follows the visitor's text
+              size setting, so it moves up automatically: ~1350px at the
+              default size, ~1800px at the largest. Narrower than that gets
+              the hamburger menu instead of a clipped row. */}
           <ul
             className="
-              hidden xl:flex
+              nav-desktop-links
               items-center
               space-x-6
               flex-shrink-0
@@ -207,7 +235,7 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop Actions: tap-to-call + primary CTA */}
-          <div className="hidden xl:flex items-center space-x-5 ml-6 flex-shrink-0">
+          <div className="nav-desktop-actions items-center space-x-5 ml-6 flex-shrink-0">
             <a
               href="tel:8172858515"
               className={`
@@ -251,7 +279,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen(!open)}
             className={`
-              xl:hidden
+              nav-mobile
               inline-flex shrink-0 items-center justify-center min-w-[44px] min-h-[44px]
               text-gray-900
               hover:text-primary
@@ -278,7 +306,7 @@ export default function Navbar() {
           id="mobile-navigation"
           ref={mobileMenuRef}
           className={`
-            xl:hidden
+            nav-mobile
             grid
             transition-[grid-template-rows] duration-300 ease-out
             motion-reduce:transition-none
@@ -291,7 +319,7 @@ export default function Navbar() {
               bg-white
               border-t border-gray-200
               shadow-lg
-              max-h-[calc(100dvh-5.5rem)] overflow-y-auto
+              max-h-[calc(100dvh-var(--nav-h,5.5rem))] overflow-y-auto
             "
           >
             <ul className="flex flex-col py-2">

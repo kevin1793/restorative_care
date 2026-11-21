@@ -11,7 +11,7 @@ export default function TermsOfServicePage() {
       <Seo path="/terms-of-service" />
 
 
-      <div className="pt-16">
+      <div className="pt-[var(--nav-h,87px)]">
         <section className="py-12 md:py-20 bg-white" aria-labelledby="terms-heading">
           <div className="max-w-3xl mx-auto px-6">
             <h1

@@ -21,7 +21,7 @@ export default function ServiceAreaPage() {
     <>
       <Seo path="/service-area" />
 
-      <div className="pt-16">
+      <div className="pt-[var(--nav-h,87px)]">
         {/* Hero */}
         <section
           className="bg-gradient-to-b from-primaryLight to-white py-12 md:py-20"

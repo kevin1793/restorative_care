@@ -131,7 +131,7 @@ export default function HomePage() {
       <Seo path="/" />
 
       {/* Main Content */}
-      <div className="pt-16">
+      <div className="pt-[var(--nav-h,87px)]">
         {/* Hero Section */}
         <section
           className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white pt-12 pb-8 md:py-20"

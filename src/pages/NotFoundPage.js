@@ -18,7 +18,7 @@ export default function NotFoundPage() {
     <>
       <Seo title={notFound.title} description={notFound.description} noindex />
 
-      <div className="pt-16">
+      <div className="pt-[var(--nav-h,87px)]">
         <section
           className="py-16 md:py-24 bg-white"
           aria-labelledby="not-found-heading"
