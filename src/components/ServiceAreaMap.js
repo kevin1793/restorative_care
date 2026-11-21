@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { geoMercator, geoPath } from "d3-geo";
 import { json } from "d3-fetch";
 import { feature } from "topojson-client";
 
-const SERVED_COUNTIES = new Set([
+export const SERVED_COUNTIES = [
   "Collin",
   "Dallas",
   "Denton",
@@ -11,11 +11,13 @@ const SERVED_COUNTIES = new Set([
   "Hood",
   "Johnson",
   "Kaufman",
+  "Navarro",
   "Parker",
   "Tarrant",
   "Wise",
-  "Navarro",
-]);
+];
+
+const SERVED_SET = new Set(SERVED_COUNTIES);
 
 // Real U.S. Census county boundary data (report §4.1) — not hand-drawn
 // shapes, so the geography stays accurate if the service area changes.
@@ -23,81 +25,208 @@ const COUNTIES_TOPOLOGY_URL =
   "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 const BEDFORD_COORDINATES = [-97.1431, 32.8437]; // [longitude, latitude]
 
-export default function ServiceAreaMap() {
-  const svgRef = useRef(null);
+const WIDTH = 600;
+const HEIGHT = 540;
+
+// Colors. Served counties use the brand navy; everything else is a cool,
+// quiet tint so the service area is the obvious focus.
+const COLORS = {
+  served: "#122C71",
+  servedActive: "#D85A30",
+  other: "#E4E8F3",
+  stroke: "#FFFFFF",
+  hq: "#D85A30",
+};
+
+// Fine-tune a few labels that would otherwise sit on top of the office marker
+const LABEL_OFFSETS = { Tarrant: [-6, -20] };
+
+// The map is zoomed in on the counties we serve (plus the surrounding
+// counties for context) instead of showing all of Texas, where the service
+// area was a tiny cluster in one corner.
+export default function ServiceAreaMap({ activeCounty = null }) {
+  const [shapes, setShapes] = useState(null);
+  const [hq, setHq] = useState(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    const width = 680;
-    const height = 620;
 
-    json(COUNTIES_TOPOLOGY_URL).then((us) => {
-      if (cancelled) return;
+    json(COUNTIES_TOPOLOGY_URL)
+      .then((us) => {
+        if (cancelled) return;
 
-      const allCounties = feature(us, us.objects.counties).features;
-      // Texas county FIPS codes all start with "48"
-      const texasCounties = allCounties.filter((d) =>
-        d.id.toString().startsWith("48")
-      );
-      const texasFeatureCollection = {
-        type: "FeatureCollection",
-        features: texasCounties,
-      };
-
-      const projection = geoMercator().fitSize(
-        [width, height],
-        texasFeatureCollection
-      );
-      const path = geoPath(projection);
-
-      const svg = svgRef.current;
-      if (!svg) return;
-      svg.innerHTML = "";
-
-      texasCounties.forEach((county) => {
-        const el = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "path"
+        // Texas county FIPS codes all start with "48"
+        const texasCounties = feature(us, us.objects.counties).features.filter(
+          (d) => d.id.toString().startsWith("48")
         );
-        el.setAttribute("d", path(county));
-        el.setAttribute(
-          "fill",
-          // Confirmed brand navy (report §4.8) — was the old placeholder
-          // blue from before the real color was sampled from the logo
-          SERVED_COUNTIES.has(county.properties.name) ? "#122C71" : "#e1e0d9"
+        const served = texasCounties.filter((d) =>
+          SERVED_SET.has(d.properties.name)
         );
-        el.setAttribute("stroke", "#ffffff");
-        el.setAttribute("stroke-width", "0.75");
-        svg.appendChild(el);
+
+        const projection = geoMercator().fitExtent(
+          [
+            [24, 24],
+            [WIDTH - 24, HEIGHT - 24],
+          ],
+          { type: "FeatureCollection", features: served }
+        );
+        const path = geoPath(projection);
+
+        setShapes(
+          texasCounties.map((county) => {
+            const name = county.properties.name;
+            const isServed = SERVED_SET.has(name);
+            const [cx, cy] = isServed ? path.centroid(county) : [0, 0];
+            return { id: county.id, name, isServed, d: path(county), cx, cy };
+          })
+        );
+        const [hqX, hqY] = projection(BEDFORD_COORDINATES);
+        setHq({ x: hqX, y: hqY });
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
       });
-
-      const [hqX, hqY] = projection(BEDFORD_COORDINATES);
-      const hqMarker = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "circle"
-      );
-      hqMarker.setAttribute("cx", hqX);
-      hqMarker.setAttribute("cy", hqY);
-      hqMarker.setAttribute("r", "5");
-      hqMarker.setAttribute("fill", "#D85A30");
-      hqMarker.setAttribute("stroke", "#ffffff");
-      hqMarker.setAttribute("stroke-width", "1.5");
-      svg.appendChild(hqMarker);
-    });
 
     return () => {
       cancelled = true;
     };
   }, []);
 
+  const label =
+    "Map of North Texas highlighting the eleven counties served by Restorative Care Home Health Services: Collin, Dallas, Denton, Ellis, Hood, Johnson, Kaufman, Navarro, Parker, Tarrant, and Wise, with the Bedford office marked";
+
+  if (failed) {
+    return (
+      <div
+        className="flex items-center justify-center text-center text-gray-700 p-8 rounded-xl bg-primaryLight"
+        style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}
+        role="status"
+      >
+        The map couldn't load right now. The full list of counties we serve is
+        shown beside it.
+      </div>
+    );
+  }
+
+  if (!shapes) {
+    return (
+      <div
+        className="w-full rounded-xl bg-primaryLight animate-pulse motion-reduce:animate-none"
+        style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}
+        role="status"
+        aria-label="Loading map"
+      />
+    );
+  }
+
+  const servedShapes = shapes.filter((s) => s.isServed);
+
   return (
     <svg
-      ref={svgRef}
-      viewBox="0 0 680 620"
+      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       width="100%"
       role="img"
-      aria-label="Map of Texas highlighting the eleven counties served by Restorative Care Home Health Services: Collin, Dallas, Denton, Ellis, Hood, Johnson, Kaufman, Parker, Tarrant, Wise, and Navarro, with the Bedford office marked"
-      className="mx-auto max-w-2xl"
-    />
+      aria-label={label}
+      className="block w-full h-auto rounded-xl bg-primaryLight/60"
+    >
+      <g aria-hidden="true">
+        {/* Surrounding counties first, so served counties draw on top */}
+        {shapes
+          .filter((s) => !s.isServed)
+          .map((s) => (
+            <path
+              key={s.id}
+              d={s.d}
+              fill={COLORS.other}
+              stroke={COLORS.stroke}
+              strokeWidth="1"
+            />
+          ))}
+
+        {servedShapes.map((s) => (
+          <path
+            key={s.id}
+            d={s.d}
+            fill={
+              activeCounty === s.name ? COLORS.servedActive : COLORS.served
+            }
+            stroke={COLORS.stroke}
+            strokeWidth="1.5"
+            style={{ transition: "fill 150ms ease" }}
+          />
+        ))}
+
+        {/* County names: hidden on narrow phones, where they'd be too small
+            to read — the county list sits right below the map there. */}
+        <g className="hidden sm:block" style={{ pointerEvents: "none" }}>
+          {servedShapes.map((s) => {
+            const [dx, dy] = LABEL_OFFSETS[s.name] || [0, 0];
+            return (
+              <text
+                key={s.id}
+                x={s.cx + dx}
+                y={s.cy + dy}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="#FFFFFF"
+                fontSize="13"
+                fontWeight="600"
+                style={{ letterSpacing: "0.01em" }}
+              >
+                {s.name}
+              </text>
+            );
+          })}
+        </g>
+
+        {hq && (
+          <g>
+            {/* soft pulsing ring; static for people who prefer reduced motion */}
+            <circle
+              cx={hq.x}
+              cy={hq.y}
+              r="11"
+              fill={COLORS.hq}
+              opacity="0.35"
+              className="animate-ping motion-reduce:animate-none"
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            />
+            <circle
+              cx={hq.x}
+              cy={hq.y}
+              r="7"
+              fill={COLORS.hq}
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
+            />
+            <g
+              transform={`translate(${hq.x - 112}, ${hq.y + 10})`}
+              className="hidden sm:block"
+            >
+              <rect
+                width="104"
+                height="24"
+                rx="12"
+                fill="#FFFFFF"
+                stroke={COLORS.hq}
+                strokeWidth="1.5"
+              />
+              <text
+                x="52"
+                y="12.5"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="#8A2F12"
+                fontSize="12"
+                fontWeight="700"
+              >
+                Bedford office
+              </text>
+            </g>
+          </g>
+        )}
+      </g>
+    </svg>
   );
 }
