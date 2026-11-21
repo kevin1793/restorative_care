@@ -11,8 +11,8 @@
     <!-- Helps accessibility in mobile UI theming -->
     <meta name="theme-color" content="#122C71" />
 
-    <!-- Helps browser adapt UI better for accessibility preferences -->
-    <meta name="color-scheme" content="light dark" />
+    <!-- Site has a light theme only; declaring "light dark" made dark-mode devices render native controls and unstyled areas dark -->
+    <meta name="color-scheme" content="light" />
 
     <meta name="author" content="Restorative Health Care HHS" />
 
@@ -43,6 +43,21 @@
   </head>
 
   <body>
+    <!-- Apply saved text-size / contrast / link preferences before React
+         loads so there's no flash of the default view. Keep the storage key
+         in sync with AccessibilityControls.js. -->
+    <script>
+      try {
+        var p = JSON.parse(localStorage.getItem("rc-a11y-prefs"));
+        if (p) {
+          var r = document.documentElement;
+          var sizes = [18, 20, 22, 24];
+          if (p.size > 0 && p.size < sizes.length) r.style.fontSize = sizes[p.size] + "px";
+          if (p.contrast) r.classList.add("a11y-contrast");
+          if (p.links) r.classList.add("a11y-links");
+        }
+      } catch (e) {}
+    </script>
     <!-- Improved accessibility fallback for no-JS users -->
     <noscript>
       <div role="alert">

@@ -35,29 +35,9 @@ export default function ContactPage() {
         />
       </Helmet>
 
-      {/* Skip Navigation */}
-      <a
-        href="#main-content"
-        className="
-          sr-only
-          focus:not-sr-only
-          focus:absolute
-          focus:top-4
-          focus:left-4
-          focus:z-50
-          focus:bg-white
-          focus:text-black
-          focus:px-4
-          focus:py-2
-          focus:rounded-md
-          focus:shadow-lg
-        "
-      >
-        Skip to main content
-      </a>
 
       {/* Main Content */}
-      <main id="main-content" className="pt-[87px] xl:pt-[94px]">
+      <div className="pt-[87px] xl:pt-[94px]">
         {/* Hero Section — shared component (report §4.9.1); also fixes
             the off-brand teal overlay that used to sit here */}
         <PageHero
@@ -114,6 +94,7 @@ export default function ContactPage() {
                 <a
                   href="tel:8172858515"
                   className={`
+                    inline-block py-2.5
                     text-gray-800 underline underline-offset-4
                     hover:text-primary
                     ${focusClasses}
@@ -137,6 +118,7 @@ export default function ContactPage() {
                 <a
                   href="mailto:inforestorativecare@gmail.com"
                   className={`
+                    inline-block py-2.5
                     [overflow-wrap:anywhere]
                     text-[13.5px] min-[360px]:text-sm min-[400px]:text-base
                     text-gray-800 underline underline-offset-4
@@ -255,7 +237,7 @@ export default function ContactPage() {
             </a>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

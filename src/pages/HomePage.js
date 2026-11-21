@@ -52,7 +52,7 @@ export default function HomePage() {
     inline-flex items-center
     bg-primaryLight text-primary
     text-sm font-medium
-    px-4 py-2 rounded-full
+    px-4 py-2.5 min-h-[44px] rounded-full
     hover:bg-primary hover:text-white
     transition-colors duration-200
   `;
@@ -127,29 +127,9 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Skip Navigation */}
-      <a
-        href="#main-content"
-        className="
-          sr-only
-          focus:not-sr-only
-          focus:absolute
-          focus:top-4
-          focus:left-4
-          focus:z-50
-          focus:bg-white
-          focus:text-black
-          focus:px-4
-          focus:py-2
-          focus:rounded-md
-          focus:shadow-lg
-        "
-      >
-        Skip to main content
-      </a>
 
       {/* Main Content */}
-      <main id="main-content" className="pt-16">
+      <div className="pt-16">
         {/* Hero Section */}
         <section
           className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white pt-12 pb-8 md:py-20"
@@ -339,7 +319,7 @@ export default function HomePage() {
             </div>
 
             {/* Skilled Services */}
-            <div id="skilled-services" className="mb-16 scroll-mt-24">
+            <div id="skilled-services" className="mb-16 scroll-mt-24 text-center">
               <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-8 inline-block">
                 Skilled Services
               </h3>
@@ -368,7 +348,7 @@ export default function HomePage() {
             </div>
 
             {/* Personal Care / Non-Skilled Services */}
-            <div id="personal-care-services" className="scroll-mt-24">
+            <div id="personal-care-services" className="scroll-mt-24 text-center">
               <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-2 inline-block">
                 Personal Care Services (Non-Skilled)
               </h3>
@@ -612,7 +592,7 @@ export default function HomePage() {
             </a>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

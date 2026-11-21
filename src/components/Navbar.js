@@ -56,13 +56,23 @@ export default function Navbar() {
     };
   }, [open]);
 
+  // The menu is always in the DOM so it can slide; `inert` takes the closed
+  // menu out of the tab order and the accessibility tree (React 18 doesn't
+  // support the attribute as a prop, so it's set here). Declared before the
+  // focus effect so the menu is already interactive when focus moves in.
+  useEffect(() => {
+    if (mobileMenuRef.current) {
+      mobileMenuRef.current.toggleAttribute("inert", !open);
+    }
+  }, [open]);
+
   // Focus first mobile menu item when opened
   useEffect(() => {
     if (open && mobileMenuRef.current) {
       const firstLink = mobileMenuRef.current.querySelector("a");
 
       if (firstLink) {
-        firstLink.focus();
+        firstLink.focus({ preventScroll: true });
       }
     }
   }, [open]);
@@ -121,14 +131,14 @@ export default function Navbar() {
           className="
             max-w-7xl mx-auto
             px-6 py-5
-            flex justify-between items-center
+            flex justify-between items-center gap-3
           "
         >
           {/* Logo */}
           <RouterLink
             to="/"
             className={`
-              flex items-center space-x-2
+              flex items-center space-x-2 min-h-[44px] min-w-0 xl:shrink-0
               text-gray-900
               ${focusClasses}
             `}
@@ -140,7 +150,7 @@ export default function Navbar() {
               aria-hidden="true"
             />
 
-            <span className="text-base min-[400px]:text-xl sm:text-2xl font-serif font-bold whitespace-nowrap">
+            <span className="text-base min-[400px]:text-xl sm:text-2xl font-serif font-bold leading-tight sm:whitespace-nowrap">
               Restorative Care HHS
             </span>
           </RouterLink>
@@ -242,7 +252,7 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             className={`
               xl:hidden
-              p-2
+              inline-flex shrink-0 items-center justify-center min-w-[44px] min-h-[44px]
               text-gray-900
               hover:text-primary
               transition-colors
@@ -260,16 +270,28 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {open && (
+        {/* Mobile Menu — always rendered so it can slide: the grid row
+            animates between 0fr and 1fr (height auto, no fixed max-height
+            guess); the overflow-hidden inner wrapper clips it, and `inert`
+            (set in an effect above) keeps closed links unfocusable. */}
+        <div
+          id="mobile-navigation"
+          ref={mobileMenuRef}
+          className={`
+            xl:hidden
+            grid
+            transition-[grid-template-rows] duration-300 ease-out
+            motion-reduce:transition-none
+            ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}
+          `}
+        >
+          <div className="min-h-0 overflow-hidden">
           <div
-            id="mobile-navigation"
-            ref={mobileMenuRef}
             className="
-              xl:hidden
               bg-white
               border-t border-gray-200
               shadow-lg
+              max-h-[calc(100dvh-5.5rem)] overflow-y-auto
             "
           >
             <ul className="flex flex-col py-2">
@@ -354,7 +376,8 @@ export default function Navbar() {
               </RouterLink>
             </div>
           </div>
-        )}
+          </div>
+        </div>
       </nav>
     </header>
   );

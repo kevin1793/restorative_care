@@ -125,7 +125,7 @@ function WebsiteLink({ url, name }) {
       rel="noopener noreferrer"
       title={hostOf(url)}
       aria-label={`${name} website (${hostOf(url)}) — opens in a new tab`}
-      className="mt-auto pt-3 w-full border-t border-primary/10 inline-flex items-center justify-center gap-1.5 text-sm text-primary underline underline-offset-4 hover:text-primary/80 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md whitespace-nowrap"
+      className="mt-auto pt-3 w-full min-h-[48px] border-t border-primary/10 inline-flex items-center justify-center gap-1.5 text-sm text-primary underline underline-offset-4 hover:text-primary/80 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md whitespace-nowrap"
     >
       <span>Visit website</span>
       <ExternalLink className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
@@ -163,7 +163,7 @@ export default function InsuranceSection() {
         </p>
 
         <div className="mb-10">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 text-center mb-4">
             Government Programs
           </h3>
 
@@ -196,7 +196,7 @@ export default function InsuranceSection() {
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 text-center mb-4">
             Managed Care Organizations
           </h3>
 

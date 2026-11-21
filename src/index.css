@@ -31,6 +31,9 @@ html {
 
 body {
   line-height: 1.6;
+  /* Long words (e.g. "Nondiscrimination") wrap instead of forcing sideways
+     scrolling when a visitor enlarges the text */
+  overflow-wrap: break-word;
 }
 
 /*
@@ -48,4 +51,57 @@ body {
     font-weight: 700;
     letter-spacing: -0.01em;
   }
+}
+/* ------------------------------------------------------------------ */
+/* Visitor accessibility preferences (see AccessibilityControls.js)    */
+/* ------------------------------------------------------------------ */
+
+/* Always-underlined links */
+html.a11y-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+
+/* High contrast: near-black text, solid dark borders, deeper navy, thicker
+   focus outline. Overrides sit after Tailwind's utilities and use
+   !important because the colors they replace come from utility classes. */
+html.a11y-contrast body {
+  color: #000;
+}
+html.a11y-contrast .text-gray-500,
+html.a11y-contrast .text-gray-600,
+html.a11y-contrast .text-gray-700,
+html.a11y-contrast .text-gray-800,
+html.a11y-contrast .text-gray-900 {
+  color: #000 !important;
+}
+html.a11y-contrast .text-primary {
+  color: #0a1a4a !important;
+}
+/* Only the semi-transparent whites (e.g. footer text-white/75) need forcing
+   to solid white; solid text-white is already white, and matching hover:
+   variants here would turn hover text white on a white background. */
+html.a11y-contrast [class*="text-white/"] {
+  color: #fff !important;
+}
+html.a11y-contrast .bg-primary {
+  background-color: #0a1a4a !important;
+}
+html.a11y-contrast .border-gray-200,
+html.a11y-contrast .border-gray-300,
+html.a11y-contrast [class*="border-primary"] {
+  border-color: #0a1a4a !important;
+}
+html.a11y-contrast input::placeholder,
+html.a11y-contrast textarea::placeholder {
+  color: #333 !important;
+  opacity: 1;
+}
+html.a11y-contrast a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+html.a11y-contrast :focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 3px;
 }

@@ -101,29 +101,9 @@ export default function ServicesPage() {
         />
       </Helmet>
 
-      {/* Skip Navigation */}
-      <a
-        href="#main-content"
-        className="
-          sr-only
-          focus:not-sr-only
-          focus:absolute
-          focus:top-4
-          focus:left-4
-          focus:z-50
-          focus:bg-white
-          focus:text-black
-          focus:px-4
-          focus:py-2
-          focus:rounded-md
-          focus:shadow-lg
-        "
-      >
-        Skip to main content
-      </a>
 
       {/* Main Content */}
-      <main id="main-content" className="pt-[87px] xl:pt-[94px]">
+      <div className="pt-[87px] xl:pt-[94px]">
         {/* Hero Section — shared component (report §4.6/§4.7.1); also
             fixes the off-brand teal overlay that used to sit here */}
         <PageHero
@@ -328,7 +308,7 @@ export default function ServicesPage() {
             </a>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

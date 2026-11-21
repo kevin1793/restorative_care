@@ -46,28 +46,8 @@ export default function ServiceAreaPage() {
         />
       </Helmet>
 
-      {/* Skip Navigation */}
-      <a
-        href="#main-content"
-        className="
-          sr-only
-          focus:not-sr-only
-          focus:absolute
-          focus:top-4
-          focus:left-4
-          focus:z-50
-          focus:bg-white
-          focus:text-black
-          focus:px-4
-          focus:py-2
-          focus:rounded-md
-          focus:shadow-lg
-        "
-      >
-        Skip to main content
-      </a>
 
-      <main id="main-content" className="pt-16">
+      <div className="pt-16">
         {/* Hero */}
         <section
           className="bg-gradient-to-b from-primaryLight to-white py-12 md:py-20"
@@ -128,7 +108,7 @@ export default function ServiceAreaPage() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

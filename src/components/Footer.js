@@ -16,7 +16,7 @@ export default function Footer() {
   // single biggest signal of "default template" rather than a considered
   // build, so light text/links on primaryDark replace the old light-gray
   // treatment throughout.
-  const linkClasses = `text-white/75 hover:text-white transition-colors ${focusClasses}`;
+  const linkClasses = `inline-block py-2.5 text-white/75 hover:text-white transition-colors ${focusClasses}`;
 
   return (
     <footer
@@ -26,7 +26,7 @@ export default function Footer() {
       <div
         className="
           max-w-7xl mx-auto px-6 py-12 md:py-16
-          grid sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10
+          grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 [&>*]:min-w-0
           text-white
         "
       >
@@ -54,7 +54,7 @@ export default function Footer() {
             Quick Links
           </h3>
 
-          <ul className="space-y-3 text-sm">
+          <ul className="text-sm">
             <li>
               <RouterLink to="/services" className={linkClasses} onClick={() => window.scrollTo(0, 0)}>
                 Services
@@ -95,7 +95,7 @@ export default function Footer() {
             Contact
           </h3>
 
-          <ul className="space-y-3 text-sm">
+          <ul className="text-sm">
             <li>
               <a
                 href="tel:8172858515"
@@ -109,7 +109,7 @@ export default function Footer() {
             <li>
               <a
                 href="mailto:inforestorativecare@gmail.com"
-                className={`${linkClasses} break-words`}
+                className={`${linkClasses} [overflow-wrap:anywhere]`}
                 aria-label="Send email to Restorative Care HHS"
               >
                 Email Us: inforestorativecare@gmail.com
@@ -150,7 +150,7 @@ export default function Footer() {
             Legal
           </h3>
 
-          <ul className="space-y-3 text-sm">
+          <ul className="text-sm">
             <li>
               <RouterLink to="/privacy-policy" className={linkClasses} onClick={() => window.scrollTo(0, 0)}>
                 Privacy Policy
@@ -159,6 +159,16 @@ export default function Footer() {
             <li>
               <RouterLink to="/terms-of-service" className={linkClasses} onClick={() => window.scrollTo(0, 0)}>
                 Terms of Service
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/accessibility" className={linkClasses} onClick={() => window.scrollTo(0, 0)}>
+                Accessibility Statement
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/nondiscrimination" className={linkClasses} onClick={() => window.scrollTo(0, 0)}>
+                Notice of Nondiscrimination
               </RouterLink>
             </li>
           </ul>

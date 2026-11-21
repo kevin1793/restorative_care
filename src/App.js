@@ -17,9 +17,12 @@ import ContactPage from "./pages/ContactPage";
 import ServiceAreaPage from "./pages/ServiceAreaPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
+import AccessibilityStatementPage from "./pages/AccessibilityStatementPage";
+import NondiscriminationPage from "./pages/NondiscriminationPage";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AccessibilityControls from "./components/AccessibilityControls";
 
 /**
  * Handles scroll + focus reset on route change (important for screen readers)
@@ -69,7 +72,7 @@ function App() {
         <Navbar />
 
         {/* Main landmark for accessibility */}
-        <main id="main-content" tabIndex={-1}>
+        <main id="main-content" tabIndex={-1} className="outline-none">
           <RouteAnnouncer>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -79,6 +82,14 @@ function App() {
               <Route path="/service-area" element={<ServiceAreaPage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
               <Route
+                path="/accessibility"
+                element={<AccessibilityStatementPage />}
+              />
+              <Route
+                path="/nondiscrimination"
+                element={<NondiscriminationPage />}
+              />
+              <Route
                 path="/terms-of-service"
                 element={<TermsOfServicePage />}
               />
@@ -87,6 +98,8 @@ function App() {
         </main>
 
         <Footer />
+
+        <AccessibilityControls />
       </Router>
     </HelmetProvider>
   );

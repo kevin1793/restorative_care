@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { Check } from "lucide-react";
 
@@ -20,10 +20,99 @@ const SERVICE_OPTIONS = [
 // showHeading: the Contact page already has its own "Send Us a Message"
 // heading right above the form, so it passes false to avoid two stacked
 // headings (and a duplicate element id).
+// Where each error's "fix it" link should send focus
+const FIELD_FOCUS_ID = {
+  name: "name",
+  email: "email",
+  phone: "phone",
+  services: "service-0",
+  message: "message",
+};
+
+// Inline error shown under a field and referenced by aria-describedby
+function FieldError({ id, message }) {
+  if (!message) return null;
+  return (
+    <p id={id} className="text-red-700 mt-2 text-sm font-medium">
+      {message}
+    </p>
+  );
+}
+
+function validate(form) {
+  const data = new FormData(form);
+  const errors = {};
+
+  if (!String(data.get("name") || "").trim()) {
+    errors.name = "Please enter your name.";
+  }
+
+  const email = String(data.get("email") || "").trim();
+  if (!email) {
+    errors.email = "Please enter your email address.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Please enter a valid email address, like name@example.com.";
+  }
+
+  const phone = String(data.get("phone") || "");
+  if (!phone.trim()) {
+    errors.phone = "Please enter your phone number.";
+  } else if (phone.replace(/\D/g, "").length < 10) {
+    errors.phone = "Please enter a 10-digit phone number, like (817) 555-0123.";
+  }
+
+  if (data.getAll("services").length === 0) {
+    errors.services = "Please select at least one service.";
+  }
+
+  if (!String(data.get("message") || "").trim()) {
+    errors.message = "Please tell us how we can help.";
+  }
+
+  return errors;
+}
+
 export default function ContactForm({ showHeading = true }) {
   const [state, handleSubmit] = useForm("mgvpkdba");
+  const [errs, setErrs] = useState({});
   const formRef = useRef(null);
   const successRef = useRef(null);
+  const summaryRef = useRef(null);
+
+  const invalid = (field) =>
+    !!errs[field] || !!state.errors?.some((error) => error.field === field);
+
+  const errorCount = Object.keys(errs).length;
+
+  // Check the form ourselves first so every problem is explained in words,
+  // announced to screen readers, and focus lands on the error summary.
+  const onSubmit = (event) => {
+    const found = validate(formRef.current);
+    setErrs(found);
+
+    if (Object.keys(found).length > 0) {
+      event.preventDefault();
+      // wait a tick so the summary exists before focusing it
+      setTimeout(() => summaryRef.current && summaryRef.current.focus(), 0);
+      return undefined;
+    }
+
+    return handleSubmit(event);
+  };
+
+  // Clear a field's error as soon as the visitor edits it
+  const clearError = (event) => {
+    const field = event.target.name;
+    if (field && errs[field]) {
+      setErrs(({ [field]: removed, ...rest }) => rest);
+    }
+  };
+
+  const focusField = (field) => (event) => {
+    event.preventDefault();
+    const el = document.getElementById(FIELD_FOCUS_ID[field]);
+    if (el) el.focus();
+  };
 
   // Clear form and move focus to success message
   useEffect(() => {
@@ -49,13 +138,12 @@ export default function ContactForm({ showHeading = true }) {
     placeholder:text-gray-500
     transition-colors
     focus:border-primary
+    aria-[invalid=true]:border-2 aria-[invalid=true]:border-red-700
     ${focusClasses}
   `;
 
   return (
-    <div
-      {...(showHeading ? { role: "region", "aria-labelledby": "contact-form-heading" } : {})}
-    >
+    <div>
       {/* Parent sections already supply the horizontal page padding, so no
           extra px here — otherwise the form lost ~50px of width on phones. */}
       <div className="max-w-2xl mx-auto">
@@ -77,7 +165,8 @@ export default function ContactForm({ showHeading = true }) {
         {/* Form */}
         <form
           ref={formRef}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          onChange={clearError}
           className="
             bg-gray-50
             shadow-brand
@@ -93,6 +182,34 @@ export default function ContactForm({ showHeading = true }) {
           <p id="form-description" className="sr-only">
             All required fields must be completed before submitting the form.
           </p>
+
+          {errorCount > 0 && (
+            <div
+              ref={summaryRef}
+              tabIndex={-1}
+              role="alert"
+              className="rounded-xl border-2 border-red-700 bg-red-50 p-4 text-red-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-red-700"
+            >
+              <p className="font-semibold mb-2">
+                {errorCount === 1
+                  ? "There is 1 problem with your message:"
+                  : `There are ${errorCount} problems with your message:`}
+              </p>
+              <ul className="list-disc pl-5 space-y-1">
+                {Object.entries(errs).map(([field, message]) => (
+                  <li key={field}>
+                    <a
+                      href={`#${FIELD_FOCUS_ID[field]}`}
+                      onClick={focusField(field)}
+                      className="underline underline-offset-4 font-medium focus:outline-none focus-visible:ring-4 focus-visible:ring-red-700 rounded-sm"
+                    >
+                      {message}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Name / Email / Phone — 2-column grid on desktop (report §3.9) */}
           <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
@@ -111,12 +228,12 @@ export default function ContactForm({ showHeading = true }) {
                 autoComplete="name"
                 required
                 aria-required="true"
-                aria-invalid={state.errors?.some(
-                  (error) => error.field === "name"
-                )}
+                aria-invalid={invalid("name")}
+                aria-describedby={errs.name ? "name-error" : undefined}
                 className={inputClasses}
               />
 
+              <FieldError id="name-error" message={errs.name} />
               <ValidationError
                 prefix="Name"
                 field="name"
@@ -141,12 +258,12 @@ export default function ContactForm({ showHeading = true }) {
                 inputMode="email"
                 required
                 aria-required="true"
-                aria-invalid={state.errors?.some(
-                  (error) => error.field === "email"
-                )}
+                aria-invalid={invalid("email")}
+                aria-describedby={errs.email ? "email-error" : undefined}
                 className={inputClasses}
               />
 
+              <FieldError id="email-error" message={errs.email} />
               <ValidationError
                 prefix="Email"
                 field="email"
@@ -171,12 +288,12 @@ export default function ContactForm({ showHeading = true }) {
                 inputMode="tel"
                 required
                 aria-required="true"
-                aria-invalid={state.errors?.some(
-                  (error) => error.field === "phone"
-                )}
+                aria-invalid={invalid("phone")}
+                aria-describedby={errs.phone ? "phone-error" : undefined}
                 className={inputClasses}
               />
 
+              <FieldError id="phone-error" message={errs.phone} />
               <ValidationError
                 prefix="Phone"
                 field="phone"
@@ -189,7 +306,7 @@ export default function ContactForm({ showHeading = true }) {
           {/* Service(s) Needed — multi-select checkboxes instead of a
               single-select dropdown, since clients often need more than
               one type of care at once (report §4.9.3) */}
-          <fieldset>
+          <fieldset aria-describedby={errs.services ? "services-error" : undefined}>
             <legend className="text-gray-900 font-medium mb-1">
               Service(s) Needed <span aria-hidden="true">*</span>
             </legend>
@@ -197,7 +314,7 @@ export default function ContactForm({ showHeading = true }) {
             <p className="text-sm text-gray-700 mb-3">Select all that apply</p>
 
             <div className="grid sm:grid-cols-2 gap-2.5">
-              {SERVICE_OPTIONS.map((service) => (
+              {SERVICE_OPTIONS.map((service, index) => (
                 <label
                   key={service}
                   className="flex items-start gap-3 min-h-[3rem] rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-gray-800 cursor-pointer hover:border-primary/40 has-[:checked]:border-primary has-[:checked]:bg-primaryLight transition-colors"
@@ -206,6 +323,7 @@ export default function ContactForm({ showHeading = true }) {
                       square before it was checked */}
                   <span className="relative mt-0.5 w-5 h-5 shrink-0">
                     <input
+                      id={`service-${index}`}
                       type="checkbox"
                       name="services"
                       value={service}
@@ -222,6 +340,7 @@ export default function ContactForm({ showHeading = true }) {
               ))}
             </div>
 
+            <FieldError id="services-error" message={errs.services} />
             <ValidationError
               prefix="Services"
               field="services"
@@ -235,21 +354,20 @@ export default function ContactForm({ showHeading = true }) {
               before a human ever sees the lead (report §4.9.3) */}
           <div>
             <label
-              htmlFor="insurance"
+              htmlFor="insurance-payer"
               className="block text-gray-900 font-medium mb-1.5"
             >
               Insurance / Payer
             </label>
 
             <input
-              id="insurance"
+              id="insurance-payer"
               type="text"
               name="insurance"
               autoComplete="off"
               placeholder="e.g. Medicare, Molina"
-              aria-invalid={state.errors?.some(
-                (error) => error.field === "insurance"
-              )}
+              aria-invalid={invalid("insurance")}
+                aria-describedby={errs.insurance ? "insurance-error" : undefined}
               className={inputClasses}
             />
 
@@ -308,13 +426,13 @@ export default function ContactForm({ showHeading = true }) {
               rows={5}
               required
               aria-required="true"
-              aria-invalid={state.errors?.some(
-                (error) => error.field === "message"
-              )}
+              aria-invalid={invalid("message")}
+                aria-describedby={errs.message ? "message-error" : undefined}
               placeholder="Tell us how we can help..."
               className={inputClasses}
             />
 
+            <FieldError id="message-error" message={errs.message} />
             <ValidationError
               prefix="Message"
               field="message"

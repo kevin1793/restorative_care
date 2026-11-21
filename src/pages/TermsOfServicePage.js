@@ -16,28 +16,8 @@ export default function TermsOfServicePage() {
         />
       </Helmet>
 
-      {/* Skip Navigation */}
-      <a
-        href="#main-content"
-        className="
-          sr-only
-          focus:not-sr-only
-          focus:absolute
-          focus:top-4
-          focus:left-4
-          focus:z-50
-          focus:bg-white
-          focus:text-black
-          focus:px-4
-          focus:py-2
-          focus:rounded-md
-          focus:shadow-lg
-        "
-      >
-        Skip to main content
-      </a>
 
-      <main id="main-content" className="pt-16">
+      <div className="pt-16">
         <section className="py-12 md:py-20 bg-white" aria-labelledby="terms-heading">
           <div className="max-w-3xl mx-auto px-6">
             <h1
@@ -138,7 +118,7 @@ export default function TermsOfServicePage() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }
