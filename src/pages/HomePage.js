@@ -11,6 +11,7 @@ import {
   BadgeCheck,
   MessageCircle,
   ClipboardCheck,
+  ArrowDown,
 } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -23,6 +24,24 @@ import InsuranceSection from "../components/InsuranceSection";
 import FacebookFeedEmbed, {
   FACEBOOK_PAGE_URL,
 } from "../components/FacebookFeedEmbed";
+
+// One service in the "Our Home Health Services" section. Fixed rem width
+// (instead of a grid with breakpoints) so cards wrap by how much room there is
+// and how large the visitor's text size is: three across on a wide screen,
+// two or one as the screen narrows or text grows, with the last row centered.
+function ServiceCard({ icon: Icon, title, text }) {
+  return (
+    <article className="w-full max-w-md md:w-[17rem] rounded-2xl border border-primary/10 bg-white p-6 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand">
+      <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primaryLight text-primary">
+        <Icon className="h-6 w-6" aria-hidden="true" />
+      </span>
+
+      <h4 className="mb-2 text-lg font-semibold text-gray-900">{title}</h4>
+
+      <p className="text-sm leading-relaxed text-gray-700">{text}</p>
+    </article>
+  );
+}
 
 export default function HomePage() {
   const focusClasses =
@@ -271,120 +290,88 @@ export default function HomePage() {
         {/* Services Section */}
         <section
           id="services"
-          className="py-12 md:py-20 bg-primaryLight"
+          className="py-14 md:py-20 bg-primaryLight"
           aria-labelledby="services-heading"
         >
-          <div className="max-w-7xl mx-auto px-6">
-            <h2
-              id="services-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary text-center mb-4"
-            >
-              Our Home Health Services
-            </h2>
-
-            <p className="text-center text-gray-700 max-w-2xl mx-auto mb-8">
-              Care falls into two categories, depending on what your loved
-              one needs.
-            </p>
-
-            {/* "At a glance" quick-scan strip (report §4.6) — a light
-                version scoped to the taxonomy that's actually live today.
-                The full 4-path comparison (adding HHA/PAS/Private Duty)
-                belongs on the dedicated Services page once that page is
-                rebuilt off the old, retired Home Health/PAS/Private Duty
-                structure — building it there now would mean building on
-                a page structure the plan already marked as retired. */}
-            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-12">
-              <a
-                href="#skilled-services"
-                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <h2
+                id="services-heading"
+                className="text-2xl sm:text-3xl font-semibold text-primary mb-3"
               >
-                <span className="block font-semibold text-gray-900 mb-1">
+                Our Home Health Services
+              </h2>
+
+              <p className="text-gray-700 max-w-2xl mx-auto mb-7">
+                Care falls into two categories, depending on what your loved
+                one needs.
+              </p>
+
+              {/* Quick-move buttons: scroll to each category below */}
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  href="#skilled-services"
+                  className={`inline-flex items-center gap-2 min-h-[44px] rounded-full border border-primary/25 bg-white px-5 py-2 font-medium text-primary hover:bg-primary hover:text-white transition-colors duration-200 ${focusClasses}`}
+                >
                   Skilled Services
-                </span>
-                <span className="block text-sm text-gray-700">
-                  Best for recovering from an illness, injury, or surgery, or
-                  managing an ongoing medical condition at home.
-                </span>
-              </a>
+                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                </a>
 
-              <a
-                href="#personal-care-services"
-                className={`block bg-white rounded-xl p-5 text-left shadow-sm hover:shadow-brand hover:-translate-y-0.5 transition-all duration-200 ${focusClasses}`}
-              >
-                <span className="block font-semibold text-gray-900 mb-1">
+                <a
+                  href="#personal-care-services"
+                  className={`inline-flex items-center gap-2 min-h-[44px] rounded-full border border-primary/25 bg-white px-5 py-2 font-medium text-primary hover:bg-primary hover:text-white transition-colors duration-200 ${focusClasses}`}
+                >
                   Personal Care Services
-                </span>
-                <span className="block text-sm text-gray-700">
-                  Best for help with daily living &mdash; bathing, dressing,
-                  grooming, and mobility &mdash; through Medicaid.
-                </span>
-              </a>
+                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </div>
             </div>
 
             {/* Skilled Services */}
-            <div id="skilled-services" className="mb-16 text-center">
-              <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-8 inline-block">
-                Skilled Services
-              </h3>
+            <div id="skilled-services" className="mb-16 md:mb-20">
+              <div className="text-center mb-8">
+                <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-2">
+                  Skilled Services
+                </h3>
 
-              <div className="flex flex-wrap justify-center gap-5 sm:gap-8">
-                {skilledServices.map(({ icon: Icon, title, text }) => (
-                  <article
-                    key={title}
-                    className="bg-white p-6 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
-                  >
-                    <Icon
-                      className="w-10 h-10 text-primary mb-4"
-                      aria-hidden="true"
-                    />
+                <p className="text-gray-700 max-w-xl mx-auto">
+                  Best for recovering from an illness, injury, or surgery, or
+                  managing an ongoing medical condition at home.
+                </p>
+              </div>
 
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                      {title}
-                    </h4>
-
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      {text}
-                    </p>
-                  </article>
+              <div className="flex flex-wrap justify-center gap-5">
+                {skilledServices.map((service) => (
+                  <ServiceCard key={service.title} {...service} />
                 ))}
               </div>
             </div>
 
             {/* Personal Care / Non-Skilled Services */}
-            <div id="personal-care-services" className="text-center">
-              <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-2 inline-block">
-                Personal Care Services (Non-Skilled)
-              </h3>
+            <div id="personal-care-services">
+              <div className="text-center mb-8">
+                <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-2">
+                  Personal Care Services (Non-Skilled)
+                </h3>
 
-              <p className="text-sm text-gray-700 mb-8">
-                Available through Long-Term Care via Texas Medicaid.
-              </p>
+                <p className="text-gray-700 max-w-xl mx-auto">
+                  Best for help with daily living &mdash; bathing, dressing,
+                  grooming, and mobility &mdash; through Medicaid.
+                </p>
 
-              <div className="flex flex-wrap justify-center gap-5 sm:gap-8">
-                {nonSkilledServices.map(({ icon: Icon, title, text }) => (
-                  <article
-                    key={title}
-                    className="bg-white p-6 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200 text-left flex-1 basis-[280px] max-w-sm"
-                  >
-                    <Icon
-                      className="w-10 h-10 text-primary mb-4"
-                      aria-hidden="true"
-                    />
+                <p className="text-sm text-gray-700 mt-2">
+                  Available through Long-Term Care via Texas Medicaid.
+                </p>
+              </div>
 
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                      {title}
-                    </h4>
-
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      {text}
-                    </p>
-                  </article>
+              <div className="flex flex-wrap justify-center gap-5">
+                {nonSkilledServices.map((service) => (
+                  <ServiceCard key={service.title} {...service} />
                 ))}
               </div>
             </div>
 
-            <div className="mt-16 text-center">
+            <div className="mt-14 text-center">
               <RouterLink
                 to="/services"
                 className={buttonClasses}
