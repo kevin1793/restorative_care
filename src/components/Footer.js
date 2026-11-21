@@ -39,7 +39,7 @@ export default function Footer() {
   const headingClasses =
     "text-sm font-semibold uppercase tracking-wider text-white/70 mb-3";
 
-  const toTop = () => window.scrollTo(0, 0);
+  const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
   return (
     <footer className="bg-primaryDark text-white" role="contentinfo">

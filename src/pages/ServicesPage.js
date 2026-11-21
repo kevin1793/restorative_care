@@ -75,7 +75,7 @@ const payerPaths = [
 
 export default function ServicesPage() {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
 
   const focusClasses =
@@ -181,7 +181,7 @@ export default function ServicesPage() {
 
               <h2
                 id="skilled-services-heading"
-                className="text-2xl sm:text-3xl font-semibold text-primary mb-2 scroll-mt-28"
+                className="text-2xl sm:text-3xl font-semibold text-primary mb-2"
               >
                 Skilled Services
               </h2>
@@ -227,7 +227,7 @@ export default function ServicesPage() {
           <div className="max-w-5xl mx-auto px-6">
             <h2
               id="personal-care-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary mb-4 scroll-mt-28"
+              className="text-2xl sm:text-3xl font-semibold text-primary mb-4"
             >
               Personal Care Services (Non-Skilled)
             </h2>

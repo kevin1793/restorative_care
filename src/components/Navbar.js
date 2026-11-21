@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { HeartPulse, Menu, X, Phone } from "lucide-react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
@@ -9,6 +9,8 @@ export default function Navbar() {
   const mobileMenuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const barRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Publish the navbar's real height as --nav-h on <html>. The navbar is
   // fixed, and its height grows with the visitor's text size setting (rem
@@ -139,6 +141,28 @@ export default function Navbar() {
     setOpen(false);
   };
 
+  // Logo: from any other page, the link goes home and the page change resets
+  // the scroll (see RouteAnnouncer in App.js). When already on the home page
+  // the link would do nothing, so scroll back to the top smoothly instead,
+  // and drop any #section from the address.
+  const handleLogoClick = (event) => {
+    setOpen(false);
+    if (location.pathname !== "/") return;
+
+    event.preventDefault();
+    if (location.hash) navigate("/", { replace: true });
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    // "auto" defers to the CSS scroll-behavior, which index.css sets to
+    // instant for visitors who ask for reduced motion
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
+
   return (
     <header className="nav-cq">
       <nav
@@ -168,7 +192,7 @@ export default function Navbar() {
               text-gray-900
               ${focusClasses}
             `}
-            onClick={() => window.scrollTo(0, 0)}
+            onClick={handleLogoClick}
             aria-label="Go to Restorative Care HHS homepage"
           >
             <HeartPulse

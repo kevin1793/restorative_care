@@ -7,7 +7,7 @@ const linkClasses =
 
 export default function AccessibilityStatementPage() {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
 
   return (
@@ -150,7 +150,7 @@ export default function AccessibilityStatementPage() {
                   <RouterLink
                     to="/nondiscrimination"
                     className={linkClasses}
-                    onClick={() => window.scrollTo(0, 0)}
+                    onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
                   >
                     Notice of Nondiscrimination
                   </RouterLink>{" "}

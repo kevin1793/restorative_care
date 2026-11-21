@@ -260,7 +260,7 @@ export default function HomePage() {
               <RouterLink
                 to="/services"
                 className={buttonOutlineClasses}
-                onClick={() => window.scrollTo(0, 0)}
+                onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
               >
                 Learn About Our Services →
               </RouterLink>
@@ -323,7 +323,7 @@ export default function HomePage() {
             </div>
 
             {/* Skilled Services */}
-            <div id="skilled-services" className="mb-16 scroll-mt-24 text-center">
+            <div id="skilled-services" className="mb-16 text-center">
               <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-8 inline-block">
                 Skilled Services
               </h3>
@@ -352,7 +352,7 @@ export default function HomePage() {
             </div>
 
             {/* Personal Care / Non-Skilled Services */}
-            <div id="personal-care-services" className="scroll-mt-24 text-center">
+            <div id="personal-care-services" className="text-center">
               <h3 className="text-lg font-semibold text-primary border-b-2 border-primary pb-2 mb-2 inline-block">
                 Personal Care Services (Non-Skilled)
               </h3>
@@ -388,7 +388,7 @@ export default function HomePage() {
               <RouterLink
                 to="/services"
                 className={buttonClasses}
-                onClick={() => window.scrollTo(0, 0)}
+                onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
               >
                 Learn More About Our Services
               </RouterLink>
@@ -414,7 +414,7 @@ export default function HomePage() {
         <section
           id="contact"
           aria-labelledby="contact-form-heading"
-          className="scroll-mt-24 py-12 md:py-20 bg-gradient-to-b from-white to-primaryLight border-t border-gray-200"
+          className="py-12 md:py-20 bg-gradient-to-b from-white to-primaryLight border-t border-gray-200"
         >
           <div className="max-w-6xl mx-auto px-6">
             {/* <h2
@@ -462,7 +462,7 @@ export default function HomePage() {
                 <RouterLink
                   to="/services"
                   className={`${pillClasses} ${focusClasses}`}
-                  onClick={() => window.scrollTo(0, 0)}
+                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
                 >
                   Skilled Services
                 </RouterLink>
@@ -477,7 +477,7 @@ export default function HomePage() {
                 <RouterLink
                   to="/veterans"
                   className={`${pillClasses} ${focusClasses}`}
-                  onClick={() => window.scrollTo(0, 0)}
+                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
                 >
                   Veteran Services
                 </RouterLink>
@@ -548,7 +548,7 @@ export default function HomePage() {
                 <RouterLink
                   to="/veterans"
                   className={buttonClasses}
-                  onClick={() => window.scrollTo(0, 0)}
+                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
                 >
                   Learn More About Veteran Services
                 </RouterLink>

@@ -24,7 +24,7 @@ import Footer from "./components/Footer";
 import AccessibilityControls from "./components/AccessibilityControls";
 
 /**
- * Handles scroll + focus reset on route change (important for screen readers),
+ * Handles scroll + focus reset on page change (important for screen readers),
  * and announces the new page's title in a polite live region. In a single-page
  * app the browser doesn't announce a page load on navigation, so without this
  * a screen reader user gets no confirmation that the page changed.
@@ -42,8 +42,11 @@ function RouteAnnouncer({ children }) {
       main.focus();
     }
 
-    // Ensure page scroll resets
-    window.scrollTo(0, 0);
+    // Ensure page scroll resets. "instant" because the site scrolls smoothly
+    // otherwise (see index.css), and a page change should not animate. Keyed
+    // on pathname only: an in-page link like #contact changes the hash, not
+    // the page, and must be left to scroll to its target.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
     // The first load is announced by the browser itself
     if (isFirstRender.current) {
@@ -54,7 +57,7 @@ function RouteAnnouncer({ children }) {
     // Wait a moment for the new page's <Seo /> to update document.title
     const timer = setTimeout(() => setAnnouncement(document.title), 300);
     return () => clearTimeout(timer);
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <>

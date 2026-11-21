@@ -11,7 +11,7 @@ export default function ServiceAreaPage() {
   const [activeCounty, setActiveCounty] = useState(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
 
   const focusClasses =
@@ -146,7 +146,7 @@ export default function ServiceAreaPage() {
                 </a>
                 <RouterLink
                   to="/contact"
-                  onClick={() => window.scrollTo(0, 0)}
+                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
                   className={`inline-flex items-center justify-center gap-2 border-2 border-white text-white px-6 py-3 min-h-[48px] rounded-full font-medium hover:bg-white/10 transition-colors ${focusClasses} focus-visible:ring-white focus-visible:ring-offset-primary`}
                 >
                   <MessageSquare className="w-5 h-5" aria-hidden="true" />

@@ -9,7 +9,7 @@ import PageHero from "../components/PageHero";
 
 export default function ContactPage() {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
 
   const focusClasses =
@@ -69,7 +69,7 @@ export default function ContactPage() {
               <RouterLink
                 to="/service-area"
                 className={`text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm ${focusClasses}`}
-                onClick={() => window.scrollTo(0, 0)}
+                onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
               >
                 See the counties we cover
               </RouterLink>
@@ -175,7 +175,7 @@ export default function ContactPage() {
         {/* Contact Form */}
         <section
           id="send-message"
-          className="scroll-mt-24 py-12 md:py-20 bg-primaryLight"
+          className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="contact-form-heading"
         >
           <div className="max-w-5xl mx-auto px-6">

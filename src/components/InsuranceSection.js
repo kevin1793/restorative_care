@@ -146,7 +146,7 @@ export default function InsuranceSection() {
   return (
     <section
       id="insurance"
-      className="py-12 md:py-20 bg-white scroll-mt-24"
+      className="py-12 md:py-20 bg-white"
       aria-labelledby="insurance-heading"
     >
       <div className="max-w-5xl mx-auto px-6">
@@ -234,7 +234,7 @@ export default function InsuranceSection() {
           <RouterLink
             to="/contact"
             className={`text-primary underline underline-offset-4 hover:text-primary/80 ${focusClasses}`}
-            onClick={() => window.scrollTo(0, 0)}
+            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
           >
             Contact us
           </RouterLink>{" "}

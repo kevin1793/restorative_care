@@ -10,6 +10,19 @@
 @tailwind utilities;
 
 /*
+  Smooth scrolling for in-page links (the "quick move" buttons such as
+  #skilled-services or #contact) instead of an instant jump. scroll-padding-top
+  keeps the target from landing underneath the fixed navbar; --nav-h is the
+  navbar's real height, published by Navbar.js. The reduced-motion rule at the
+  bottom of this file turns smooth scrolling off for visitors who ask for it.
+  Page changes use behavior: "instant" so they never animate.
+*/
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h, 5.5rem) + 0.5rem);
+}
+
+/*
   Base type size bumped from the Tailwind default (16px) to 18px per the
   site's elderly-audience accessibility guidance (report §3.15). Since
   Tailwind's text-* utilities are rem-based, this scales every heading and
