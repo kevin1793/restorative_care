@@ -12,8 +12,12 @@ code {
     monospace;
 } */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@400;700&family=Poppins:wght@700&family=Roboto:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playwrite+AU+TAS:wght@100..400&display=swap');
+/*
+  The @font-face rules for Inter, Merriweather and Playwrite live in a
+  <style> block in public/index.html (the fonts are self-hosted in
+  public/fonts). They can't be here: CRA's webpack tries to bundle root-
+  relative url("/fonts/...") references and fails the build.
+*/
 
 @tailwind base;
 @tailwind components;

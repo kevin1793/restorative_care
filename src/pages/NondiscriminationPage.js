@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 
 const linkClasses =
   "text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2";
@@ -50,13 +50,7 @@ export default function NondiscriminationPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Notice of Nondiscrimination | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="Restorative Care Home Health Services does not discriminate. Free language assistance and aids for people with disabilities are available. Learn how to file a complaint."
-        />
-      </Helmet>
+      <Seo path="/nondiscrimination" />
 
       <div className="pt-[87px] xl:pt-[94px]">
         <section

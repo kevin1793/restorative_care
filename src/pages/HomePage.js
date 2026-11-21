@@ -17,6 +17,7 @@ import { Link as RouterLink } from "react-router-dom";
 import nurseImage1 from "../assets/images/nurse_care1.webp";
 import nurseCall from "../assets/images/calling.webp";
 import veteransImage from "../assets/images/veterans.webp";
+import Seo from "../components/Seo";
 import ContactForm from "../components/ContactForm";
 import InsuranceSection from "../components/InsuranceSection";
 import FacebookFeedEmbed, {
@@ -127,6 +128,7 @@ export default function HomePage() {
 
   return (
     <>
+      <Seo path="/" />
 
       {/* Main Content */}
       <div className="pt-16">

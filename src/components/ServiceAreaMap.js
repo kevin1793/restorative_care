@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { geoMercator, geoPath } from "d3-geo";
 import { json } from "d3-fetch";
-import { feature } from "topojson-client";
 
 export const SERVED_COUNTIES = [
   "Collin",
@@ -21,8 +20,10 @@ const SERVED_SET = new Set(SERVED_COUNTIES);
 
 // Real U.S. Census county boundary data (report §4.1) — not hand-drawn
 // shapes, so the geography stays accurate if the service area changes.
-const COUNTIES_TOPOLOGY_URL =
-  "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
+// This is a small local file (served counties plus their neighbors) built by
+// scripts/build-county-data.js, instead of the full ~1 MB U.S. county file
+// that used to be downloaded from a CDN on every visit.
+const COUNTIES_URL = `${process.env.PUBLIC_URL || ""}/data/dfw-counties.json`;
 const BEDFORD_COORDINATES = [-97.1431, 32.8437]; // [longitude, latitude]
 
 const WIDTH = 600;
@@ -52,14 +53,11 @@ export default function ServiceAreaMap({ activeCounty = null }) {
   useEffect(() => {
     let cancelled = false;
 
-    json(COUNTIES_TOPOLOGY_URL)
-      .then((us) => {
+    json(COUNTIES_URL)
+      .then((data) => {
         if (cancelled) return;
 
-        // Texas county FIPS codes all start with "48"
-        const texasCounties = feature(us, us.objects.counties).features.filter(
-          (d) => d.id.toString().startsWith("48")
-        );
+        const texasCounties = data.features;
         const served = texasCounties.filter((d) =>
           SERVED_SET.has(d.properties.name)
         );

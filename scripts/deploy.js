@@ -36,7 +36,11 @@ const config = {
   secure: process.env.FTP_SECURE !== "false",
 };
 
-const buildDir = path.resolve(__dirname, "..", "build");
+// BUILD_DIR lets another app (e.g. the /careers app) reuse this script together
+// with FTP_REMOTE_DIR; by default it uploads this project's build/ folder.
+const buildDir = process.env.BUILD_DIR
+  ? path.resolve(process.env.BUILD_DIR)
+  : path.resolve(__dirname, "..", "build");
 
 function askHidden(question) {
   return new Promise((resolve) => {
@@ -87,7 +91,11 @@ async function main() {
     console.log(`Uploading build/ to ${await client.pwd()} ...`);
     await client.uploadFromDir(buildDir);
     process.stdout.write("\n");
-    console.log("Deploy complete: https://restorativecarehhs.com/");
+    console.log(
+      `Deploy complete: https://restorativecarehhs.com${
+        config.remoteDir === "/" ? "/" : config.remoteDir + "/"
+      }`
+    );
   } finally {
     client.close();
   }

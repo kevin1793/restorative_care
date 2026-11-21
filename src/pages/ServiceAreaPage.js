@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 import { MapPin, Phone, MessageSquare } from "lucide-react";
 
 import ServiceAreaMap, { SERVED_COUNTIES } from "../components/ServiceAreaMap";
@@ -19,13 +19,7 @@ export default function ServiceAreaPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Counties We Serve | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="Restorative Care HHS serves 11 counties across North and Central Texas, including Collin, Dallas, Denton, Ellis, Hood, Johnson, Kaufman, Parker, Tarrant, Wise, and Navarro."
-        />
-      </Helmet>
+      <Seo path="/service-area" />
 
       <div className="pt-16">
         {/* Hero */}

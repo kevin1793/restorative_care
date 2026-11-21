@@ -9,7 +9,7 @@ import {
   ClipboardCheck,
   Home,
 } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 
 import servicesHeroImg from "../assets/images/services.webp";
 import nurseImage1 from "../assets/images/nurse_care1.webp";
@@ -93,13 +93,7 @@ export default function ServicesPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Our Services | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="Explore Restorative Care HHS's home health, personal attendant, and private duty services — skilled nursing, therapy, and daily living support in Bedford, TX."
-        />
-      </Helmet>
+      <Seo path="/services" />
 
 
       {/* Main Content */}

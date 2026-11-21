@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 
 export default function PrivacyPolicyPage() {
   useEffect(() => {
@@ -8,13 +8,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="How Restorative Care Home Health Services collects, uses, and protects the personal information you share with us."
-        />
-      </Helmet>
+      <Seo path="/privacy-policy" />
 
 
       <div className="pt-16">

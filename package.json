@@ -27,7 +27,9 @@
     "deploy:only": "node scripts/deploy.js",
     "deploy:setup": "node scripts/setup-deploy.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postbuild": "node scripts/prerender.js",
+    "build:county-data": "node scripts/build-county-data.js"
   },
   "eslintConfig": {
     "extends": [

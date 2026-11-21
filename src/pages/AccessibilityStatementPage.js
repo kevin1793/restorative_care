@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 import { Link as RouterLink } from "react-router-dom";
 
 const linkClasses =
@@ -12,13 +12,7 @@ export default function AccessibilityStatementPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Accessibility Statement | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="Restorative Care Home Health Services is committed to making this website accessible to everyone, including people with disabilities. Learn what we do and how to reach us for help."
-        />
-      </Helmet>
+      <Seo path="/accessibility" />
 
       <div className="pt-[87px] xl:pt-[94px]">
         <section

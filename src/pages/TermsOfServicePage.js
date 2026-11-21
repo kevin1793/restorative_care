@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 
 export default function TermsOfServicePage() {
   useEffect(() => {
@@ -8,13 +8,7 @@ export default function TermsOfServicePage() {
 
   return (
     <>
-      <Helmet>
-        <title>Terms of Service | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="Terms governing your use of the Restorative Care Home Health Services website."
-        />
-      </Helmet>
+      <Seo path="/terms-of-service" />
 
 
       <div className="pt-16">

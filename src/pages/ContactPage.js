@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import Seo from "../components/Seo";
 
 import ContactForm from "../components/ContactForm";
 import contactHeroImg from "../assets/images/contact_hero.webp";
@@ -27,13 +27,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Contact Us | Restorative Care HHS</title>
-        <meta
-          name="description"
-          content="Reach Restorative Care Home Health Services in Bedford, TX by phone, email, or our contact form to schedule a free in-home assessment."
-        />
-      </Helmet>
+      <Seo path="/contact" />
 
 
       {/* Main Content */}

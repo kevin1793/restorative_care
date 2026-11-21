@@ -14,50 +14,162 @@
     <!-- Site has a light theme only; declaring "light dark" made dark-mode devices render native controls and unstyled areas dark -->
     <meta name="color-scheme" content="light" />
 
-    <meta name="author" content="Restorative Health Care HHS" />
+    <meta name="author" content="Restorative Care Home Health Services, Inc." />
+    <meta name="format-detection" content="telephone=yes" />
 
-    <meta
-      name="description"
-      content="Restorative Care HHS provides professional in-home health care, skilled nursing, and personal care services to support comfort, independence, and wellbeing for patients at home."
+    <!--
+      Preload the fonts used on every page. They are self-hosted, so the
+      browser starts downloading them immediately instead of waiting for the
+      CSS to be parsed first. `crossorigin` is required for font preloads,
+      even same-origin, or the file is fetched twice.
+    -->
+    <link
+      rel="preload"
+      href="%PUBLIC_URL%/fonts/inter-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="%PUBLIC_URL%/fonts/merriweather-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
-    <meta
-      name="keywords"
-      content="home health care, skilled nursing, CNA, LVN, PRN, personal care, physical therapy, occupational therapy, wound care, Restorative Care HHS, Dallas Texas, Irving Texas, Bedford Texas"
-    />
+    <!--
+      Fonts are self-hosted (public/fonts) instead of loaded through Google's
+      CSS @import. That removes render-blocking requests to a third-party
+      domain and keeps visitors' browsers from contacting Google just to load
+      the page. Latin subset only; each file is a variable font, so one file
+      covers every weight. font-display: swap shows text immediately in a
+      fallback font and swaps when the font arrives. Declared inline here
+      (not in src/index.css) because CRA's webpack can't bundle root-relative
+      url() paths. Inline styles are allowed by the CSP (style-src).
+    -->
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/inter-latin.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Merriweather";
+        font-style: normal;
+        font-weight: 300 900;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/merriweather-latin.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Playwrite AU TAS";
+        font-style: normal;
+        font-weight: 100 400;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/playwrite-au-tas.woff2") format("woff2");
+      }
+    </style>
 
-    <!-- Open Graph (SEO + accessibility context for shared links) -->
-    <meta property="og:title" content="Restorative Care HHS – Home Health Care Services in Texas" />
-    <meta
-      property="og:description"
-      content="Professional in-home health care services including skilled nursing, personal care, therapy, and more."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://restorativecarehhs.com" />
+    <!--
+      Applies the visitor's saved text size / contrast / link preferences
+      before the page paints, so there's no flash of the default view. It is
+      an external file (not inline) so the Content-Security-Policy can forbid
+      inline scripts. Keep the storage key in sync with
+      src/components/AccessibilityControls.js.
+    -->
+    <script src="%PUBLIC_URL%/a11y-init.js"></script>
+
+    <!--
+      Page-specific <title>, description, canonical URL and Open Graph /
+      Twitter tags are written into each page's static HTML after the build
+      by scripts/prerender.js (from src/seo/routes.js), and kept up to date in
+      the browser by the <Seo /> component. The title below is only the
+      fallback used by the dev server.
+    -->
+    <title>Restorative Care HHS – Home Health Care Services in Texas</title>
+
+    <!-- Structured data: tells Google who we are, where, and what we offer -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://restorativecarehhs.com/#website",
+            "url": "https://restorativecarehhs.com/",
+            "name": "Restorative Care HHS",
+            "inLanguage": "en-US",
+            "publisher": { "@id": "https://restorativecarehhs.com/#business" }
+          },
+          {
+            "@type": ["LocalBusiness", "MedicalBusiness"],
+            "@id": "https://restorativecarehhs.com/#business",
+            "name": "Restorative Care HHS",
+            "legalName": "Restorative Care Home Health Services, Inc.",
+            "description": "Restorative Care HHS provides professional in-home health care, skilled nursing, and personal care services to support comfort, independence, and wellbeing for patients at home.",
+            "url": "https://restorativecarehhs.com/",
+            "logo": "https://restorativecarehhs.com/logo512.png",
+            "image": "https://restorativecarehhs.com/og-image.png",
+            "telephone": "+1-817-285-8515",
+            "email": "inforestorativecare@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "221 Bedford Road, Suite 320",
+              "addressLocality": "Bedford",
+              "addressRegion": "TX",
+              "postalCode": "76022",
+              "addressCountry": "US"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 32.8437,
+              "longitude": -97.1431
+            },
+            "areaServed": [
+              { "@type": "AdministrativeArea", "name": "Collin County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Dallas County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Denton County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Ellis County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Hood County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Johnson County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Kaufman County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Navarro County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Parker County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Tarrant County, Texas" },
+              { "@type": "AdministrativeArea", "name": "Wise County, Texas" }
+            ],
+            "sameAs": ["https://www.facebook.com/profile.php?id=61584362892488"],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Home health services",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skilled Nursing" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Physical Therapy" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Occupational Therapy" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Speech Therapy" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Medical Social Work" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Home Health Aide (HHA)" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personal Care Attendant (PCA)" } }
+              ]
+            }
+          }
+        ]
+      }
+    </script>
 
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
-    <!-- IMPROVED ACCESSIBLE TITLE -->
-    <title>Restorative Care HHS – Home Health Care Services in Texas</title>
   </head>
 
   <body>
-    <!-- Apply saved text-size / contrast / link preferences before React
-         loads so there's no flash of the default view. Keep the storage key
-         in sync with AccessibilityControls.js. -->
-    <script>
-      try {
-        var p = JSON.parse(localStorage.getItem("rc-a11y-prefs"));
-        if (p) {
-          var r = document.documentElement;
-          var sizes = [18, 20, 22, 24];
-          if (p.size > 0 && p.size < sizes.length) r.style.fontSize = sizes[p.size] + "px";
-          if (p.contrast) r.classList.add("a11y-contrast");
-          if (p.links) r.classList.add("a11y-links");
-        }
-      } catch (e) {}
-    </script>
     <!-- Improved accessibility fallback for no-JS users -->
     <noscript>
       <div role="alert">
