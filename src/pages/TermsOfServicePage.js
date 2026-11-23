@@ -102,14 +102,6 @@ export default function TermsOfServicePage() {
                   .
                 </p>
               </div>
-
-              <p className="text-sm text-gray-700 pt-6 border-t border-gray-200">
-                This page is a general-purpose starting point and has not
-                been reviewed by an attorney. Restorative Care Home Health
-                Services, Inc. should have this page reviewed for
-                Texas-specific compliance requirements before relying on it
-                as a final legal document.
-              </p>
             </div>
           </div>
         </section>

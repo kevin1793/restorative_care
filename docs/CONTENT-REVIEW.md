@@ -7,6 +7,12 @@ the comments themselves are still in the code at the lines shown.
 
 ## Needs sign-off
 
+- **Legal review of the Privacy Policy and Terms of Service** (`src/pages/PrivacyPolicyPage.js`, `src/pages/TermsOfServicePage.js`).
+  Both are general-purpose drafts that no attorney has reviewed. Have them checked for
+  Texas-specific requirements, and the Privacy Policy for HIPAA-adjacent ones, before relying on
+  them as final legal documents. (This note used to show at the bottom of each page; it was moved
+  here on Nov 23, 2026 so visitors don't see it.) Update each page's "Last updated" date when its
+  wording changes.
 - `src/siteInfo.js` // The agency's Facebook Page (confirmed active, July 23; only list platforms
 - `src/pages/HomePage.js:99` // Client-benefit copy drafted per report §3.17 — pending Juice's review
 - `src/pages/ServicesPage.js:51` // payer paths (report §4.6, correction from Juice July 23). Each is tied

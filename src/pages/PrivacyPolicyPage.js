@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
               style={{ "--i": 1 }}
               className="hero-rise text-sm text-gray-700 mb-10"
             >
-              Last updated: July 21, 2026
+              Last updated: November 23, 2026
             </p>
 
             <div className="space-y-8 text-gray-800 leading-relaxed">
@@ -106,14 +106,6 @@ export default function PrivacyPolicyPage() {
                   </a>
                 </p>
               </div>
-
-              <p className="text-sm text-gray-700 pt-6 border-t border-gray-200">
-                This policy is a general-purpose starting point and has not
-                been reviewed by an attorney. Restorative Care Home Health
-                Services, Inc. should have this page reviewed for
-                Texas-specific and HIPAA-adjacent compliance requirements
-                before relying on it as a final legal document.
-              </p>
             </div>
           </div>
         </section>
