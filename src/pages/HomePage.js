@@ -1,4 +1,5 @@
-import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
+import { PHONE_HREF, PHONE_DISPLAY, HOURS } from "../siteInfo";
+import OpenStatus from "../components/OpenStatus";
 import React from "react";
 import {
   Users,
@@ -215,6 +216,20 @@ export default function HomePage() {
             </ul>
           </div>
         </section>
+
+        {/* Slim office-hours strip: open/closed right now, the regular
+            schedule and a holiday note, where families look first. Shows
+            nothing until HOURS is set in src/siteInfo.js. */}
+        {HOURS && (
+          <section
+            aria-label="Office hours"
+            className="border-y border-primary/10 bg-primaryLight"
+          >
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 sm:py-3">
+              <OpenStatus layout="inline" />
+            </div>
+          </section>
+        )}
 
         {/* About Section */}
         <section

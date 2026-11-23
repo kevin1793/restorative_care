@@ -1,4 +1,9 @@
-import { getOpenStatus, formatTime, sameClock } from "./openStatus";
+import {
+  getOpenStatus,
+  formatTime,
+  sameClock,
+  formatHoursSummary,
+} from "./openStatus";
 
 const CT = "America/Chicago";
 const weekdays = [{ days: [1, 2, 3, 4, 5], open: "08:00", close: "17:00" }];
@@ -102,5 +107,27 @@ describe("time formatting in another time zone", () => {
     const now = new Date("2026-11-24T23:00:00Z");
     expect(sameClock(now, CT, "America/Chicago")).toBe(true);
     expect(sameClock(now, CT, "America/New_York")).toBe(false);
+  });
+});
+
+describe("formatHoursSummary", () => {
+  test("nothing to show without hours", () => {
+    expect(formatHoursSummary(null)).toBeNull();
+    expect(formatHoursSummary([])).toBeNull();
+  });
+
+  test("a weekday range", () => {
+    expect(
+      formatHoursSummary([{ days: [1, 2, 3, 4, 5], open: "09:00", close: "17:00" }])
+    ).toBe("Mon–Fri, 9 AM–5 PM");
+  });
+
+  test("odd days, minutes, and several blocks", () => {
+    expect(
+      formatHoursSummary([
+        { days: [5, 1, 3], open: "08:30", close: "12:00" },
+        { days: [6], open: "10:00", close: "24:00" },
+      ])
+    ).toBe("Mon, Wed, Fri, 8:30 AM–12 PM · Sat, 10 AM–12 AM");
   });
 });

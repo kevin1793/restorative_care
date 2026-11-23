@@ -119,6 +119,50 @@ export function formatDayAndTime(date, timeZone) {
   }).format(date);
 }
 
+const SHORT_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// "09:00" -> "9 AM", "17:30" -> "5:30 PM", "24:00" -> "12 AM"
+function formatClock(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  const suffix = h % 24 < 12 ? "AM" : "PM";
+  return m === 0
+    ? `${hour12} ${suffix}`
+    : `${hour12}:${String(m).padStart(2, "0")} ${suffix}`;
+}
+
+// [1,2,3,4,5] -> "Mon–Fri", [1,3,5] -> "Mon, Wed, Fri", [6] -> "Sat"
+function formatDays(days) {
+  const sorted = [...days].sort((a, b) => a - b);
+  const runs = [];
+  sorted.forEach((day) => {
+    const last = runs[runs.length - 1];
+    if (last && day === last[1] + 1) last[1] = day;
+    else runs.push([day, day]);
+  });
+  return runs
+    .map(([from, to]) => {
+      if (from === to) return SHORT_DAYS[from];
+      if (to === from + 1) return `${SHORT_DAYS[from]}, ${SHORT_DAYS[to]}`;
+      return `${SHORT_DAYS[from]}–${SHORT_DAYS[to]}`;
+    })
+    .join(", ");
+}
+
+/**
+ * The regular schedule as written in the office's time, for display:
+ * "Mon–Fri, 9 AM–5 PM", with blocks joined by " · ". null when no hours set.
+ */
+export function formatHoursSummary(hours) {
+  if (!hours || hours.length === 0) return null;
+  return hours
+    .map(
+      ({ days, open, close }) =>
+        `${formatDays(days)}, ${formatClock(open)}–${formatClock(close)}`
+    )
+    .join(" · ");
+}
+
 // Whether two time zones show the same clock time right now
 export function sameClock(date, zoneA, zoneB) {
   return formatTime(date, zoneA) === formatTime(date, zoneB);

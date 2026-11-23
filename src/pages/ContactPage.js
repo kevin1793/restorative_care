@@ -83,7 +83,7 @@ export default function ContactPage() {
                     <>
                       Talk with a member of our care team.
                       {/* Only appears once HOURS is set in src/siteInfo.js */}
-                      <OpenStatus className="mt-2 justify-center" />
+                      <OpenStatus align="center" className="mt-2" />
                     </>
                   ),
                   action: (
