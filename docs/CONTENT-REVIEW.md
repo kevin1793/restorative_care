@@ -7,7 +7,7 @@ the comments themselves are still in the code at the lines shown.
 
 ## Needs sign-off
 
-- `src/components/Footer.js:17` // Juice has actually confirmed are active. Shared with FacebookFeedEmbed
+- `src/siteInfo.js` // The agency's Facebook Page (confirmed active, July 23; only list platforms
 - `src/pages/HomePage.js:99` // Client-benefit copy drafted per report §3.17 — pending Juice's review
 - `src/pages/ServicesPage.js:51` // payer paths (report §4.6, correction from Juice July 23). Each is tied
 
@@ -19,7 +19,6 @@ the comments themselves are still in the code at the lines shown.
 - `src/components/ContactForm.js:339` one type of care at once (report §4.9.3) */}
 - `src/components/ContactForm.js:385` before a human ever sees the lead (report §4.9.3) */}
 - `src/components/ContactForm.js:475` {/* Privacy-conscious note (report §3.9) */}
-- `src/components/FacebookFeedEmbed.js:8` // someone to grab a new post URL every time (report §4.10).
 - `src/components/Footer.js:35` // design system pass (report §4.4) — a thin, low-contrast footer is the
 - `src/components/InsuranceSection.js:29` // dropdown (report §4.2) without the two lists drifting out of sync.
 - `src/components/PageHero.js:4` // future pages) — report §4.7.1. Consolidates three previously bespoke
@@ -31,7 +30,7 @@ the comments themselves are still in the code at the lines shown.
 - `src/pages/HomePage.js:265` paragraph (report §2.2) */}
 - `src/pages/HomePage.js:394` {/* Cross-link to Insurance & Payers (report §4.6) — each
 - `src/pages/HomePage.js:458` {/* Quick-link pills (report §3.18) */}
-- `src/pages/HomePage.js:568` {/* Tips From Our Team — live Facebook feed (report §4.10).
+- `src/pages/HomePage.js` {/* Tips From Our Team — follow card for the Facebook Page (report
 - `src/pages/ServiceAreaPage.js:125` not just decoration alongside the map (report §4.1). */}
 - `src/pages/ServicesPage.js:19` // Kept identical to the homepage's Skilled Services copy (report §4.6 —
 - `src/pages/ServicesPage.js:102` {/* Hero Section — shared component (report §4.6/§4.7.1); also

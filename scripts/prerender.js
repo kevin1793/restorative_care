@@ -46,7 +46,7 @@ if (!fs.existsSync(templatePath)) {
 //  - styles: own files plus inline style attributes (React and the map use them)
 //  - images: own files and data: URIs
 //  - connect: our own files plus Formspree (the contact form)
-//  - frames: the Facebook page plugin and the Google map embed
+//  - frames: the Google map embed on the Contact page
 const CSP = [
   "default-src 'self'",
   "script-src 'self'",
@@ -54,7 +54,7 @@ const CSP = [
   "img-src 'self' data:",
   "font-src 'self'",
   "connect-src 'self' https://formspree.io",
-  "frame-src https://www.facebook.com https://www.google.com https://maps.google.com",
+  "frame-src https://www.google.com https://maps.google.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self' https://formspree.io",

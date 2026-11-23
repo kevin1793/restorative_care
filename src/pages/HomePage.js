@@ -22,9 +22,7 @@ import veteransImage from "../assets/images/veterans.webp";
 import Seo from "../components/Seo";
 import ContactForm from "../components/ContactForm";
 import InsuranceSection from "../components/InsuranceSection";
-import FacebookFeedEmbed, {
-  FACEBOOK_PAGE_URL,
-} from "../components/FacebookFeedEmbed";
+import FacebookFollowCard from "../components/FacebookFollowCard";
 
 // One service in the "Our Home Health Services" section. Fixed rem width
 // (instead of a grid with breakpoints) so cards wrap by how much room there is
@@ -65,6 +63,17 @@ export default function HomePage() {
     px-6 py-3 rounded-full
     font-medium
     hover:bg-primaryLight
+    transition-colors duration-200
+    ${focusClasses}
+  `;
+
+  // Hero buttons: same look as the buttons above, but narrower padding on
+  // phones (where they sit side by side) and the same border on both so the
+  // pair is exactly the same height
+  const heroButtonBase = `
+    inline-flex items-center justify-center gap-1.5 sm:gap-2
+    min-h-[48px] px-3 sm:px-6 py-3 rounded-full whitespace-nowrap
+    border-2 font-medium
     transition-colors duration-200
     ${focusClasses}
   `;
@@ -141,7 +150,9 @@ export default function HomePage() {
       <div className="pt-[var(--nav-h,87px)]">
         {/* Hero Section */}
         <section
-          className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white pt-12 pb-8 md:py-20"
+          // Tighter on phones so the hero, its buttons and the office-hours
+          // strip below all fit on a typical phone screen without scrolling
+          className="relative overflow-hidden bg-gradient-to-b from-primaryLight to-white pt-8 pb-6 sm:pt-12 sm:pb-8 md:py-20"
           aria-labelledby="hero-heading"
         >
           {/* Subtle background texture — soft blurred accent instead of a
@@ -163,7 +174,7 @@ export default function HomePage() {
             {/* Visible hero tagline (decorative duplicate of the h1 message) */}
             <p
               style={{ "--i": 0 }}
-              className="hero-rise font-fancy text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl text-balance !leading-[1.8] font-bold text-primary mb-6"
+              className="hero-rise font-fancy text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl text-balance !leading-[1.8] font-bold text-primary mb-4 sm:mb-6"
               aria-hidden="true"
             >
               Compassionate Care, Right at Home in the DFW Area
@@ -171,7 +182,7 @@ export default function HomePage() {
 
             <p
               style={{ "--i": 1 }}
-              className="hero-rise text-gray-800 text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
+              className="hero-rise text-gray-800 text-base sm:text-lg max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed"
             >
               We provide professional, personalized home health services that
               support comfort, dignity, and independence.
@@ -179,22 +190,28 @@ export default function HomePage() {
 
             {/* Call is the higher-intent action for healthcare leads, so
                 it's the solid primary button; messaging is secondary
-                (report §1.2) */}
+                (report §1.2). Side by side on phones too (two equal
+                columns); there the call button just says "Call Us", since
+                the number doesn't fit in half the width. */}
             <div
               style={{ "--i": 2 }}
-              className="hero-rise flex flex-wrap justify-center gap-4"
+              className="hero-rise grid grid-cols-2 gap-3 max-w-sm mx-auto sm:flex sm:flex-wrap sm:justify-center sm:gap-4 sm:max-w-none"
             >
               <a
                 href={PHONE_HREF}
-                className={buttonClasses}
+                aria-label={`Call us at ${PHONE_DISPLAY}`}
+                className={`${heroButtonBase} border-primary bg-primary text-white hover:bg-primary/90`}
               >
-                Call Us: {PHONE_DISPLAY}
+                <Phone className="h-4 w-4 shrink-0 sm:hidden" aria-hidden="true" />
+                <span className="sm:hidden">Call Us</span>
+                <span className="hidden sm:inline">Call Us: {PHONE_DISPLAY}</span>
               </a>
 
               <a
                 href="#contact"
-                className={buttonOutlineClasses}
+                className={`${heroButtonBase} border-primary bg-white text-primary hover:bg-primaryLight`}
               >
+                <MessageCircle className="h-4 w-4 shrink-0 sm:hidden" aria-hidden="true" />
                 Message Us
               </a>
             </div>
@@ -202,7 +219,7 @@ export default function HomePage() {
             {/* Trust bar (report §1.3) */}
             <ul
               style={{ "--i": 3 }}
-              className="hero-rise flex flex-wrap justify-center gap-x-8 gap-y-3 mt-10 text-sm text-gray-700"
+              className="hero-rise flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-8 sm:gap-y-3 mt-6 sm:mt-10 text-xs sm:text-sm text-gray-700"
             >
               {trustBadges.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center gap-2">
@@ -622,7 +639,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Tips From Our Team — live Facebook feed (report §4.10).
+        {/* Tips From Our Team — follow card for the Facebook Page (report
+            §4.10; was a live feed embed, see FacebookFollowCard.js).
             Supportive/supplementary content, so it sits after the main
             CTAs and just before the footer rather than competing with
             them for attention. */}
@@ -639,20 +657,11 @@ export default function HomePage() {
             </h2>
 
             <p className="text-gray-700 mb-10 leading-relaxed">
-              We regularly share home health tips, caregiving advice, and
-              agency updates on Facebook — follow along for more.
+              We regularly share helpful posts on Facebook. Follow along to
+              see them as they go up.
             </p>
 
-            <FacebookFeedEmbed />
-
-            <a
-              href={FACEBOOK_PAGE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${buttonOutlineClasses} mt-10`}
-            >
-              Follow Us on Facebook
-            </a>
+            <FacebookFollowCard />
           </div>
         </section>
       </div>

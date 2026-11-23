@@ -1,5 +1,5 @@
 import OpenStatus from "./OpenStatus";
-import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED, EMAIL, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL } from "../siteInfo";
+import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED, EMAIL, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL, FACEBOOK_PAGE_URL as FACEBOOK_URL } from "../siteInfo";
 import React from "react";
 import {
   HeartPulse,
@@ -12,11 +12,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
-
-// Confirmed active account (Status Update, July 23) — only list platforms
-// Juice has actually confirmed are active. Shared with FacebookFeedEmbed
-// so the URL only lives in one place.
-import { FACEBOOK_PAGE_URL as FACEBOOK_URL } from "./FacebookFeedEmbed";
 
 const TRUST_BADGES = [
   { icon: ShieldCheck, label: "Licensed by Texas HHSC" },

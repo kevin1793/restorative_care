@@ -92,9 +92,8 @@ export default function AccessibilityStatementPage() {
                 </h2>
                 <p>
                   Some content comes from other companies and may not be fully
-                  accessible, including our embedded Facebook feed, the Google
-                  map on our Contact page, and the logos shown for insurance
-                  providers. If you have trouble with any of these, contact us
+                  accessible, including the Google map on our Contact page and
+                  the logos shown for insurance providers. If you have trouble with any of these, contact us
                   and we will give you the same information another way.
                 </p>
               </div>

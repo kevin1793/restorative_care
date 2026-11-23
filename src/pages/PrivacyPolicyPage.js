@@ -61,11 +61,11 @@ export default function PrivacyPolicyPage() {
                 </h2>
                 <p>
                   Our contact form is processed through Formspree, a
-                  third-party form service. Some pages on this site may embed
-                  content from Facebook or Google, which may set their own
-                  cookies or collect visit data independent of this site.
-                  Please review those providers' own privacy policies for
-                  details.
+                  third-party form service. Our Contact page embeds a Google
+                  map, which may set its own cookies or collect visit data
+                  independent of this site. Links to our Facebook Page and to
+                  Google Maps take you to those services, which have their
+                  own privacy policies.
                 </p>
               </div>
 

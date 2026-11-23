@@ -22,6 +22,11 @@ const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
   ADDRESS_FULL
 )}`;
 
+// The agency's Facebook Page (confirmed active, July 23; only list platforms
+// the owner has confirmed are active). Also in public/index.html's "sameAs".
+const FACEBOOK_PAGE_URL =
+  "https://www.facebook.com/profile.php?id=61584362892488";
+
 // Opening hours, as the office's own local time. The "open now" display
 // (src/components/OpenStatus.js) works out whether the office is open for the
 // visitor's current moment and shows times in the visitor's own time zone.
@@ -48,6 +53,7 @@ module.exports = {
   ADDRESS_CITY_LINE,
   ADDRESS_FULL,
   MAPS_URL,
+  FACEBOOK_PAGE_URL,
   TIME_ZONE,
   HOURS,
 };
