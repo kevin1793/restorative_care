@@ -46,8 +46,19 @@ function RouteAnnouncer({ children }) {
     // Ensure page scroll resets. "instant" because the site scrolls smoothly
     // otherwise (see index.css), and a page change should not animate. Keyed
     // on pathname only: an in-page link like #contact changes the hash, not
-    // the page, and must be left to scroll to its target.
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    // the page, and must be left to scroll to its target. A link to another
+    // page's section (/services#personal-care-heading) lands on that section
+    // instead of the top; scrollIntoView honors scroll-padding-top, so the
+    // fixed navbar doesn't cover it.
+    const hashTarget = location.hash
+      ? document.getElementById(decodeURIComponent(location.hash.slice(1)))
+      : null;
+
+    if (hashTarget) {
+      hashTarget.scrollIntoView({ behavior: "instant", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
 
     // The first load is announced by the browser itself
     if (isFirstRender.current) {
@@ -58,6 +69,8 @@ function RouteAnnouncer({ children }) {
     // Wait a moment for the new page's <Seo /> to update document.title
     const timer = setTimeout(() => setAnnouncement(document.title), 300);
     return () => clearTimeout(timer);
+    // The hash is read only on a page change; a same-page #link scrolls itself
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   // Sections below the fold rise in as they scroll into view

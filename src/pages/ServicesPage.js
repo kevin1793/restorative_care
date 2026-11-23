@@ -1,5 +1,5 @@
 import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Stethoscope,
   Activity,
@@ -74,11 +74,11 @@ const payerPaths = [
   },
 ];
 
+// No scroll-to-top here: RouteAnnouncer in App.js resets the scroll on every
+// page change, and lands on the #section when a link names one (the homepage's
+// "Learn More About Personal Care Services" button). A reset here would undo
+// that.
 export default function ServicesPage() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
-
   const focusClasses =
     "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
 

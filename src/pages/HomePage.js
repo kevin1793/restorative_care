@@ -1,7 +1,6 @@
 import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React from "react";
 import {
-  HeartPulse,
   Users,
   Phone,
   Stethoscope,
@@ -124,19 +123,6 @@ export default function HomePage() {
       icon: Users,
       title: "Medical Social Work",
       text: "Connects clients and families with community resources, emotional support, and guidance for navigating care decisions and next steps.",
-    },
-  ];
-
-  const nonSkilledServices = [
-    {
-      icon: HeartPulse,
-      title: "Home Health Aide (HHA)",
-      text: "Hands-on help with bathing, dressing, grooming, and mobility, so clients can maintain their comfort, dignity, and daily routines at home.",
-    },
-    {
-      icon: ClipboardCheck,
-      title: "Personal Care Attendant (PCA)",
-      text: "Day-to-day support with personal care and household tasks for clients who qualify for long-term care services through Texas Medicaid.",
     },
   ];
 
@@ -358,27 +344,71 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Personal Care / Non-Skilled Services */}
+            {/* Personal Care & Long-Term Support Services — client-supplied
+                wording (Nov 2026) for Medicaid LTSS / STAR+PLUS and MCOs.
+                The HHA card that used to sit here was dropped: HHA is billed
+                through Medicare (see the Services page), not Medicaid. */}
             <div id="personal-care-services">
               <div className="text-center mb-8">
-                <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-2">
-                  Personal Care Services (Non-Skilled)
+                <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-3">
+                  Personal Care &amp; Long-Term Support Services
                 </h3>
 
-                <p className="text-gray-700 max-w-xl mx-auto">
-                  Best for help with daily living &mdash; bathing, dressing,
-                  grooming, and mobility &mdash; through Medicaid.
+                <p className="text-gray-700 max-w-2xl mx-auto mb-3 leading-relaxed">
+                  We provide compassionate, non-skilled personal care
+                  assistance to help individuals remain safe, comfortable, and
+                  independent in their homes.
                 </p>
 
-                <p className="text-sm text-gray-700 mt-2">
-                  Available through Long-Term Care via Texas Medicaid.
+                <p className="text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                  Our services include assistance with bathing, dressing,
+                  grooming, mobility, meal preparation, and other activities of
+                  daily living.
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-5">
-                {nonSkilledServices.map((service) => (
-                  <ServiceCard key={service.title} {...service} />
-                ))}
+              <article className="max-w-3xl mx-auto rounded-2xl border border-primary/10 bg-white p-6 sm:p-8 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-5">
+                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primaryLight text-primary">
+                    <ClipboardCheck className="h-6 w-6" aria-hidden="true" />
+                  </span>
+
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold text-gray-900">
+                      Medicaid &amp; Managed Care Coverage
+                    </h4>
+
+                    <p className="mb-3 text-gray-700 leading-relaxed">
+                      Personal care services may be available to eligible
+                      individuals through Texas Medicaid Long-Term Services and
+                      Supports (LTSS), including STAR+PLUS and participating
+                      Managed Care Organizations (MCOs).
+                    </p>
+
+                    <p className="mb-4 text-gray-700 leading-relaxed">
+                      Our team works with clients, families, and care
+                      coordinators to coordinate authorized personal care
+                      services.
+                    </p>
+
+                    <p className="border-t border-gray-200 pt-4 text-sm text-gray-700 leading-relaxed">
+                      Coverage and services are subject to Medicaid
+                      eligibility, health plan participation, and authorization
+                      requirements.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              {/* Lands on the Personal Care section of the Services page
+                  (RouteAnnouncer in App.js scrolls to the #hash target) */}
+              <div className="mt-8 text-center">
+                <RouterLink
+                  to="/services#personal-care-heading"
+                  className={buttonOutlineClasses}
+                >
+                  Learn More About Personal Care Services
+                </RouterLink>
               </div>
             </div>
 
