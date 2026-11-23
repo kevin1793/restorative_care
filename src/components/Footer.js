@@ -1,5 +1,5 @@
 import OpenStatus from "./OpenStatus";
-import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED, EMAIL, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE } from "../siteInfo";
+import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED, EMAIL, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL } from "../siteInfo";
 import React from "react";
 import {
   HeartPulse,
@@ -175,7 +175,7 @@ export default function Footer() {
 
             <li>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+320+Bedford,+TX+76022"
+                href={MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-start gap-3 py-2.5 text-white/80 hover:text-white transition-colors ${focusClasses}`}

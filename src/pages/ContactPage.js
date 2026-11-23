@@ -1,4 +1,4 @@
-import { PHONE_HREF, PHONE_DISPLAY, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE } from "../siteInfo";
+import { PHONE_HREF, PHONE_DISPLAY, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL } from "../siteInfo";
 import { useEffect } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
@@ -137,7 +137,7 @@ export default function ContactPage() {
                   ),
                   action: (
                     <a
-                      href="https://www.google.com/maps/search/?api=1&query=221+Bedford+Road+Suite+320+Bedford+TX+76022"
+                      href={MAPS_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`inline-flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full border-2 border-primary text-primary font-medium hover:bg-primaryLight transition-colors ${focusClasses}`}

@@ -16,6 +16,11 @@ const EMAIL_HREF = `mailto:${EMAIL}`;
 const ADDRESS_STREET = "221 Bedford Road Suite 320";
 const ADDRESS_CITY_LINE = "Bedford, TX 76022";
 const ADDRESS_FULL = `${ADDRESS_STREET}, ${ADDRESS_CITY_LINE}`;
+// Opens the office in Google Maps (search link, so it works on every device
+// and hands off to the Maps app on phones)
+const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  ADDRESS_FULL
+)}`;
 
 // Opening hours, as the office's own local time. The "open now" display
 // (src/components/OpenStatus.js) works out whether the office is open for the
@@ -40,6 +45,7 @@ module.exports = {
   ADDRESS_STREET,
   ADDRESS_CITY_LINE,
   ADDRESS_FULL,
+  MAPS_URL,
   TIME_ZONE,
   HOURS,
 };

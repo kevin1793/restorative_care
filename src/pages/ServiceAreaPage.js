@@ -1,8 +1,14 @@
-import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
+import {
+  PHONE_HREF,
+  PHONE_DISPLAY,
+  ADDRESS_STREET,
+  ADDRESS_CITY_LINE,
+  MAPS_URL,
+} from "../siteInfo";
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
-import { MapPin, Phone, MessageSquare } from "lucide-react";
+import { MapPin, Phone, MessageSquare, Navigation } from "lucide-react";
 
 import { lazy, Suspense } from "react";
 import { SERVED_COUNTIES } from "../servedCounties";
@@ -12,8 +18,9 @@ import { SERVED_COUNTIES } from "../servedCounties";
 const ServiceAreaMap = lazy(() => import("../components/ServiceAreaMap"));
 
 export default function ServiceAreaPage() {
-  // Hovering a county in the list lights it up on the map (mouse/touch
-  // enhancement only — the list itself is plain text for everyone else).
+  // Hovering a county in the list lights it up on the map, and hovering or
+  // tapping it on the map lights up its pill here (mouse/touch enhancement
+  // only — the list itself is plain text for everyone else).
   const [activeCounty, setActiveCounty] = useState(null);
 
   useEffect(() => {
@@ -79,7 +86,10 @@ export default function ServiceAreaPage() {
                     />
                   }
                 >
-                  <ServiceAreaMap activeCounty={activeCounty} />
+                  <ServiceAreaMap
+                    activeCounty={activeCounty}
+                    onActiveCountyChange={setActiveCounty}
+                  />
                 </Suspense>
 
                 {/* Legend */}
@@ -129,10 +139,13 @@ export default function ServiceAreaPage() {
                       key={county}
                       onMouseEnter={() => setActiveCounty(county)}
                       onMouseLeave={() => setActiveCounty(null)}
-                      className={`flex items-center gap-2 bg-white border rounded-xl px-3 py-3 text-sm font-medium text-primary shadow-sm transition-colors ${
+                      // bg-white lives in the inactive branch only: with both
+                      // background classes present, bg-white won and the
+                      // active tint never showed
+                      className={`flex items-center gap-2 border rounded-xl px-3 py-3 text-sm font-medium text-primary shadow-sm transition-colors ${
                         activeCounty === county
                           ? "border-[#D85A30] bg-[#FFF4EF]"
-                          : "border-primary/15"
+                          : "border-primary/15 bg-white"
                       }`}
                     >
                       <MapPin
@@ -148,6 +161,37 @@ export default function ServiceAreaPage() {
                     </li>
                   ))}
                 </ul>
+
+                {/* The office marked on the map: its address and a
+                    directions link. Orange accent matches the map marker. */}
+                <article className="mt-6 flex items-start gap-4 bg-white border border-[#D85A30]/30 rounded-2xl p-5 shadow-sm">
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#FFF4EF] text-[#D85A30]">
+                    <MapPin className="w-5 h-5" aria-hidden="true" />
+                  </span>
+
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      Our Bedford office
+                    </h3>
+
+                    <address className="not-italic text-gray-700 leading-relaxed mb-3">
+                      {ADDRESS_STREET}
+                      <br />
+                      {ADDRESS_CITY_LINE}
+                    </address>
+
+                    <a
+                      href={MAPS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-2 min-h-[44px] rounded-full border-2 border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primaryLight transition-colors ${focusClasses}`}
+                      aria-label="Open our Bedford office in Google Maps — opens in a new tab"
+                    >
+                      <Navigation className="w-4 h-4" aria-hidden="true" />
+                      Open in Google Maps
+                    </a>
+                  </div>
+                </article>
               </div>
             </div>
 

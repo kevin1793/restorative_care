@@ -32,7 +32,14 @@ const LABEL_OFFSETS = { Tarrant: [-6, -20] };
 // The map is zoomed in on the counties we serve (plus the surrounding
 // counties for context) instead of showing all of Texas, where the service
 // area was a tiny cluster in one corner.
-export default function ServiceAreaMap({ activeCounty = null }) {
+//
+// Linked with the county list beside it both ways: the list passes in
+// activeCounty, and pointing at (mouse) or tapping (touch) a served county
+// here reports it back through onActiveCountyChange so its pill lights up.
+export default function ServiceAreaMap({
+  activeCounty = null,
+  onActiveCountyChange = () => {},
+}) {
   const [shapes, setShapes] = useState(null);
   const [hq, setHq] = useState(null);
   const [failed, setFailed] = useState(false);
@@ -114,6 +121,8 @@ export default function ServiceAreaMap({ activeCounty = null }) {
       role="img"
       aria-label={label}
       className="block w-full h-auto rounded-xl bg-primaryLight/60"
+      // A tap anywhere off the served counties clears a touch selection
+      onClick={() => onActiveCountyChange(null)}
     >
       <g aria-hidden="true">
         {/* Surrounding counties first, so served counties draw on top */}
@@ -138,7 +147,19 @@ export default function ServiceAreaMap({ activeCounty = null }) {
             }
             stroke={COLORS.stroke}
             strokeWidth="1.5"
-            style={{ transition: "fill 150ms ease" }}
+            style={{ transition: "fill 150ms ease", cursor: "pointer" }}
+            // Mouse: follow the pointer. Touch has no hover, so a tap
+            // selects the county until another tap moves or clears it.
+            onPointerEnter={(e) => {
+              if (e.pointerType === "mouse") onActiveCountyChange(s.name);
+            }}
+            onPointerLeave={(e) => {
+              if (e.pointerType === "mouse") onActiveCountyChange(null);
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onActiveCountyChange(s.name);
+            }}
           />
         ))}
 
