@@ -1,10 +1,10 @@
 import { PHONE_HREF, PHONE_DISPLAY, EMAIL, EMAIL_HREF, ADDRESS_FULL } from "../siteInfo";
 import React from "react";
 import Seo from "../components/Seo";
+import { textLink } from "../ui";
 import { Link as RouterLink } from "react-router-dom";
 
-const linkClasses =
-  "text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2";
+const linkClasses = textLink;
 
 export default function AccessibilityStatementPage() {
   return (
@@ -150,7 +150,6 @@ export default function AccessibilityStatementPage() {
                   <RouterLink
                     to="/nondiscrimination"
                     className={linkClasses}
-                    onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
                   >
                     Notice of Nondiscrimination
                   </RouterLink>{" "}

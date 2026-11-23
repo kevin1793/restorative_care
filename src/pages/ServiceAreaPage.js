@@ -1,14 +1,9 @@
-import {
-  PHONE_HREF,
-  PHONE_DISPLAY,
-  ADDRESS_STREET,
-  ADDRESS_CITY_LINE,
-  MAPS_URL,
-} from "../siteInfo";
+import { ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL } from "../siteInfo";
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
-import { MapPin, Phone, MessageSquare, Navigation } from "lucide-react";
+import CtaBand from "../components/CtaBand";
+import { MapPin, Navigation } from "lucide-react";
+import { button, cardTitle, sectionTitle, sectionY } from "../ui";
 
 import { lazy, Suspense } from "react";
 import { SERVED_COUNTIES } from "../servedCounties";
@@ -22,9 +17,6 @@ export default function ServiceAreaPage() {
   // tapping it on the map lights up its pill here (mouse/touch enhancement
   // only — the list itself is plain text for everyone else).
   const [activeCounty, setActiveCounty] = useState(null);
-
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
 
   return (
     <>
@@ -48,7 +40,8 @@ export default function ServiceAreaPage() {
             <h1
               id="service-area-heading"
               style={{ "--i": 1 }}
-              className="hero-rise text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-6"
+              // Same title size as the photo heroes on the other pages
+              className="hero-rise text-3xl min-[400px]:text-4xl md:text-5xl font-bold text-primary mb-4"
             >
               Counties We Serve
             </h1>
@@ -64,14 +57,15 @@ export default function ServiceAreaPage() {
         </section>
 
         {/* Map + County List */}
+        {/* White, so the light-blue call-to-action band below stands apart */}
         <section
-          className="py-10 md:py-16 bg-primaryLight"
+          className={`${sectionY} bg-white`}
           aria-labelledby="county-list-heading"
         >
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
               {/* Map card */}
-              <div className="lg:col-span-3 bg-white rounded-2xl shadow-brand p-4 sm:p-6">
+              <div className="lg:col-span-3 bg-white border border-primary/10 rounded-2xl shadow-brand p-4 sm:p-6">
                 <Suspense
                   fallback={
                     <div
@@ -118,9 +112,9 @@ export default function ServiceAreaPage() {
               <div className="lg:col-span-2">
                 <h2
                   id="county-list-heading"
-                  className="text-2xl font-semibold text-primary mb-2 text-center lg:text-left"
+                  className={`${sectionTitle} text-center lg:text-left`}
                 >
-                  11 counties, one local team
+                  11 Counties, One Local Team
                 </h2>
                 <p className="text-gray-700 leading-relaxed mb-5 text-center lg:text-left">
                   If you live in one of these counties, our team can bring
@@ -166,9 +160,7 @@ export default function ServiceAreaPage() {
                   </span>
 
                   <div className="min-w-0">
-                    <h3 className="font-semibold text-gray-900 mb-1">
-                      Our Bedford office
-                    </h3>
+                    <h3 className={`${cardTitle} mb-1`}>Our Bedford Office</h3>
 
                     <address className="not-italic text-gray-700 leading-relaxed mb-3">
                       {ADDRESS_STREET}
@@ -180,46 +172,25 @@ export default function ServiceAreaPage() {
                       href={MAPS_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-2 min-h-[44px] rounded-full border-2 border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primaryLight transition-colors ${focusClasses}`}
-                      aria-label="Open our Bedford office in Google Maps — opens in a new tab"
+                      className={button("secondary", "sm")}
+                      aria-label="Get directions to our Bedford office in Google Maps — opens in a new tab"
                     >
                       <Navigation className="w-4 h-4" aria-hidden="true" />
-                      Open in Google Maps
+                      Get Directions
                     </a>
                   </div>
                 </article>
               </div>
             </div>
-
-            {/* CTA band */}
-            <div className="mt-10 md:mt-14 rounded-2xl bg-gradient-to-br from-primary to-primaryDark text-white p-6 sm:p-10 text-center shadow-brand">
-              <h2 className="text-2xl sm:text-3xl font-semibold mb-3">
-                Not sure if we serve your address?
-              </h2>
-              <p className="text-white/90 max-w-xl mx-auto mb-6 leading-relaxed">
-                Give us a call or send a message. We'll confirm quickly and
-                help you with next steps.
-              </p>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
-                <a
-                  href={PHONE_HREF}
-                  className={`inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 min-h-[48px] rounded-full font-medium hover:bg-primaryLight transition-colors ${focusClasses} focus-visible:ring-white focus-visible:ring-offset-primary`}
-                >
-                  <Phone className="w-5 h-5" aria-hidden="true" />
-                  Call {PHONE_DISPLAY}
-                </a>
-                <RouterLink
-                  to="/contact"
-                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
-                  className={`inline-flex items-center justify-center gap-2 border-2 border-white text-white px-6 py-3 min-h-[48px] rounded-full font-medium hover:bg-white/10 transition-colors ${focusClasses} focus-visible:ring-white focus-visible:ring-offset-primary`}
-                >
-                  <MessageSquare className="w-5 h-5" aria-hidden="true" />
-                  Check if We Serve Your Area
-                </RouterLink>
-              </div>
-            </div>
           </div>
         </section>
+
+        <CtaBand
+          id="cta-heading"
+          title="Not Sure If We Serve Your Address?"
+          text="Give us a call or send a message. We’ll confirm quickly and help you with next steps."
+          secondary={{ label: "Send Us a Message", to: "/contact" }}
+        />
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
+import { focusRingText, sectionTitle, sectionY } from "../ui";
 
 import molinaLogo from "../assets/insurance/molina.svg";
 import aetnaLogo from "../assets/insurance/aetna.svg";
@@ -134,8 +135,7 @@ function WebsiteLink({ url, name }) {
 }
 
 export default function InsuranceSection() {
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-md";
+  const focusClasses = focusRingText;
 
   const cardClasses =
     "flex flex-col items-center text-center min-w-0 bg-white border border-primary/15 rounded-xl shadow-brand hover:shadow-brand-hover transition-shadow duration-200";
@@ -146,19 +146,21 @@ export default function InsuranceSection() {
   return (
     <section
       id="insurance"
-      className="py-12 md:py-20 bg-white"
+      // Light blue: sits between the white Veterans and Get in Touch
+      // sections on the homepage
+      className={`${sectionY} bg-primaryLight`}
       aria-labelledby="insurance-heading"
     >
       <div className="max-w-5xl mx-auto px-6">
         <h2
           id="insurance-heading"
-          className="text-2xl sm:text-3xl font-semibold text-primary text-center mb-4"
+          className={`${sectionTitle} text-center`}
         >
           Insurance &amp; Payers We Accept
         </h2>
 
         <p className="text-center text-gray-700 max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed">
-          We're proud to be contracted and credentialed with the following
+          We’re proud to be contracted and credentialed with the following
           programs, so more families can access our care.
         </p>
 
@@ -234,11 +236,10 @@ export default function InsuranceSection() {
           <RouterLink
             to="/contact"
             className={`text-primary underline underline-offset-4 hover:text-primary/80 ${focusClasses}`}
-            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
           >
             Contact us
           </RouterLink>{" "}
-          and we'll help you find out.
+          and we’ll help you find out.
         </p>
       </div>
     </section>

@@ -36,8 +36,6 @@ export default function Footer() {
   const headingClasses =
     "text-sm font-semibold uppercase tracking-wider text-white/70 mb-3";
 
-  const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-
   return (
     <footer className="bg-primaryDark text-white" role="contentinfo">
       {/* Accent line ties the footer to the map/office marker color */}
@@ -108,12 +106,12 @@ export default function Footer() {
 
           <ul className="grid grid-cols-2 sm:grid-cols-1 gap-x-4">
             <li>
-              <RouterLink to="/services" className={linkClasses} onClick={toTop}>
+              <RouterLink to="/services" className={linkClasses}>
                 Services
               </RouterLink>
             </li>
             <li>
-              <RouterLink to="/veterans" className={linkClasses} onClick={toTop}>
+              <RouterLink to="/veterans" className={linkClasses}>
                 Veterans
               </RouterLink>
             </li>
@@ -121,7 +119,6 @@ export default function Footer() {
               <RouterLink
                 to="/service-area"
                 className={linkClasses}
-                onClick={toTop}
               >
                 Service Area
               </RouterLink>
@@ -138,7 +135,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <RouterLink to="/contact" className={linkClasses} onClick={toTop}>
+              <RouterLink to="/contact" className={linkClasses}>
                 Contact Us
               </RouterLink>
             </li>
@@ -206,7 +203,6 @@ export default function Footer() {
 
           <RouterLink
             to="/service-area"
-            onClick={toTop}
             className={`inline-flex items-center gap-2 py-2.5 font-medium text-white underline underline-offset-4 hover:text-[#F2A58A] transition-colors ${focusClasses}`}
           >
             See all counties
@@ -246,7 +242,6 @@ export default function Footer() {
                 <RouterLink
                   to="/privacy-policy"
                   className={linkClasses}
-                  onClick={toTop}
                 >
                   Privacy Policy
                 </RouterLink>
@@ -255,7 +250,6 @@ export default function Footer() {
                 <RouterLink
                   to="/terms-of-service"
                   className={linkClasses}
-                  onClick={toTop}
                 >
                   Terms of Service
                 </RouterLink>
@@ -264,7 +258,6 @@ export default function Footer() {
                 <RouterLink
                   to="/accessibility"
                   className={linkClasses}
-                  onClick={toTop}
                 >
                   Accessibility Statement
                 </RouterLink>
@@ -273,7 +266,6 @@ export default function Footer() {
                 <RouterLink
                   to="/nondiscrimination"
                   className={linkClasses}
-                  onClick={toTop}
                 >
                   Notice of Nondiscrimination
                 </RouterLink>

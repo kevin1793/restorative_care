@@ -1,4 +1,3 @@
-import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React from "react";
 import {
   Stethoscope,
@@ -15,6 +14,16 @@ import Seo from "../components/Seo";
 import servicesHeroImg from "../assets/images/services.webp";
 import nurseImage1 from "../assets/images/nurse_care1.webp";
 import PageHero from "../components/PageHero";
+import CtaBand from "../components/CtaBand";
+import {
+  cardTitle,
+  focusRing,
+  photo,
+  sectionTitle,
+  sectionY,
+  tag,
+  textLink,
+} from "../ui";
 
 // Kept identical to the homepage's Skilled Services copy (report §4.6 —
 // the two pages must not contradict each other) so this page can serve as
@@ -56,21 +65,21 @@ const payerPaths = [
     title: "Home Health Aide (HHA)",
     payer: "Via Medicare",
     bestFor: "Personal care alongside skilled nursing or therapy",
-    text: "A Home Health Aide provides hands-on personal care — like bathing, dressing, and grooming — as part of a Medicare-covered home health plan. This service is only available when a doctor has also ordered skilled care, such as nursing or therapy, for a medical reason. The aide works alongside that skilled team to support daily comfort while the medical needs are being treated. It isn't offered as a standalone service — it comes as part of the larger Medicare home health plan.",
+    text: "A Home Health Aide provides hands-on personal care — like bathing, dressing, and grooming — as part of a Medicare-covered home health plan. This service is only available when a doctor has also ordered skilled care, such as nursing or therapy, for a medical reason. The aide works alongside that skilled team to support daily comfort while the medical needs are being treated. It isn’t offered as a standalone service — it comes as part of the larger Medicare home health plan.",
   },
   {
     icon: ClipboardCheck,
     title: "Personal Attendant Services (PAS)",
     payer: "Via Medicaid",
     bestFor: "Ongoing daily-living support, no skilled order needed",
-    text: "Personal Attendant Services provide ongoing, hands-on help with everyday tasks — bathing, dressing, meal preparation, light housekeeping, and more — for clients who qualify for long-term care support through Texas Medicaid. Unlike a Home Health Aide, PAS doesn't require a skilled nursing order — it's available on its own for anyone who needs regular help staying safe and independent at home, based on their Medicaid eligibility.",
+    text: "Personal Attendant Services provide ongoing, hands-on help with everyday tasks — bathing, dressing, meal preparation, light housekeeping, and more — for clients who qualify for long-term care support through Texas Medicaid. Unlike a Home Health Aide, PAS doesn’t require a skilled nursing order — it’s available on its own for anyone who needs regular help staying safe and independent at home, based on their Medicaid eligibility.",
   },
   {
     icon: Home,
     title: "Private Duty",
     payer: "Private pay",
     bestFor: "Flexible hours, no wait for approval",
-    text: "Private Duty care offers the same kind of personal, hands-on support as Personal Attendant Services — help with bathing, dressing, meals, companionship, and more — but is paid for directly by the client or family rather than through Medicaid or Medicare. Families often choose Private Duty when they want more flexible hours, don't qualify for Medicaid's program, or want to begin care right away without waiting through an approval process.",
+    text: "Private Duty care offers the same kind of personal, hands-on support as Personal Attendant Services — help with bathing, dressing, meals, companionship, and more — but is paid for directly by the client or family rather than through Medicaid or Medicare. Families often choose Private Duty when they want more flexible hours, don’t qualify for Medicaid’s program, or want to begin care right away without waiting through an approval process.",
   },
 ];
 
@@ -96,19 +105,6 @@ const comparisonCards = [
 // "Learn More About Personal Care Services" button). A reset here would undo
 // that.
 export default function ServicesPage() {
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
-
-  const buttonClasses = `
-    inline-flex items-center justify-center
-    bg-primary text-white
-    px-6 py-3 rounded-full
-    font-medium
-    hover:bg-primary/90
-    transition-colors duration-200
-    ${focusClasses}
-  `;
-
   return (
     <>
       <Seo path="/services" />
@@ -129,34 +125,35 @@ export default function ServicesPage() {
             §4.6, optional-but-recommended) — safe to build in full now
             that the taxonomy below actually matches it. */}
         <section
-          className="py-10 md:py-16 bg-white"
+          className={`${sectionY} bg-white`}
           aria-labelledby="comparison-heading"
         >
           <div className="max-w-5xl mx-auto px-6">
             <h2
               id="comparison-heading"
-              className="text-2xl font-semibold text-primary text-center mb-8"
+              className={`${sectionTitle} text-center`}
             >
-              Which service is right for you?
+              Which Service Is Right for You?
             </h2>
 
             {/* Cards in a row stretch to the same height; each is a column
                 with the payer pill pushed to the bottom (mt-auto), so the
-                pills line up however long the title or description is. */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                pills line up however long the title or description is.
+                These are links, so they get the hover state. */}
+            <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {comparisonCards.map((card) => (
                 <a
                   key={card.title}
                   href={card.href}
-                  className={`flex flex-col h-full bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusClasses}`}
+                  className={`flex flex-col h-full bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusRing}`}
                 >
-                  <span className="block font-semibold text-gray-900 mb-1">
+                  <span className={`block ${cardTitle} mb-1`}>
                     {card.title}
                   </span>
                   <span className="block text-sm text-gray-700 mb-4">
                     {card.bestFor}
                   </span>
-                  <span className="mt-auto self-start text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1">
+                  <span className={`${tag} mt-auto self-start`}>
                     {card.payer}
                   </span>
                 </a>
@@ -167,7 +164,7 @@ export default function ServicesPage() {
 
         {/* Skilled Services */}
         <section
-          className="py-12 md:py-20 bg-primaryLight"
+          className={`${sectionY} bg-primaryLight`}
           aria-labelledby="skilled-services-heading"
         >
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -176,7 +173,7 @@ export default function ServicesPage() {
               alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
               width="799"
               height="533"
-              className="rounded-2xl shadow-brand w-full order-first md:order-last"
+              className={`${photo} order-first md:order-last`}
               loading="lazy"
             />
 
@@ -185,10 +182,7 @@ export default function ServicesPage() {
                 <Stethoscope className="w-6 h-6" aria-hidden="true" />
               </span>
 
-              <h2
-                id="skilled-services-heading"
-                className="text-2xl sm:text-3xl font-semibold text-primary mb-2"
-              >
+              <h2 id="skilled-services-heading" className={sectionTitle}>
                 Skilled Services
               </h2>
 
@@ -226,14 +220,11 @@ export default function ServicesPage() {
         {/* Personal Care Services (Non-Skilled) — three payer paths, not
             one blended service (report §4.6 correction, July 23) */}
         <section
-          className="py-12 md:py-20 bg-white text-center"
+          className={`${sectionY} bg-white text-center`}
           aria-labelledby="personal-care-heading"
         >
           <div className="max-w-5xl mx-auto px-6">
-            <h2
-              id="personal-care-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary mb-4"
-            >
+            <h2 id="personal-care-heading" className={sectionTitle}>
               Personal Care Services (Non-Skilled)
             </h2>
 
@@ -241,26 +232,22 @@ export default function ServicesPage() {
               Non-skilled personal care — help with daily activities like
               bathing, dressing, and meal preparation — can be accessed in
               three different ways, depending on your situation and coverage.
-              Here's how each option works:
+              Here’s how each option works:
             </p>
 
             <div className="grid md:grid-cols-3 gap-6">
               {payerPaths.map(({ icon: Icon, title, payer, text }) => (
                 <article
                   key={title}
-                  className="bg-white border border-primary/10 rounded-2xl p-6 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand"
+                  className="bg-white border border-primary/10 rounded-2xl p-6 text-left"
                 >
                   <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primaryLight text-primary">
                     <Icon className="h-6 w-6" aria-hidden="true" />
                   </span>
 
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                    {title}
-                  </h3>
+                  <h3 className={`${cardTitle} mb-1`}>{title}</h3>
 
-                  <span className="inline-block text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1 mb-3">
-                    {payer}
-                  </span>
+                  <span className={`${tag} mb-3`}>{payer}</span>
 
                   <p className="text-sm text-gray-700 leading-relaxed">
                     {text}
@@ -271,43 +258,21 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section
-          className="py-10 md:py-16 bg-primaryLight text-center"
-          aria-labelledby="cta-heading"
-        >
-          <div className="max-w-3xl mx-auto px-6">
-            <h2
-              id="cta-heading"
-              className="text-2xl md:text-3xl font-semibold text-primary mb-4"
-            >
-              Ready to Get Started?
-            </h2>
-
-            <p className="text-gray-800 mb-6 max-w-xl mx-auto leading-relaxed">
-              Contact Restorative Care Home Health Services to schedule your
-              free in-home assessment and begin your care plan today.
-            </p>
-
-            {/* Cross-link to Insurance & Payers on the homepage (report §4.6) */}
-            <p className="text-sm text-gray-700 mb-6">
+        <CtaBand
+          id="cta-heading"
+          title="Ready to Get Started?"
+          text="Contact us to schedule your free in-home assessment and begin your care plan today."
+          note={
+            // Cross-link to Insurance & Payers on the homepage (report §4.6)
+            <>
               Wondering if we accept your insurance?{" "}
-              <a
-                href="/#insurance"
-                className={`text-primary underline underline-offset-4 hover:text-primary/80 ${focusClasses}`}
-              >
+              <a href="/#insurance" className={textLink}>
                 See Insurance &amp; Payers we accept →
               </a>
-            </p>
-
-            <a
-              href={PHONE_HREF}
-              className={buttonClasses}
-            >
-              Call Us Now: {PHONE_DISPLAY}
-            </a>
-          </div>
-        </section>
+            </>
+          }
+          secondary={{ label: "Send Us a Message", to: "/contact" }}
+        />
       </div>
     </>
   );

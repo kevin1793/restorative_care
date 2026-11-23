@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
                 <p>
                   We use the information you provide to respond to your
                   inquiry, schedule a free in-home assessment, and follow up
-                  about the services you've requested. We do not sell your
+                  about the services you’ve requested. We do not sell your
                   personal information to third parties.
                 </p>
               </div>

@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import HomePage from "./pages/HomePage";
 import ServicesPage from "./pages/ServicesPage";
@@ -35,12 +35,16 @@ function RouteAnnouncer({ children }) {
   const [announcement, setAnnouncement] = useState("");
   const isFirstRender = useRef(true);
 
-  useEffect(() => {
+  // Focus and scroll run in a layout effect: before the browser paints the
+  // new page, so it never flashes at the old page's scroll position (links
+  // used to each carry their own onClick scroll-to-top to hide that), and
+  // before useScrollReveal below measures what's on screen.
+  useLayoutEffect(() => {
     // Move focus to top of page on route change
     const main = document.getElementById("main-content");
 
     if (main) {
-      main.focus();
+      main.focus({ preventScroll: true });
     }
 
     // Ensure page scroll resets. "instant" because the site scrolls smoothly
@@ -59,7 +63,11 @@ function RouteAnnouncer({ children }) {
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
+    // The hash is read only on a page change; a same-page #link scrolls itself
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
+  useEffect(() => {
     // The first load is announced by the browser itself
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -69,8 +77,6 @@ function RouteAnnouncer({ children }) {
     // Wait a moment for the new page's <Seo /> to update document.title
     const timer = setTimeout(() => setAnnouncement(document.title), 300);
     return () => clearTimeout(timer);
-    // The hash is read only on a page change; a same-page #link scrolls itself
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   // Sections below the fold rise in as they scroll into view

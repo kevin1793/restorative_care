@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { Check } from "lucide-react";
+import { button, focusRing } from "../ui";
 
 // Matches the site-wide taxonomy exactly (report §3.17 / §4.9.3) — 5
 // Skilled Services + 2 Personal Care Services. "Private Duty" is
@@ -72,7 +73,9 @@ function validate(form) {
   return errors;
 }
 
-export default function ContactForm({ showHeading = true }) {
+// showHeading / showIntro: pages that write their own heading and intro
+// above the form (the homepage, the Contact page) turn these off
+export default function ContactForm({ showHeading = true, showIntro = true }) {
   const [state, handleSubmit] = useForm("mgvpkdba");
   const [errs, setErrs] = useState({});
   const formRef = useRef(null);
@@ -125,8 +128,7 @@ export default function ContactForm({ showHeading = true }) {
     }
   }, [state.succeeded]);
 
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2";
+  const focusClasses = focusRing;
 
   const inputClasses = `
     w-full
@@ -157,10 +159,12 @@ export default function ContactForm({ showHeading = true }) {
           </h2>
         )}
 
-        <p className="text-center text-gray-800 mb-6 sm:mb-8 leading-relaxed">
-          Have questions about our services or need assistance? Fill out the
-          form below and a member of our care team will reach out shortly.
-        </p>
+        {showIntro && (
+          <p className="text-center text-gray-800 mb-6 sm:mb-8 leading-relaxed">
+            Have questions about our services or need assistance? Fill out the
+            form below and a member of our care team will reach out shortly.
+          </p>
+        )}
 
         {/* Form */}
         <form
@@ -168,7 +172,8 @@ export default function ContactForm({ showHeading = true }) {
           onSubmit={onSubmit}
           onChange={clearError}
           className="
-            bg-gray-50
+            bg-white
+            border border-primary/10
             shadow-brand
             rounded-2xl
             p-4 min-[400px]:p-6 sm:p-8
@@ -404,7 +409,7 @@ export default function ContactForm({ showHeading = true }) {
 
             <p className="text-sm text-gray-700 mt-2 leading-snug">
               Not sure if we accept your plan? Tell us what you have —
-              including PPO or out-of-network coverage — and we'll help you
+              including PPO or out-of-network coverage — and we’ll help you
               find out.
             </p>
 
@@ -485,18 +490,7 @@ export default function ContactForm({ showHeading = true }) {
               type="submit"
               disabled={state.submitting}
               aria-disabled={state.submitting}
-              className={`
-                inline-flex items-center justify-center
-                w-full sm:w-auto
-                bg-primary text-white
-                px-8 py-3 rounded-full
-                font-medium
-                transition-colors duration-200
-                hover:bg-primary/90
-                disabled:opacity-70
-                disabled:cursor-not-allowed
-                ${focusClasses}
-              `}
+              className={`${button("primary")} w-full sm:w-auto`}
             >
               {state.submitting
                 ? "Sending Message..."

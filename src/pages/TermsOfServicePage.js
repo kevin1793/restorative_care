@@ -49,7 +49,7 @@ export default function TermsOfServicePage() {
                 <p>
                   By submitting the contact form, you consent to Restorative
                   Care Home Health Services, Inc. contacting you by phone,
-                  email, or text about the services you've requested. Please
+                  email, or text about the services you’ve requested. Please
                   do not include sensitive medical details in the form — a
                   team member will follow up to discuss your care needs
                   directly and securely.

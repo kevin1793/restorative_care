@@ -1,5 +1,14 @@
-import { PHONE_HREF, PHONE_DISPLAY, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL } from "../siteInfo";
-import { Phone, Mail, MapPin } from "lucide-react";
+import {
+  PHONE_HREF,
+  PHONE_DISPLAY,
+  EMAIL,
+  EMAIL_HREF,
+  ADDRESS_STREET,
+  ADDRESS_CITY_LINE,
+  ADDRESS_FULL,
+  MAPS_URL,
+} from "../siteInfo";
+import { Phone, Mail, MapPin, Navigation } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
 import OpenStatus from "../components/OpenStatus";
@@ -7,21 +16,12 @@ import OpenStatus from "../components/OpenStatus";
 import ContactForm from "../components/ContactForm";
 import contactHeroImg from "../assets/images/contact_hero.webp";
 import PageHero from "../components/PageHero";
+import CtaBand from "../components/CtaBand";
+import { button, cardTitle, sectionTitle, sectionY, textLink } from "../ui";
+
+const [EMAIL_USER, EMAIL_DOMAIN] = EMAIL.split("@");
 
 export default function ContactPage() {
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
-
-  const buttonClasses = `
-    inline-flex items-center justify-center
-    bg-primary text-white
-    px-6 py-3 rounded-full
-    font-medium
-    hover:bg-primary/90
-    transition-colors duration-200
-    ${focusClasses}
-  `;
-
   return (
     <>
       <Seo path="/contact" />
@@ -40,23 +40,16 @@ export default function ContactPage() {
 
         {/* Contact Information */}
         <section
-          className="py-12 md:py-20 bg-gradient-to-b from-white to-primaryLight"
+          className={`${sectionY} bg-white`}
           aria-labelledby="contact-info-heading"
         >
           <div className="max-w-5xl mx-auto px-6 text-center">
-            <p className="text-sm font-semibold uppercase tracking-widest text-primary/80 mb-3">
-              Get in touch
-            </p>
-
-            <h2
-              id="contact-info-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary mb-5"
-            >
+            <h2 id="contact-info-heading" className={sectionTitle}>
               We’re Here to Help
             </h2>
 
             <p className="text-gray-800 max-w-2xl mx-auto leading-relaxed mb-4">
-              Whether you're exploring home health services, need information
+              Whether you’re exploring home health services, need information
               about insurance, or want assistance creating a personalized care
               plan, our team is ready to guide you every step of the way.
             </p>
@@ -65,8 +58,7 @@ export default function ContactPage() {
               Not sure if we serve your area?{" "}
               <RouterLink
                 to="/service-area"
-                className={`text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm ${focusClasses}`}
-                onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
+                className={textLink}
               >
                 See the counties we cover
               </RouterLink>
@@ -89,10 +81,10 @@ export default function ContactPage() {
                   action: (
                     <a
                       href={PHONE_HREF}
-                      className={`inline-flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary/90 transition-colors ${focusClasses}`}
+                      className={`${button("primary")} w-full`}
                     >
                       <Phone className="w-4 h-4 shrink-0" aria-hidden="true" />
-                      {PHONE_DISPLAY}
+                      Call {PHONE_DISPLAY}
                     </a>
                   ),
                 },
@@ -104,19 +96,19 @@ export default function ContactPage() {
                       Send your questions to
                       <br />
                       <span className="font-medium text-gray-900">
-                        inforestorativecare@
+                        {EMAIL_USER}@
                         <wbr />
-                        gmail.com
+                        {EMAIL_DOMAIN}
                       </span>
                     </>
                   ),
                   action: (
                     <a
                       href={EMAIL_HREF}
-                      className={`inline-flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full border-2 border-primary text-primary font-medium hover:bg-primaryLight transition-colors ${focusClasses}`}
+                      className={`${button("secondary")} w-full`}
                     >
                       <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
-                      Send an email
+                      Send an Email
                     </a>
                   ),
                 },
@@ -135,25 +127,24 @@ export default function ContactPage() {
                       href={MAPS_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full border-2 border-primary text-primary font-medium hover:bg-primaryLight transition-colors ${focusClasses}`}
+                      className={`${button("secondary")} w-full`}
                       aria-label="Get directions to our Bedford office in Google Maps — opens in a new tab"
                     >
-                      Get directions
+                      <Navigation className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      Get Directions
                     </a>
                   ),
                 },
               ].map(({ icon: Icon, title, text, action }) => (
                 <article
                   key={title}
-                  className="min-w-0 flex flex-col items-center bg-white border border-primary/10 p-6 sm:p-8 rounded-2xl shadow-brand hover:shadow-brand-hover hover:-translate-y-0.5 transition-all duration-200"
+                  className="min-w-0 flex flex-col items-center bg-white border border-primary/10 p-6 sm:p-8 rounded-2xl shadow-brand"
                 >
                   <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primaryLight text-primary mb-4">
                     <Icon className="w-8 h-8" aria-hidden="true" />
                   </span>
 
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {title}
-                  </h3>
+                  <h3 className={`${cardTitle} mb-2`}>{title}</h3>
 
                   <p className="text-gray-700 leading-relaxed mb-6">{text}</p>
 
@@ -166,7 +157,7 @@ export default function ContactPage() {
               Prefer to write?{" "}
               <a
                 href="#send-message"
-                className={`text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm ${focusClasses}`}
+                className={textLink}
               >
                 Send us a message below
               </a>
@@ -178,13 +169,13 @@ export default function ContactPage() {
         {/* Contact Form */}
         <section
           id="send-message"
-          className="py-12 md:py-20 bg-primaryLight"
+          className={`${sectionY} bg-primaryLight`}
           aria-labelledby="contact-form-heading"
         >
           <div className="max-w-5xl mx-auto px-6">
             <h2
               id="contact-form-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary text-center mb-8"
+              className={`${sectionTitle} text-center`}
             >
               Send Us a Message
             </h2>
@@ -195,14 +186,11 @@ export default function ContactPage() {
 
         {/* Map Section */}
         <section
-          className="py-12 md:py-20 bg-white"
+          className={`${sectionY} bg-white`}
           aria-labelledby="map-heading"
         >
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2
-              id="map-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary mb-6"
-            >
+            <h2 id="map-heading" className={sectionTitle}>
               Our Location
             </h2>
 
@@ -211,10 +199,10 @@ export default function ContactPage() {
               appointment.
             </p>
 
-            <div className="rounded-2xl overflow-hidden shadow-lg">
+            <div className="rounded-2xl overflow-hidden shadow-brand">
               <iframe
                 title="Map showing the Restorative Care HHS office location in Bedford, Texas"
-                src="https://www.google.com/maps?q=221+Bedford+Road+Suite+320+Bedford,+TX+76022&output=embed"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(ADDRESS_FULL)}&output=embed`}
                 width="100%"
                 height="350"
                 loading="lazy"
@@ -226,32 +214,11 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section
-          className="py-10 md:py-16 bg-primaryLight text-center"
-          aria-labelledby="cta-heading"
-        >
-          <div className="max-w-3xl mx-auto px-6">
-            <h2
-              id="cta-heading"
-              className="text-2xl md:text-3xl font-semibold text-primary mb-4"
-            >
-              Need Assistance Right Away?
-            </h2>
-
-            <p className="text-gray-800 mb-6 leading-relaxed">
-              Call us today to discuss your needs or schedule a free in-home
-              assessment.
-            </p>
-
-            <a
-              href={PHONE_HREF}
-              className={buttonClasses}
-            >
-              Call Us Now: {PHONE_DISPLAY}
-            </a>
-          </div>
-        </section>
+        <CtaBand
+          id="cta-heading"
+          title="Need Assistance Right Away?"
+          text="Call us today to discuss your needs or schedule a free in-home assessment."
+        />
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import { PHONE_HREF, PHONE_DISPLAY, PHONE_DASHED } from "../siteInfo";
+import { button, focusRingText } from "../ui";
 import React, { useEffect, useRef } from "react";
 import { HeartPulse, Menu, X, Phone } from "lucide-react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
@@ -53,11 +54,13 @@ export default function Navbar() {
     };
   }, []);
 
+  // No separate "Contact Us" link: the Request Care button goes to the
+  // Contact page, and dropping the duplicate lets the full row fit on
+  // laptop screens. The footer still lists Contact Us.
   const navLinks = [
     { label: "Services", href: "/services" },
     { label: "Veterans", href: "/veterans" },
     { label: "Service Area", href: "/service-area" },
-    { label: "Contact Us", href: "/contact" },
   ];
 
   const careersLink = {
@@ -65,8 +68,11 @@ export default function Navbar() {
     href: "https://restorativecarehhs.com/careers/",
   };
 
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md";
+  const focusClasses = focusRingText;
+
+  // The page you're on is marked in both menus (color + underline on
+  // desktop, tinted row on mobile) and announced with aria-current
+  const isCurrent = (href) => location.pathname === href;
 
   // Close menu with Escape key
   useEffect(() => {
@@ -220,7 +226,7 @@ export default function Navbar() {
           ref={barRef}
           className="
             max-w-7xl mx-auto
-            px-6 py-5
+            px-4 sm:px-6 py-3
             flex justify-between items-center gap-3
           "
         >
@@ -228,7 +234,7 @@ export default function Navbar() {
           <RouterLink
             to="/"
             className={`
-              nav-logo flex items-center space-x-2 min-h-[44px] min-w-0
+              nav-logo flex items-center gap-2 min-h-[44px] min-w-0
               text-gray-900
               ${focusClasses}
             `}
@@ -236,47 +242,45 @@ export default function Navbar() {
             aria-label="Go to Restorative Care HHS homepage"
           >
             <HeartPulse
-              className="text-primary w-7 h-7"
+              className="text-primary w-7 h-7 shrink-0"
               aria-hidden="true"
             />
 
-            <span className="text-base min-[400px]:text-xl sm:text-2xl font-serif font-bold leading-tight sm:whitespace-nowrap">
+            {/* One line from 360px up; on the very smallest phones it may
+                wrap rather than run into the call and menu buttons */}
+            <span className="text-base min-[400px]:text-xl font-serif font-bold leading-tight min-[360px]:whitespace-nowrap">
               Restorative Care HHS
             </span>
           </RouterLink>
 
           {/* Desktop Navigation — shown only when the navbar is wide enough
-              for the whole row (4 links + Careers + phone button + Request
+              for the whole row (3 links + Careers + phone button + Request
               Care). The threshold is in rem inside a container query (see
               .nav-cq in src/index.css), and rem follows the visitor's text
-              size setting, so it moves up automatically: ~1350px at the
-              default size, ~1800px at the largest. Narrower than that gets
-              the hamburger menu instead of a clipped row. */}
-          <ul
-            className="
-              nav-desktop-links
-              items-center
-              space-x-6
-              flex-shrink-0
-            "
-          >
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <RouterLink
-                  to={link.href}
-                  className={`
-                    text-gray-900
-                    hover:text-primary
-                    transition-colors
-                    whitespace-nowrap
-                    ${focusClasses}
-                  `}
-                  onClick={closeMenu}
-                >
-                  {link.label}
-                </RouterLink>
-              </li>
-            ))}
+              size setting, so it moves up automatically: ~1170px at the
+              default size, wider at larger text sizes. Narrower than that
+              gets the hamburger menu instead of a clipped row. */}
+          <ul className="nav-desktop-links items-center gap-x-6 flex-shrink-0">
+            {navLinks.map((link) => {
+              const current = isCurrent(link.href);
+              return (
+                <li key={link.label}>
+                  <RouterLink
+                    to={link.href}
+                    aria-current={current ? "page" : undefined}
+                    className={`
+                      font-medium whitespace-nowrap transition-colors
+                      underline-offset-8 decoration-2
+                      ${current ? "text-primary underline" : "text-gray-900 hover:text-primary"}
+                      ${focusClasses}
+                    `}
+                    onClick={closeMenu}
+                  >
+                    {link.label}
+                  </RouterLink>
+                </li>
+              );
+            })}
 
             <li>
               <a
@@ -284,10 +288,8 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`
-                  text-gray-900
-                  hover:text-primary
-                  transition-colors
-                  whitespace-nowrap
+                  font-medium whitespace-nowrap transition-colors
+                  text-gray-900 hover:text-primary
                   ${focusClasses}
                 `}
                 onClick={closeMenu}
@@ -299,20 +301,10 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop Actions: tap-to-call + primary CTA */}
-          <div className="nav-desktop-actions items-center space-x-5 ml-6 flex-shrink-0">
+          <div className="nav-desktop-actions items-center gap-3 ml-4 flex-shrink-0">
             <a
               href={PHONE_HREF}
-              className={`
-                flex items-center gap-2
-                text-primary font-medium
-                border border-primary/30
-                rounded-full
-                px-4 py-2
-                whitespace-nowrap
-                hover:bg-primaryLight
-                transition-colors
-                ${focusClasses}
-              `}
+              className={`${button("secondary", "sm")} whitespace-nowrap`}
               aria-label={`Call Restorative Care HHS at ${PHONE_DASHED}`}
             >
               <Phone className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
@@ -321,45 +313,50 @@ export default function Navbar() {
 
             <RouterLink
               to="/contact"
-              className={`
-                bg-primary text-white
-                rounded-full
-                px-5 py-2
-                font-medium
-                whitespace-nowrap
-                hover:bg-primary/90
-                transition-colors
-                ${focusClasses}
-              `}
+              aria-current={isCurrent("/contact") ? "page" : undefined}
+              className={`${button("primary", "sm")} whitespace-nowrap`}
               onClick={closeMenu}
             >
               Request Care
             </RouterLink>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            ref={menuButtonRef}
-            type="button"
-            onClick={() => setOpen(!open)}
-            className={`
-              nav-mobile
-              inline-flex shrink-0 items-center justify-center min-w-[44px] min-h-[44px]
-              text-gray-900
-              hover:text-primary
-              transition-colors
-              ${focusClasses}
-            `}
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-          >
-            {open ? (
-              <X aria-hidden="true" />
-            ) : (
-              <Menu aria-hidden="true" />
-            )}
-          </button>
+          {/* Mobile: a one-tap call button beside the menu button, so
+              calling doesn't mean opening the menu first */}
+          <div className="nav-mobile flex shrink-0 items-center">
+            <a
+              href={PHONE_HREF}
+              className={`
+                inline-flex items-center justify-center w-11 h-11 rounded-full
+                text-primary hover:bg-primaryLight transition-colors
+                ${focusClasses}
+              `}
+              aria-label={`Call Restorative Care HHS at ${PHONE_DASHED}`}
+            >
+              <Phone className="w-5 h-5" aria-hidden="true" />
+            </a>
+
+            <button
+              ref={menuButtonRef}
+              type="button"
+              onClick={() => setOpen(!open)}
+              className={`
+                inline-flex items-center justify-center w-11 h-11 rounded-full
+                text-gray-900 hover:text-primary hover:bg-primaryLight
+                transition-colors
+                ${focusClasses}
+              `}
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            >
+              {open ? (
+                <X aria-hidden="true" />
+              ) : (
+                <Menu aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu — always rendered so it can slide: the grid row
@@ -387,25 +384,30 @@ export default function Navbar() {
             "
           >
             <ul className="flex flex-col py-2">
-              {navLinks.map((link) => (
-                <li key={link.label}>
-                  <RouterLink
-                    to={link.href}
-                    className={`
-                      block
-                      px-6 py-4
-                      text-gray-900
-                      hover:bg-primaryLight
-                      hover:text-primary
-                      transition-colors
-                      ${focusClasses}
-                    `}
-                    onClick={closeMenu}
-                  >
-                    {link.label}
-                  </RouterLink>
-                </li>
-              ))}
+              {navLinks.map((link) => {
+                const current = isCurrent(link.href);
+                return (
+                  <li key={link.label}>
+                    <RouterLink
+                      to={link.href}
+                      aria-current={current ? "page" : undefined}
+                      className={`
+                        block px-4 sm:px-6 py-3.5 font-medium transition-colors
+                        border-l-4
+                        ${
+                          current
+                            ? "border-primary bg-primaryLight text-primary"
+                            : "border-transparent text-gray-900 hover:bg-primaryLight hover:text-primary"
+                        }
+                        ${focusClasses}
+                      `}
+                      onClick={closeMenu}
+                    >
+                      {link.label}
+                    </RouterLink>
+                  </li>
+                );
+              })}
 
               <li>
                 <a
@@ -413,12 +415,9 @@ export default function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`
-                    block
-                    px-6 py-4
-                    text-gray-900
-                    hover:bg-primaryLight
-                    hover:text-primary
-                    transition-colors
+                    block px-4 sm:px-6 py-3.5 font-medium transition-colors
+                    border-l-4 border-transparent
+                    text-gray-900 hover:bg-primaryLight hover:text-primary
                     ${focusClasses}
                   `}
                   onClick={closeMenu}
@@ -429,20 +428,12 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {/* Mobile Actions: tap-to-call + primary CTA */}
-            <div className="flex flex-col gap-3 px-6 py-4 border-t border-gray-200">
+            {/* Mobile Actions: tap-to-call + primary CTA, the same buttons
+                as the rest of the site */}
+            <div className="flex flex-col gap-3 px-4 sm:px-6 py-4 border-t border-gray-200">
               <a
                 href={PHONE_HREF}
-                className={`
-                  flex items-center justify-center gap-2
-                  text-primary font-medium
-                  border border-primary/30
-                  rounded-full
-                  px-4 py-3
-                  hover:bg-primaryLight
-                  transition-colors
-                  ${focusClasses}
-                `}
+                className={button("secondary")}
                 aria-label={`Call Restorative Care HHS at ${PHONE_DASHED}`}
                 onClick={closeMenu}
               >
@@ -452,16 +443,8 @@ export default function Navbar() {
 
               <RouterLink
                 to="/contact"
-                className={`
-                  flex items-center justify-center
-                  bg-primary text-white
-                  rounded-full
-                  px-4 py-3
-                  font-medium
-                  hover:bg-primary/90
-                  transition-colors
-                  ${focusClasses}
-                `}
+                aria-current={isCurrent("/contact") ? "page" : undefined}
+                className={button("primary")}
                 onClick={closeMenu}
               >
                 Request Care

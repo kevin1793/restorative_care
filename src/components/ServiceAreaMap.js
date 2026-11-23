@@ -96,7 +96,7 @@ export default function ServiceAreaMap({
         style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}
         role="status"
       >
-        The map couldn't load right now. The full list of counties we serve is
+        The map couldn’t load right now. The full list of counties we serve is
         shown beside it.
       </div>
     );

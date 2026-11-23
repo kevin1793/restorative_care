@@ -1,9 +1,9 @@
 import { PHONE_HREF, PHONE_DISPLAY, EMAIL, EMAIL_HREF, ADDRESS_FULL } from "../siteInfo";
 import React from "react";
 import Seo from "../components/Seo";
+import { textLink } from "../ui";
 
-const linkClasses =
-  "text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2";
+const linkClasses = textLink;
 
 const PHONE = PHONE_DISPLAY;
 

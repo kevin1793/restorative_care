@@ -1,30 +1,12 @@
-import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
 import React from "react";
 import Seo from "../components/Seo";
 import veteransHero from "../assets/images/veterans.webp";
 import PageHero from "../components/PageHero";
+import CtaBand from "../components/CtaBand";
+import { cardTitle, sectionTitle, sectionY, textLink } from "../ui";
 
 export default function VeteransPage() {
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
-
-  const buttonClasses = `
-    inline-flex items-center justify-center
-    bg-primary text-white
-    px-6 py-3 rounded-full
-    font-medium
-    hover:bg-primary/90
-    transition-colors duration-200
-    ${focusClasses}
-  `;
-
-  const linkClasses = `
-    text-primary
-    underline
-    underline-offset-4
-    hover:text-primary/80
-    ${focusClasses}
-  `;
+  const linkClasses = textLink;
 
   // Numbered step timeline instead of a plain stack of headed paragraphs
   // (report §4.7.2). The real VA.gov hrefs are preserved exactly as they
@@ -47,7 +29,7 @@ export default function VeteransPage() {
           if you’re a veteran and want to apply for VA health care. You must
           be enrolled in VA health care to receive care at VA facilities or
           have the VA cover your care through a community care provider like
-          Restorative Care Home Health Services.
+          Restorative Care HHS.
         </>
       ),
     },
@@ -97,7 +79,7 @@ export default function VeteransPage() {
     {
       title: "Schedule Your Assessment",
       content:
-        "Once Restorative Care Home Health Services receives the referral, our agency will schedule a free in-home assessment to create an individualized care plan. Care services will then be scheduled to begin.",
+        "Once we receive the referral, we’ll schedule a free in-home assessment to create an individualized care plan. Care services will then be scheduled to begin.",
     },
   ];
 
@@ -119,18 +101,18 @@ export default function VeteransPage() {
 
         {/* How to Get Care — numbered step timeline (report §4.7.2) */}
         <section
-          className="py-12 md:py-20 bg-white"
+          className={`${sectionY} bg-white`}
           aria-labelledby="care-steps-heading"
         >
           <div className="max-w-3xl mx-auto px-6">
             <h2
               id="care-steps-heading"
-              className="text-2xl sm:text-3xl font-semibold text-primary mb-10 text-center"
+              className={`${sectionTitle} text-center`}
             >
               How to Get Care
             </h2>
 
-            <ol className="reveal-blocks relative">
+            <ol className="reveal-blocks relative mt-8">
               {steps.map((step, i) => (
                 <li key={step.title} className="flex gap-5 pb-10 last:pb-0">
                   <span className="relative flex-shrink-0">
@@ -147,7 +129,7 @@ export default function VeteransPage() {
                   </span>
 
                   <div className="text-gray-800 leading-relaxed pt-1.5">
-                    <h3 className="text-xl font-semibold text-primary mb-2">
+                    <h3 className={`${cardTitle} mb-2`}>
                       {step.title}
                     </h3>
                     <div>{step.content}</div>
@@ -175,32 +157,12 @@ export default function VeteransPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section
-          className="py-10 md:py-16 bg-primaryLight text-center"
-          aria-labelledby="cta-heading"
-        >
-          <div className="max-w-3xl mx-auto px-6">
-            <h2
-              id="cta-heading"
-              className="text-2xl md:text-3xl font-semibold text-primary mb-4"
-            >
-              Ready to Get Started?
-            </h2>
-
-            <p className="text-gray-800 mb-6 leading-relaxed">
-              Contact Restorative Care Home Health Services to schedule your
-              free in-home assessment and begin your care plan today.
-            </p>
-
-            <a
-              href={PHONE_HREF}
-              className={buttonClasses}
-            >
-              Call Us Now: {PHONE_DISPLAY}
-            </a>
-          </div>
-        </section>
+        <CtaBand
+          id="cta-heading"
+          title="Ready to Get Started?"
+          text="Contact us to schedule your free in-home assessment and begin your care plan today."
+          secondary={{ label: "Send Us a Message", to: "/contact" }}
+        />
       </div>
     </>
   );

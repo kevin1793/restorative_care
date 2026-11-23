@@ -34,7 +34,7 @@ const routes = [
     source: "src/pages/ServicesPage.js",
     title: "Our Services | Restorative Care HHS",
     description:
-      "Explore Restorative Care HHS's home health, personal attendant, and private duty services — skilled nursing, therapy, and daily living support in Bedford, TX.",
+      "Explore Restorative Care HHS’s home health, personal attendant, and private duty services — skilled nursing, therapy, and daily living support in Bedford, TX.",
     heading: "Our Services",
     changefreq: "monthly",
     priority: "0.9",

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { FACEBOOK_PAGE_URL } from "../siteInfo";
+import { button } from "../ui";
 
 // "Tips From Our Team" card: what the agency posts on Facebook and a button to
 // follow the Page. Built into the site instead of Facebook's Page Plugin,
@@ -22,11 +23,8 @@ const TOPICS = [
 ];
 
 export default function FacebookFollowCard() {
-  const focusClasses =
-    "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
-
   return (
-    <div className="bg-white rounded-2xl shadow-brand p-6 sm:p-8 max-w-2xl mx-auto text-left">
+    <div className="bg-white rounded-2xl shadow-brand p-4 min-[400px]:p-6 sm:p-8 max-w-2xl mx-auto text-left">
       {/* Who: the agency's Page, with the same mark as the navbar/footer */}
       <div className="flex items-center gap-4">
         <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white">
@@ -61,11 +59,11 @@ export default function FacebookFollowCard() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Follow Restorative Care HHS on Facebook — opens in a new tab"
-        className={`mt-6 inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 min-h-[48px] font-medium text-white hover:bg-primary/90 transition-colors ${focusClasses}`}
+        className={`${button("primary")} mt-6 w-full sm:w-auto`}
       >
-        <Facebook className="h-5 w-5" aria-hidden="true" />
+        <Facebook className="h-4 w-4 shrink-0" aria-hidden="true" />
         Follow Us on Facebook
-        <ExternalLink className="h-4 w-4 opacity-80" aria-hidden="true" />
+        <ExternalLink className="hidden sm:block h-4 w-4 opacity-80" aria-hidden="true" />
       </a>
     </div>
   );

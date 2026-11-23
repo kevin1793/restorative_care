@@ -4,13 +4,10 @@ import { Link as RouterLink } from "react-router-dom";
 
 import Seo from "../components/Seo";
 import { notFound } from "../seo/routes";
+import { button } from "../ui";
 
-const focusClasses =
-  "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
-
-const buttonClasses = `inline-flex items-center justify-center bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors duration-200 ${focusClasses}`;
-
-const buttonOutlineClasses = `inline-flex items-center justify-center bg-white text-primary border-2 border-primary px-6 py-3 rounded-full font-medium hover:bg-primaryLight transition-colors duration-200 ${focusClasses}`;
+const buttonClasses = button("primary");
+const buttonOutlineClasses = button("secondary");
 
 // Shown for any URL that isn't a real page. Kept out of search results
 // (noindex) and out of the sitemap.
@@ -41,7 +38,7 @@ export default function NotFoundPage() {
             </h1>
 
             <p className="text-gray-800 leading-relaxed mb-8">
-              Sorry, we couldn't find the page you were looking for. It may
+              Sorry, we couldn’t find the page you were looking for. It may
               have moved, or the web address may have a typo. You can head
               back to our home page, browse our services, or call us at{" "}
               <a
@@ -50,7 +47,7 @@ export default function NotFoundPage() {
               >
                 {PHONE_DISPLAY}
               </a>{" "}
-              and we'll be glad to help.
+              and we’ll be glad to help.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">

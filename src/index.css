@@ -113,7 +113,8 @@ html.a11y-contrast :focus-visible {
 /* Navbar layout switch (see Navbar.js)                                */
 /* ------------------------------------------------------------------ */
 
-/* The full desktop row needs ~74.5rem (75rem threshold). Container-query rem units follow the
+/* The full desktop row (3 links + Careers + phone + Request Care) needs
+   ~63rem (65rem threshold, ~1170px at the default text size). Container-query rem units follow the
    visitor's text size setting (the root font size), unlike media-query
    breakpoints, so the switch to the hamburger menu moves to wider screens
    automatically as text gets larger. Browsers without container queries just
@@ -125,7 +126,7 @@ html.a11y-contrast :focus-visible {
 .nav-desktop-actions {
   display: none;
 }
-@container nav (min-width: 75rem) {
+@container nav (min-width: 65rem) {
   .nav-desktop-links,
   .nav-desktop-actions {
     display: flex;
