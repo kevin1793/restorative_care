@@ -1,5 +1,4 @@
 import { PHONE_HREF, PHONE_DISPLAY, EMAIL_HREF, ADDRESS_STREET, ADDRESS_CITY_LINE, MAPS_URL } from "../siteInfo";
-import { useEffect } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
@@ -10,10 +9,6 @@ import contactHeroImg from "../assets/images/contact_hero.webp";
 import PageHero from "../components/PageHero";
 
 export default function ContactPage() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
-
   const focusClasses =
     "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
 

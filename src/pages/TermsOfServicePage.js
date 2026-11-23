@@ -1,12 +1,8 @@
 import { PHONE_HREF, PHONE_DISPLAY, EMAIL, EMAIL_HREF } from "../siteInfo";
-import React, { useEffect } from "react";
+import React from "react";
 import Seo from "../components/Seo";
 
 export default function TermsOfServicePage() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
-
   return (
     <>
       <Seo path="/terms-of-service" />

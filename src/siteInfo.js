@@ -33,7 +33,9 @@ const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
 // For example Monday to Friday, 8 AM to 5 PM:
 //   [{ days: [1, 2, 3, 4, 5], open: "08:00", close: "17:00" }]
 const TIME_ZONE = "America/Chicago";
-const HOURS = null;
+// Monday to Friday, 9 AM to 5 PM; closed weekends (from the office's Google
+// Business Profile, Nov 2026)
+const HOURS = [{ days: [1, 2, 3, 4, 5], open: "09:00", close: "17:00" }];
 
 module.exports = {
   PHONE_DISPLAY,

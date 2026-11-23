@@ -5,7 +5,7 @@ import {
   ADDRESS_CITY_LINE,
   MAPS_URL,
 } from "../siteInfo";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Seo from "../components/Seo";
 import { MapPin, Phone, MessageSquare, Navigation } from "lucide-react";
@@ -22,10 +22,6 @@ export default function ServiceAreaPage() {
   // tapping it on the map lights up its pill here (mouse/touch enhancement
   // only — the list itself is plain text for everyone else).
   const [activeCounty, setActiveCounty] = useState(null);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
 
   const focusClasses =
     "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";

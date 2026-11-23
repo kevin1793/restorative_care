@@ -496,7 +496,7 @@ export default function HomePage() {
                 </RouterLink>
 
                 <a
-                  href="#services"
+                  href="#personal-care-services"
                   className={`${pillClasses} ${focusClasses}`}
                 >
                   Personal Care

@@ -1,14 +1,10 @@
 import { PHONE_HREF, PHONE_DISPLAY } from "../siteInfo";
-import React, { useEffect } from "react";
+import React from "react";
 import Seo from "../components/Seo";
 import veteransHero from "../assets/images/veterans.webp";
 import PageHero from "../components/PageHero";
 
 export default function VeteransPage() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
-
   const focusClasses =
     "focus:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-primary";
 

@@ -1,5 +1,5 @@
 import { PHONE_HREF, PHONE_DISPLAY, EMAIL, EMAIL_HREF, ADDRESS_FULL } from "../siteInfo";
-import React, { useEffect } from "react";
+import React from "react";
 import Seo from "../components/Seo";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -7,10 +7,6 @@ const linkClasses =
   "text-primary underline underline-offset-4 hover:text-primary/80 rounded-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2";
 
 export default function AccessibilityStatementPage() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
-
   return (
     <>
       <Seo path="/accessibility" />
