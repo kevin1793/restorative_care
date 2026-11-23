@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { geoMercator, geoPath } from "d3-geo";
 import { json } from "d3-fetch";
 import { SERVED_COUNTIES } from "../servedCounties";
+import { MAPS_URL } from "../siteInfo";
 
 const SERVED_SET = new Set(SERVED_COUNTIES);
 
@@ -187,7 +188,21 @@ export default function ServiceAreaMap({
         </g>
 
         {hq && (
-          <g>
+          // The office pin and its label open the office in Google Maps.
+          // Pointer/touch only (tabIndex -1): the whole map is one image to
+          // screen readers and keyboards, and the "Our Bedford office" card
+          // beside it has the same link for them.
+          <a
+            href={MAPS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={-1}
+            className="group cursor-pointer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <title>Open our Bedford office in Google Maps</title>
+            {/* Invisible, larger tap target around the small dot */}
+            <circle cx={hq.x} cy={hq.y} r="18" fill="transparent" />
             {/* soft pulsing ring; static for people who prefer reduced motion */}
             <circle
               cx={hq.x}
@@ -214,7 +229,7 @@ export default function ServiceAreaMap({
                 width="104"
                 height="24"
                 rx="12"
-                fill="#FFFFFF"
+                className="fill-white transition-colors group-hover:fill-[#FFF4EF]"
                 stroke={COLORS.hq}
                 strokeWidth="1.5"
               />
@@ -226,11 +241,12 @@ export default function ServiceAreaMap({
                 fill="#8A2F12"
                 fontSize="12"
                 fontWeight="700"
+                className="group-hover:underline"
               >
                 Bedford office
               </text>
             </g>
-          </g>
+          </a>
         )}
       </g>
     </svg>

@@ -237,65 +237,75 @@ export default function HomePage() {
           className="py-12 md:py-20 bg-white"
           aria-labelledby="about-heading"
         >
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <img
-              src={nurseImage1}
-              alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
-              width="799"
-              height="533"
-              className="rounded-2xl shadow-md w-full"
-              loading="lazy"
-            />
+          {/* Photo + mission text side by side, then the three highlights
+              as a full-width row below. The highlights used to sit inside
+              the text column, which made it much taller than the photo and
+              left big gaps above and below the image. */}
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <img
+                src={nurseImage1}
+                alt="A skilled home health nurse providing compassionate care to an elderly patient in their home"
+                width="799"
+                height="533"
+                className="rounded-2xl shadow-md w-full"
+                loading="lazy"
+              />
 
-            <div>
-              <h2
-                id="about-heading"
-                className="text-2xl sm:text-3xl font-semibold text-primary mb-4"
-              >
-                About Our Mission
-              </h2>
+              <div>
+                <h2
+                  id="about-heading"
+                  className="text-2xl sm:text-3xl font-semibold text-primary mb-4"
+                >
+                  About Our Mission
+                </h2>
 
-              <p className="text-gray-800 leading-relaxed mb-8">
-                At <strong>Restorative Care HHS</strong>, we believe everyone
-                deserves comfort and dignity at home. Our skilled nurses and
-                compassionate caregivers are dedicated to helping each client
-                live with independence, safety, and respect.
-              </p>
+                <p className="text-gray-800 leading-relaxed mb-4">
+                  At <strong>Restorative Care HHS</strong>, we believe everyone
+                  deserves comfort and dignity at home. Our skilled nurses and
+                  compassionate caregivers are dedicated to helping each client
+                  live with independence, safety, and respect.
+                </p>
 
-              {/* Mission broken into scannable bullets instead of a dense
-                  paragraph (report §2.2) */}
-              <ul className="grid sm:grid-cols-3 gap-5 sm:gap-6 mb-8">
-                {missionHighlights.map(({ icon: Icon, title, text }) => (
-                  <li key={title} className="flex items-start gap-4 sm:block">
-                    <span className="inline-flex shrink-0 items-center justify-center w-12 h-12 rounded-full bg-primaryLight text-primary sm:mb-3">
-                      <Icon className="w-6 h-6" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">
-                        {title}
-                      </h3>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        {text}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                <p className="text-gray-800 leading-relaxed mb-8">
+                  Whether it’s daily living assistance, therapy, or specialized
+                  medical care, our team is here for you. We bring care and
+                  compassion together, right where it’s needed most.
+                </p>
 
-              <p className="text-gray-800 leading-relaxed mb-8">
-                Whether it’s daily living assistance, therapy, or specialized
-                medical care, our team is here for you. We bring care and
-                compassion together, right where it’s needed most.
-              </p>
-
-              <RouterLink
-                to="/services"
-                className={buttonOutlineClasses}
-                onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
-              >
-                Learn About Our Services →
-              </RouterLink>
+                <RouterLink
+                  to="/services"
+                  className={buttonOutlineClasses}
+                  onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
+                >
+                  Learn About Our Services →
+                </RouterLink>
+              </div>
             </div>
+
+            {/* Mission broken into scannable highlights instead of a dense
+                paragraph (report §2.2). Tinted panels, not bordered cards:
+                they're information, not links, so no hover state. */}
+            <ul className="mt-10 md:mt-14 grid sm:grid-cols-3 gap-4 sm:gap-6">
+              {missionHighlights.map(({ icon: Icon, title, text }) => (
+                <li
+                  key={title}
+                  className="flex items-start gap-4 sm:block rounded-2xl bg-primaryLight p-5 sm:p-6"
+                >
+                  <span className="inline-flex shrink-0 items-center justify-center w-12 h-12 rounded-full bg-white text-primary sm:mb-4">
+                    <Icon className="w-6 h-6" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {text}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -556,7 +566,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Veterans Section */}
+        {/* Veterans Section — image on the left on desktop, so it zigzags
+            with the "Let's Talk" section above (text left, image right);
+            image above the text on phones */}
         <section
           className="py-12 md:py-20 bg-primaryLight"
           aria-labelledby="veterans-heading"
@@ -567,7 +579,7 @@ export default function HomePage() {
               alt="A caregiver assisting a veteran client at home"
               width="1000"
               height="688"
-              className="rounded-2xl shadow-md w-full order-first md:order-last"
+              className="rounded-2xl shadow-md w-full"
               loading="lazy"
             />
 

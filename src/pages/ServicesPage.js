@@ -74,6 +74,23 @@ const payerPaths = [
   },
 ];
 
+// "Which service is right for you?" cards: skilled care plus the three
+// personal-care payer paths, each jumping to its section below
+const comparisonCards = [
+  {
+    title: "Skilled Services",
+    bestFor: "Recovering from illness, injury, or surgery",
+    payer: "Medicare & Medicaid",
+    href: "#skilled-services-heading",
+  },
+  ...payerPaths.map(({ title, bestFor, payer }) => ({
+    title,
+    bestFor,
+    payer,
+    href: "#personal-care-heading",
+  })),
+];
+
 // No scroll-to-top here: RouteAnnouncer in App.js resets the scroll on every
 // page change, and lands on the #section when a link names one (the homepage's
 // "Learn More About Personal Care Services" button). A reset here would undo
@@ -123,36 +140,24 @@ export default function ServicesPage() {
               Which service is right for you?
             </h2>
 
+            {/* Cards in a row stretch to the same height; each is a column
+                with the payer pill pushed to the bottom (mt-auto), so the
+                pills line up however long the title or description is. */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <a
-                href="#skilled-services-heading"
-                className={`block bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusClasses}`}
-              >
-                <span className="block font-semibold text-gray-900 mb-1">
-                  Skilled Services
-                </span>
-                <span className="block text-sm text-gray-700 mb-2">
-                  Recovering from illness, injury, or surgery
-                </span>
-                <span className="inline-block text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1">
-                  Medicare &amp; Medicaid
-                </span>
-              </a>
-
-              {payerPaths.map((path) => (
+              {comparisonCards.map((card) => (
                 <a
-                  key={path.title}
-                  href="#personal-care-heading"
-                  className={`block bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusClasses}`}
+                  key={card.title}
+                  href={card.href}
+                  className={`flex flex-col h-full bg-white border border-primary/10 rounded-2xl p-5 text-left transition-colors duration-200 hover:border-primary/30 hover:shadow-brand ${focusClasses}`}
                 >
                   <span className="block font-semibold text-gray-900 mb-1">
-                    {path.title}
+                    {card.title}
                   </span>
-                  <span className="block text-sm text-gray-700 mb-2">
-                    {path.bestFor}
+                  <span className="block text-sm text-gray-700 mb-4">
+                    {card.bestFor}
                   </span>
-                  <span className="inline-block text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1">
-                    {path.payer}
+                  <span className="mt-auto self-start text-xs font-semibold text-primary bg-primaryLight rounded-full px-3 py-1">
+                    {card.payer}
                   </span>
                 </a>
               ))}
